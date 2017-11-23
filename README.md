@@ -1,4 +1,4 @@
-# marketing_bms
+# marketing_portals
 
 > yes
 
