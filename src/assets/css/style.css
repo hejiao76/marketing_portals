@@ -4,7 +4,6 @@ header{
   width:100%;
   min-width:1245px;
   height:60px;
-  background: url("../img/header_bg.jpg")no-repeat 100% 100%;
   display:flex;/*设为伸缩容器*/
   flex-flow:row;/*伸缩项目单行排列*/
   overflow: hidden\0; /* ie9 */;
@@ -57,7 +56,6 @@ header ul li  .name_e{
 
 }
 .h_icon{
-  background: url("../img/header_icon.png")no-repeat;
   display: inline-block;
   /*opacity: .8;*/
 }
@@ -267,7 +265,6 @@ table{
   min-width:1245px;
   height:100vh;
   min-height: 600px;
-  background: url('../img/login_bg.jpg')no-repeat center center;
   background-size: cover;
   position: relative;
   text-align: center;
@@ -344,10 +341,8 @@ table{
   display: inline-block;
 }
 .login_con .form_list .img_loack{
-  background: url('../img/loack.png')no-repeat center center;
 }
 .login_con .form_list .img_person{
-  background: url('../img/person.png')no-repeat center center;
 }
 .login_con button{
   width:100%;

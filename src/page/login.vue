@@ -1,7 +1,6 @@
 <template>
   <section class="login_bg">
     <div class="pos_center">
-      <h1><img src="./../assets/img/logo.png">蜘点物流审核系统</h1>
       <div class="login_con">
         <h3>欢迎登录蜘点物流审核系统</h3>
         <hr   noshade="noshade">

@@ -1,7 +1,6 @@
 <template>
   <header>
     <div class="logo">
-      <img class="vm" src="./../assets/img/small_logo.png"/>
       <span class="vm">物流审核系统</span>
     </div>
     <ul class="fr">
