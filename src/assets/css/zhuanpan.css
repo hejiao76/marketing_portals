@@ -1,0 +1,6 @@
+html,body { height: 100%;}
+body{color:#333; font-size:12px;font-family:"Microsoft YaHei"}
+.title,.all_number { text-align: center; color: #ffffff;}
+.title .title_bc { width:90%;}
+.protocolBtn { margin: 0 auto; width: 100px; height: 40px; line-height: 40px; display: block;}
+.title .cjnumber { color: #ffffff;}

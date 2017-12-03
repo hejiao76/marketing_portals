@@ -12,6 +12,7 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
   -webkit-tap-highlight-color:transparent;
   -webkit-font-smoothing: antialiased;
 }
+button,input { outline: none;}
 .fl{
   float: left;
 }
@@ -125,3 +126,4 @@ body, div, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, 
 .cur {
   cursor: pointer;
 }
+#app { width: 375px;  margin: 0 auto; min-height: 100%;  font-size: 14px; }
