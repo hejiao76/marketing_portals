@@ -112,15 +112,15 @@ var turnplate={
               if(text.indexOf(turnplate.restaraunts[0])>=0){
                 var img= document.getElementById("diy1-img");
                 img.onload=function(){
-                  ctx.drawImage(img,null,null,150,150,-35,20,30,30);
+                  ctx.drawImage(img,-35,20);
 
                 };
-                ctx.drawImage(img,null,null,150,150,-35,20,30,30);
+                ctx.drawImage(img,-35,20);
               };
               if(text.indexOf(turnplate.restaraunts[1])>=0){
                 var img= document.getElementById("shan-img");
                 img.onload=function(){
-                  ctx.drawImage(img,-35,20,null,null,null,null,20,20);
+                  ctx.drawImage(img,-35,20);
                 };
                 ctx.drawImage(img,-35,20);
               };
@@ -129,7 +129,7 @@ var turnplate={
                 img.onload=function(){
                   ctx.drawImage(img,-25,35);
                 };
-                ctx.drawImage(img,-30,35);
+                ctx.drawImage(img,-25,35);
               };
               if(text.indexOf(turnplate.restaraunts[3])>=0){
                 var img= document.getElementById("shan-img");
