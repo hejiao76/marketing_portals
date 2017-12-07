@@ -16,7 +16,11 @@ button,input { outline: none;}
 .fl{
   float: left;
 }
-
+input,
+textarea {
+  border: 0; /* 方法1 */
+  -webkit-appearance: none; /* 方法2 */
+}
 .fr{
   float: right;
 }
@@ -126,4 +130,7 @@ button,input { outline: none;}
 .cur {
   cursor: pointer;
 }
-#app { width: 375px;  margin: 0 auto; min-height: 100%;  font-size: 14px; }
+#app { max-width: 500px;
+  width:100%;  margin: 0 auto; min-height: 100%;  font-size: 14px; }
+html { font-size: 100px;}
+html,body { height: 100%;}

@@ -2,17 +2,17 @@
   	<div>
       <loading v-show="loadingShow"></loading>
       <div class="center_box">
-      <img class="banner" src="../assets/img/couponBanner.png"/>
-        <div class="login" v-show="!logon">
+      <img class="banner" v-show="status==0||status==1" src="../assets/img/couponBanner.png"/>
+        <div class="login" v-show="status==1">
             <input type="text" class="logintext username" placeholder="请填写真实购车人姓名" />
             <input type="password" class="logintext password" placeholder="请输入手机号" />
             <div class="Verification">
               <input type="number" class="logintext code" placeholder="请输入验证码" />
               <span class="btn_code">获取验证码</span>
             </div>
-            <button class="codebtn">点击领卷</button>
+            <button class="codebtn" @click="getcoupon">点击领卷</button>
         </div>
-        <div class="couponList"  v-for="item in couponlist" :key="item.id">
+        <div class="couponList"  v-show="status==0"  v-for="item in couponlist" :key="item.id">
           <div class="couponTop">
             <img class="couponImg" :src="item.img">
             <div class="couponright">
@@ -26,6 +26,55 @@
           </div>
           <div class="couponBottom" @click="Pickclick">立即领取</div>
         </div>
+
+        <!--领取状态-->
+        <div class="getist" v-show="status==2">
+          <div class="getBox getSucceed">
+            <div class="gettop">
+              恭喜您，领取成功！
+            </div>
+            <div class="centerlist">
+              <div>
+                <span class="spa">核销码</span>
+                <span class="spb">{{discount.code}}</span>
+              </div>
+              <div>
+                <span class="spa">适用车系</span>
+                <span class="spb">{{discount.text}}</span>
+              </div>
+              <div>
+                <span class="spa">购车人姓名</span>
+                <span class="spb">{{discount.name}}</span>
+              </div>
+            </div>
+            <div class="centerlist qy_list">
+              <span class="spa">抵扣权益</span>
+              <ul class="qy_ul">
+                <li v-for="(item,index,key) in discount.qylist" :key="index">{{item}}</li>
+              </ul>
+            </div>
+            <div class="centerlist validity">
+              <span class="spa">有效期</span>
+              <span class="spb" style="color: #FF0036">{{discount.timeout}}日前使用有效</span>
+            </div>
+
+          </div>
+          <div class="getbtn" @click="tolist">查看我的礼券</div>
+        </div>
+        <div class="getist" v-show="status==3||status==4">
+          <div class="getBox getSucceed">
+            <div class="gettop">
+             {{status==3?'很遗憾，抵扣券已发放完':'您已领取过相同的抵扣券'}}
+            </div>
+            <div class="get_bg">
+
+            </div>
+          </div>
+          <div class="getbtn">查看其他活动</div>
+        </div>
+
+
+
         <div class="ruleDestail">
             <div class="ruletitle">活动细则</div>
             <div class="rulelist">
@@ -48,14 +97,15 @@
 //  import api from "./../fetch/api"
   import Final from "../util/Final";
   import API from "./../fetch/api";
-  import zhuanpan from "../components/zhuanpan";
   import loading from "../components/loading";
   export default {
       data() {
           return {
             logon:false,
             loadingShow:false,
-            couponlist:[{id:12,status:1,img:'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=169726949,11506498&fm=27&gp=0.jpg',title:'xxxxx',alllist:['xsss','xxx','xssdsd']},{id:12,status:2,img:'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=169726949,11506498&fm=27&gp=0.jpg',title:'xxxxx',alllist:['xsss','xxx','xssdsd']}]
+            status:1,
+            couponlist:[{id:12,status:1,img:'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=169726949,11506498&fm=27&gp=0.jpg',title:'xxxxx',alllist:['xsss','xxx','xssdsd']},{id:12,status:2,img:'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=169726949,11506498&fm=27&gp=0.jpg',title:'xxxxx',alllist:['xsss','xxx','xssdsd']}],
+            discount:{code:47927498,text:'迈腾全系车型',name:'任宝生',timeout:'2018.05.20',qylist:['3000元保险增值礼包\n','3000元线上购车专享礼金\n', '2000元贴膜\n','2000元新车大礼包\n']}
           }
       },
       created (){
@@ -67,6 +117,12 @@
       methods : {
         Pickclick : function (data){
             this.loadingShow=true;
+        },
+        getcoupon:function(){
+          this.status=2;
+        },
+        tolist:function(){
+          location.href='/#/couponlist'
         }
       }
   }

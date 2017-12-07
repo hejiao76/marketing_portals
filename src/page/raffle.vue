@@ -1,12 +1,13 @@
 <template>
-  	<div>
+  	<div class="raffle">
       <div class="title">
         <img class="title_bc" src="../assets/img/title_bc.png"></img>
-        <div>今日您还有 <span>{{cjNumber}}</span> 次抽奖机会</div>
+        <div class="raffle_number">今日您还有 <span>{{cjNumber}}</span> 次抽奖机会</div>
       </div>
       <zhuanpan></zhuanpan>
       <div class="all_number">已有<span class="number">{{allNumber}}</span>人参见</div>
-      <button class="protocolBtn">活动须知</button>
+      <div class="showmesg">Shelly刚刚抽中了<span>二等奖</span>，快来试试你的运气吧！</div>
+      <div class="protocolBtn">活动须知</div>
     </div>
 </template>
 <script>

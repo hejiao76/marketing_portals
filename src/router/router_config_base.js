@@ -4,6 +4,7 @@ const home = r => require.ensure([], () => r(require('../page/home')), 'home');
 const login = r => require.ensure([], () => r(require('../page/login')), 'login');
 const action = r => require.ensure([], () => r(require('../page/raffle')), 'action');
 const coupons = r => require.ensure([], () => r(require('../page/coupons')), 'coupons');
+const couponlist = r => require.ensure([], () => r(require('../page/couponlist')), 'couponlist');
 const routerConfig = [{
   path: '',
   redirect:"/login"
@@ -20,6 +21,10 @@ const routerConfig = [{
   }, {
     path: '/coupons',
     component: coupons
+  }
+  , {
+    path: '/couponlist',
+    component: couponlist
   }
 ];
 

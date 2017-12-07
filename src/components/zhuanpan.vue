@@ -88,10 +88,8 @@ var turnplate={
               var line_height = 17;
               //translate方法重新映射画布上的 (0,0) 位置
               ctx.translate(outwidth/2 + Math.cos(angle + arc / 2) * turnplate.textRadius, outwidth/2 + Math.sin(angle + arc / 2) * turnplate.textRadius);
-
               //rotate方法旋转当前的绘图
               ctx.rotate(angle + arc / 2 + Math.PI / 2);
-
               /** 下面代码根据奖品类型、奖品名称长度渲染不同效果，如字体、颜色、图片效果。(具体根据实际情况改变) **/
              if( text.length>8){//奖品名称长度超过一定范围
                 text = text.substring(0,8)+"||"+text.substring(8);
