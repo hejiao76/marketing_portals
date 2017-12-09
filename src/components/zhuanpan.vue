@@ -1,15 +1,12 @@
 <template>
   <div  style="background-size:cover;">
-  <img src="../assets/img/4.png" id="shan-img" style="display:none;" />
-  <img src="../assets/img/3.png" id="diy2-img" style="display:none;" />
-  <img src="../assets/img/5.png" id="diy1-img" style="display:none;" />
-  <img src="../assets/img/6.png" id="diy3-img" style="display:none;" />
-  <img src="../assets/img/7.png" id="diy4-img" style="display:none;" />
-  <img src="../assets/img/7.png" id="diy5-img" style="display:none;" />
+    <div class="img_box" style="display: none;">
+      <img class="imgitem" :id="['imglist'+index]" :src="item" v-for="(item,index,key) in imglist" />
+    </div>
   <div class="banner">
     <div class="turnplate" >
       <canvas class="item" id="wheelcanvas" width="300px" height="300px"></canvas>
-      <div class="pointer"></div>
+      <div class="pointer"><span :class="['centermesg',{poining: bRotate},{end: !bRotate}]">{{bRotate?'正在抽奖':'点击抽奖'}}</span></div>
     </div>
   </div>
   </div>
@@ -23,6 +20,8 @@
   import VConNav from "./con_nav";
   import Final from "../util/Final";
   import API from "../fetch/api";
+  var widthaa=$(window).width;
+
 var turnplate={
   restaraunts:[],				//大转盘奖品名称
   colors:[],					//大转盘奖品区块对应背景颜色
@@ -31,11 +30,13 @@ var turnplate={
   textRadius:120,				//大转盘奖品位置距离圆心的距离
   insideRadius:0,			//大转盘内圆的半径
   startAngle:0,				//开始角度
-  bRotate:false				//false:停止;ture:旋转
+
 };
   export default {
       data() {
           return {
+            bRotate:false,
+            imglist:[],
           }
       },
       created (){
@@ -54,11 +55,13 @@ var turnplate={
           if (canvas.getContext) {
             //根据奖品个数计算圆周角度
             var arc = Math.PI / (turnplate.restaraunts.length/2);
+            //turnplate.startAngle=360/turnplate.restaraunts.length;
             var ctx = canvas.getContext("2d");
             //在给定矩形内清空一个矩形
             ctx.clearRect(0,0,outwidth,outwidth);
             //strokeStyle 属性设置或返回用于笔触的颜色、渐变或模式
-            ctx.strokeStyle = "#FFBE04";
+           // ctx.strokeStyle = "rgba(0,0,0,0)";
+            ctx.strokeStyle = "#FD767B";
             //font 属性设置或返回画布上文本内容的当前字体属性
             ctx.font = 'bold 14px Microsoft YaHei';
             for(var i = 0; i < turnplate.restaraunts.length; i++) {
@@ -74,16 +77,8 @@ var turnplate={
               ctx.save();
 
               //改变画布文字颜色
-              var b = i+2;
-              if(b%2){
                 ctx.fillStyle = "#FFFFFF";
-              }else{
-                ctx.fillStyle = "#E5302F";
-              };
-
               //----绘制奖品开始----
-
-
               var text = turnplate.restaraunts[i];
               var line_height = 17;
               //translate方法重新映射画布上的 (0,0) 位置
@@ -98,73 +93,19 @@ var turnplate={
                   ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, j * line_height);
                 }
               }else{
-
                 //在画布上绘制填色的文本。文本的默认颜色是黑色
-
-                //measureText()方法返回包含一个对象，该对象包含以像素计的指定字体宽度
                 ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
               }
 
               //添加对应图标
 
-              if(text.indexOf(turnplate.restaraunts[0])>=0){
-                var img= document.getElementById("diy1-img");
-                img.onload=function(){
-                  ctx.drawImage(img,-35,20);
+                var img= document.getElementById("imglist"+i);
+             if(img){
+               ctx.drawImage(img,-20,30,40,40);
+             }
 
-                };
-                ctx.drawImage(img,-35,20);
-              };
-              if(text.indexOf(turnplate.restaraunts[1])>=0){
-                var img= document.getElementById("shan-img");
-                img.onload=function(){
-                  ctx.drawImage(img,-35,20);
-                };
-                ctx.drawImage(img,-35,20);
-              };
-              if(text.indexOf(turnplate.restaraunts[2])>=0){
-                var img= document.getElementById("diy5-img");
-                img.onload=function(){
-                  ctx.drawImage(img,-25,35);
-                };
-                ctx.drawImage(img,-25,35);
-              };
-              if(text.indexOf(turnplate.restaraunts[3])>=0){
-                var img= document.getElementById("shan-img");
-                img.onload=function(){
-                  ctx.drawImage(img,-35,20);
-                };
-                ctx.drawImage(img,-35,20);
-              };
-              if(text.indexOf(turnplate.restaraunts[4])>=0){
-                var img= document.getElementById("diy3-img");
-                img.onload=function(){
-                  ctx.drawImage(img,-30,20);
-                };
-                ctx.drawImage(img,-30,20);
-              };
-              if(text.indexOf(turnplate.restaraunts[5])>=0){
-                var img= document.getElementById("shan-img");
-                img.onload=function(){
-                  ctx.drawImage(img,-35,20);
-                };
-                ctx.drawImage(img,-35,20);
-              };
-              if(text.indexOf(turnplate.restaraunts[6])>=0){
-                var img= document.getElementById("diy2-img");
-                img.onload=function(){
-                  ctx.drawImage(img,-30,20);
-                };
-                ctx.drawImage(img,-30,20);
-              };
 
-              if(text.indexOf(turnplate.restaraunts[7])>=0){
-                var img= document.getElementById("shan-img");
-                img.onload=function(){
-                  ctx.drawImage(img,-35,20);
-                };
-                ctx.drawImage(img,-35,20);
-              };
+
 
 
               //把当前画布返回（调整）到上一个save()状态之前
@@ -175,10 +116,12 @@ var turnplate={
 }
       },
     mounted() {
-      turnplate.restaraunts = ["碧根果一袋", "年货红包", "水果拼盘300元月卡", "2元现金红包", "夏威夷果一袋", "3元现金红包", "松子一袋 ", "5元现金红包"];
-      turnplate.colors = ["#FFFFFF","#5fcbd5", "#FFFFFF", "#5fcbd5", "#FFFFFF","#5fcbd5", "#FFFFFF", "#5fcbd5" ];
+      turnplate.restaraunts = ["碧根果一袋", "年货红包", "水果拼盘300元月卡", "2元现金红包", "夏威夷果一袋",'谢谢惠顾'];
+      turnplate.colors = ["#FD767B","#FD5B5D", "#FC4B4D","#FD767B","#FD5B5D", "#FC4B4D" ];
+     this.imglist=["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512672494498&di=8c31ade21ccef8a59eafc99888e89f1e&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fbba1cd11728b471064dc28dec9cec3fdfc032335.jpg"
+     ]
         var _that=this;
-        setTimeout(function(){_that.drawRouletteWheel();},100)
+        setTimeout(function(){_that.drawRouletteWheel();},200)
       var rotateTimeOut = function (){
         $('#wheelcanvas').rotate({
           angle:0,
@@ -205,6 +148,7 @@ var turnplate={
           animateTo:angles+1800,
           duration:8000,
           callback:function (){	//回调
+            _that.bRotate=false;
             alert('恭喜获得'+txt);
 
           }
@@ -212,10 +156,10 @@ var turnplate={
       };
 
       $('.pointer').click(function (){
-        if(turnplate.bRotate)return;
-        turnplate.bRotate = !turnplate.bRotate;
+        if(_that.bRotate)return;
+        _that.bRotate = !_that.bRotate;
         //获取随机数(奖品个数范围内)
-        var item = 7;
+        var item = 2;
         //奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
         rotateFn(item, turnplate.restaraunts[item]);
 

@@ -47,8 +47,8 @@
 .Verification { overflow: hidden;}
 .Verification .logintext {
   float: left;
-  width:1.87rem;}
-.Verification .btn_code { width: 1.08rem;border-radius: 3px; height: .42rem; line-height:.42rem; text-align: center; float: right; border:1px solid #57B5F2; color: #57B5F2;}
+  width:60%;}
+.Verification .btn_code { width: 35%;border-radius: 3px; height: .42rem; line-height:.42rem; text-align: center; float: right; border:1px solid #57B5F2; color: #57B5F2;}
 .codebtn { height:.44rem; width: 100%;  border-radius: 3px; background: #FF0036; font-size: .18rem; color: #ffffff; line-height: .44rem; text-align: center}
 
 

@@ -2,9 +2,9 @@
 .clear{clear:both;}
 
 /* 大转盘样式 */
-.banner{display:block;width:336px;margin-left:auto;margin-right:auto;margin-bottom: 20px;}
-.banner .turnplate{display:block;width:100%;position:relative;
-  height:336px;}
+.banner{display:block;width:100%;margin-left:auto;margin-right:auto;margin-bottom: 20px;}
+.banner .turnplate{display:block;width:330px; margin: 0 auto; position:relative;
+  height:330px;}
 .banner .turnplate canvas.item{position: absolute;left: 0;top:0; right:0; bottom: 0; margin: auto;}
 .banner .turnplate .pointer {position: absolute;
   width: 50%;
@@ -44,3 +44,10 @@
 .red-img{position: fixed;top: 10%;left: 5%;width: 90%;}
 #app { background:url("../img/outbg.jpg") }
 
+.centermesg {
+  width:2em; display: inline-block; position: absolute;left: 50%;
+  margin-left: -1em;
+  top: 50%; font-size: .2rem; line-height: 1.2;
+  margin-top: -0.6em;}
+.centermesg.end { color: #C75D0D;}
+.centermesg.poining { color: #C75D0D;}
