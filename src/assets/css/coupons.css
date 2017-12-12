@@ -1,5 +1,7 @@
 #app { background: #f5f5f5;}
+.bannerbox { position: relative;overflow: hidden;}
 .banner {width:100%; float: left;}
+.bannerbox .bottomtext { position: absolute; width: 100%; text-align: center; color: #ffffff; bottom: .06rem; font-size: .1rem;}
 .center_box { padding: 0 .15rem;overflow: hidden;  background: #F8A900;}
 .couponList { overflow: hidden; margin-bottom: .15rem; background: #ffffff;clear: both;}
 .couponTop { padding: .2rem; overflow: hidden;}
@@ -8,6 +10,8 @@
 .couponBottom { clear: both; text-align: center; cursor: pointer; font-size: .12rem;
   height:.3rem; line-height: .3rem; background: #ff0036;float: left; color: #ffffff;
   width: 100%;}
+.couponBottom.getend { color: rgba(255,255,255,0.7);}
+.detailslist { margin-top: .06rem;}
 .detailslist li { color: #ff0036;}
 .detailslist li>span { margin-right: .05rem;}
 .couponList .coupontitle { font-size: .14rem;}

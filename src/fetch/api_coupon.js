@@ -3,12 +3,12 @@ import * as fetch from "./fetch.js"
 export default {
     /*************方法命名规则：ap_ 前缀 ap_ 前缀 ap_ 前缀   写注释 写注释***************/
       /**
-        * 提现超上限列表接口
+        * 抵扣卷列表
         * @param params
         * @returns {*}
       */
-      ap_trade_audit_list(params) {
-        return fetch.fetch('wuliu-web-user/emp/trade/tradeAuditList.action', params);
+      ap_coupon(params) {
+        return fetch.fetch('user/coupon/couponActivityInfo', params,"post","json");
       },
       /**
        * 审核通过

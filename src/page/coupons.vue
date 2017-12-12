@@ -2,10 +2,14 @@
   	<div>
       <loading v-show="loadingShow"></loading>
       <div class="center_box">
-      <img class="banner" v-show="status==0||status==1" src="../assets/img/couponBanner.png"/>
+        <div class="bannerbox">
+          <img class="banner" v-show="status==0||status==1" src="../assets/img/couponBanner.png"/>
+          <div class="bottomtext">活动日期：<br>{{beginTime+'至'+endTime}}</div>
+        </div>
+
         <div class="login" v-show="status==1">
             <input type="text" class="logintext username" placeholder="请填写真实购车人姓名" />
-            <input type="password" class="logintext password" placeholder="请输入手机号" />
+            <input type="number" class="logintext mobile" placeholder="请输入手机号" />
             <div class="Verification">
               <input type="number" class="logintext code" placeholder="请输入验证码" />
               <span class="btn_code">获取验证码</span>
@@ -14,17 +18,17 @@
         </div>
         <div class="couponList"  v-show="status==0"  v-for="item in couponlist" :key="item.id">
           <div class="couponTop">
-            <img class="couponImg" :src="item.img">
+            <img class="couponImg" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=169726949,11506498&fm=27&gp=0.jpg">
             <div class="couponright">
-              <div class="coupontitle">{{item.title}}</div>
+              <div class="coupontitle">{{item.name}}</div>
               <ul class="detailslist">
-                <li v-for="itemssss in item.alllist" >
+                <li :key="item.id" v-for="(itemssss,index,key) in getsplit(item.description)" v-if="index<4" >
                   <span class="iconfont icon-libao"></span>{{itemssss}}
                 </li>
               </ul>
             </div>
           </div>
-          <div class="couponBottom" @click="Pickclick">立即领取</div>
+          <div  :class="['couponBottom',{getend:item.isGet==2}]"  @click="Pickclick(item)">{{item.isGet==1?'立即领取':'已领取'}}</div>
         </div>
 
         <!--领取状态-->
@@ -94,19 +98,36 @@
     </div>
 </template>
 <script>
-//  import api from "./../fetch/api"
+  import api from "./../fetch/api"
   import Final from "../util/Final";
   import API from "./../fetch/api";
   import loading from "../components/loading";
   export default {
       data() {
           return {
-            logon:false,
+              username:"",
+              usermobile:"",
+              usercode:"",
             loadingShow:false,
-            status:1,
+            status:0,
+            endTime:null,
+            beginTime:null,
             couponlist:[{id:12,status:1,img:'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=169726949,11506498&fm=27&gp=0.jpg',title:'xxxxx',alllist:['xsss','xxx','xssdsd']},{id:12,status:2,img:'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=169726949,11506498&fm=27&gp=0.jpg',title:'xxxxx',alllist:['xsss','xxx','xssdsd']}],
             discount:{code:47927498,text:'迈腾全系车型',name:'任宝生',timeout:'2018.05.20',qylist:['3000元保险增值礼包\n','3000元线上购车专享礼金\n', '2000元贴膜\n','2000元新车大礼包\n']}
           }
+      },
+      mounted (){
+          let id = this.$route.params.id;
+          console.log(id);
+          api.ap_coupon({'id':id}).then(res => {
+            console.log(res)
+            if(res.couponList)
+            this.endTime=res.endTime
+            this.beginTime=res.beginTime
+            this.couponlist=res.couponList;
+          }).catch(error => {
+            console.log(error)
+          })
       },
       created (){
         //alert("create");
@@ -116,15 +137,54 @@
       },
       methods : {
         Pickclick : function (data){
-            this.loadingShow=true;
+          if(data.isGet==2){
+            return false;
+          }
+           // this.loadingShow=true;
+          let mobile=localStorage.mobile;
+          let realName=localStorage.realName;
+          if(mobile&&realName){
+            $(".login .username").val(realName);
+            $(".login .mobile").val(mobile);
+
+          }
+          this.status=1;
+        },
+        setlocal:function(mesg){
+          localStorage.realName=mesg.realName;
+          localStorage.mobile=mesg.mobile;
+          localStorage.cityId=mesg.cityId;
+          localStorage.userId=mesg.userId;
+          localStorage.weixin_id=mesg.weixin_id;
+          localStorage.photo=mesg.photo;
         },
         getcoupon:function(){
-          this.status=2;
+
+          api.base_login({userPhone:'15010357825',checkCode:'2343242'})
+            .then(res => {
+              console.log(res)
+              if (res.status) {
+                this.setlocal(res.result)
+                this.status=2;
+              }else {
+
+              }
+            }).catch(err => {
+
+          });
+//          this.status=2;
         },
         tolist:function(){
           location.href='/#/couponlist'
+        },
+        getsplit:function(detail){
+          if(detail.indexOf('\r\n')!=-1){
+            return detail.split("\r\n");
+          }else{
+            return detail
+          }
         }
-      }
+      },
   }
 
 </script>

@@ -1,13 +1,14 @@
 <template>
   	<div class="raffle">
+      <loading v-show="loadingShow"></loading>
       <div class="title">
         <img class="title_bc" src="../assets/img/title_bc.png"></img>
-        <div class="raffle_number">今日您还有 <span>{{cjNumber}}</span> 次抽奖机会</div>
+        <div class="raffle_number">您还有 <span>{{remainnumber}}</span> 次抽奖机会</div>
       </div>
-      <zhuanpan></zhuanpan>
-      <div class="all_number">已有<span class="number">{{allNumber}}</span>人参见</div>
-      <div class="showmesg">Shelly刚刚抽中了<span>二等奖</span>，快来试试你的运气吧！</div>
-      <div class="protocolBtn">活动须知</div>
+      <zhuanpan v-on:listenstatus="getstatus"></zhuanpan>
+      <div class="all_number" v-if="isShowJoinSize===1">已有<span class="number">{{allNumber}}</span>人参加</div>
+      <titleaa :titlelist="titlelistaa" v-if="isShowWinningRecord===1 && titlelistaa.length>0" ></titleaa>
+      <div class="protocolBtn" @click="status=0">活动须知</div>
       <div class="out_box sigin" v-if="loginshow">
         <div class="out_boxa">
         <span class="close iconfont icon-guanbi"></span>
@@ -22,9 +23,9 @@
         </div>
 
       </div>
-      <div class="out_box actionmesg" v-if="actionmesga">
+      <div class="out_box actionmesg" v-if="status==0">
         <div class="out_boxa">
-          <span class="close iconfont icon-guanbi"></span>
+          <span class="close iconfont icon-guanbi" @click="status=null"></span>
           <div class="title_name">活动须知</div>
           <div class="action_detail">
             <div>1. 玩家通过签到来增加游戏的抽奖次数。</div>
@@ -43,15 +44,15 @@
 
       </div>
 
-      <div class="out_box " v-if="actionmesga">
+      <div class="out_box " v-if="status==1">
         <div class="out_boxa min-width">
-          <span class="close iconfont icon-guanbi"></span>
+          <span class="close iconfont icon-guanbi" @click="status=null"></span>
           <img class="bc_img" src="../assets/img/prize.png" >
           <div class="title_name">恭喜您，中奖啦</div>
           <div class="jiangli">
               <div class="jl_name">{{jl_mesg.name}}</div>
               <ul>
-                <li class="jl_list" v-for="(item,index,key) in jl_mesg.jllist">{{item}}</li>
+                <li class="jl_list" v-for="(item,index,key) in jl_mesg.jllist">{{item.giftName}}</li>
               </ul>
           </div>
           <div class="color_btn">立即领取</div>
@@ -59,43 +60,61 @@
 
       </div>
 
-      <div class="out_box " v-if="actionmesga">
+      <div class="out_box" v-if="status==2">
         <div class="out_boxa min-width noprize">
-          <span class="close iconfont icon-guanbi"></span>
+          <span class="close iconfont icon-guanbi" @click="status=null"></span>
           <div class="title_name">很遗憾，您没中奖</div>
           <div class="remainnumber">今日您还有 <span>{{remainnumber}}</span> 次抽奖机会</div>
-          <div class="color_btn">再次抽奖</div>
+          <div class="color_btn" @click="status=null">再次抽奖</div>
         </div>
       </div>
 
-      <div class="out_box " v-if="actionmesg">
+      <div class="out_box"  v-if="status==3">
         <div class="out_boxa min-width getnumber">
-          <span class="close iconfont icon-guanbi"></span>
+          <span class="close iconfont icon-guanbi" @click="status=null"></span>
           <div class="title_name">抽奖机会已用完</div>
           <div class="iconfont icon-weixin weixinicon"></div>
           <div class="mesg">分享到微信<br>可增加抽奖机会噢~</div>
-          <div class="color_btn">获取抽奖机会</div>
+          <div class="color_btn" @click="getnumber">获取抽奖机会</div>
+        </div>
+      </div>
+
+      <div class="out_box" v-if="status==4">
+        <div class="out_boxa min-width noprize">
+          <span class="close iconfont icon-guanbi" @click="status=null"></span>
+          <div class="title_name">很遗憾，抽奖失败</div>
+          <div class="remainnumber">{{errormesg}}</div>
+          <div class="color_btn"  @click="status=null">确定</div>
         </div>
       </div>
     </div>
 </template>
 <script>
-//  import api from "./../fetch/api"
+import api from "./../fetch/api"
   import VHeader from "../components/header";
   import VLeft from "../components/left";
   import VConNav from "../components/con_nav";
   import Final from "../util/Final";
   import API from "./../fetch/api";
   import zhuanpan from "../components/zhuanpan";
-  export default {
+  import titleaa from "../components/titleaa";
+  import loading from "../components/loading";
+  import wxShare from '../mixin/wxShare.js'
+  var xxUrl = window.location.origin
+export default {
+  mixins: [wxShare],
       data() {
           return {
-            cjNumber:1,
-            remainnumber:3,
-            allNumber:60,
+            loadingShow:true,
+            remainnumber:0,
+            allNumber:0,
             loginshow:false,
-            actionmesg:true,
-            jl_mesg:{name:'一等奖',jllist:['高压锅','电饭煲','平底锅','锅铲']}
+            status:null,//状态
+            titlelistaa:[],//获奖list
+            errormesg:"",//失败原因
+            jl_mesg:{name:'',jllist:[]},
+            isShowJoinSize:null,
+            isShowWinningRecord:null
           }
       },
       created (){
@@ -105,23 +124,90 @@
         VHeader,
         VLeft,
         VConNav,
-        zhuanpan
+        zhuanpan,
+        titleaa,
+        loading
       },
       methods : {
-          a : function (data){
-
-
-              //alert(data);
+        getstatus : function (data){
+          let _that=this;
+          if(data.code==2){
+            _that.status=3;
           }
-      }
-  }
+          if(data.code==3 || data.code==4||data.code==5){
+            _that.status=4;
+            _that.errormesg=data.message;
+          }
+          if(data.status){
 
-//  api.Login({a:1,b:2})
-//    .then(res => {
-//        alert("请求成功..");
-//    }).catch(error => {
-//      alert("fail");
-//    })
+            var mesg=data.result;
+            if(mesg.level==0){
+              _that.status=2;
+            }else {
+              _that.status=1;
+              this.jl_mesg.name=mesg.giftDetail.giftGroupName;
+              this.jl_mesg.jllist=mesg.giftDetail.giftInfoList;
+            }
+            this.remainnumber
+          }
+          console.log(data.result);
+          }
+      },
+    mounted (){
+//      var shareInfo={
+//        title:'xxxxx',
+//        link:'http:www.baidu.com',
+//        imgUrl:'',
+//        desc:'xq'
+//      }
+//      this.weChatShare(shareInfo)
+      let id = this.$route.params.id;
+      var _that=this;
+      console.log(id);
+      //获取详情
+      api.ap_prizedraw({'activityCode':id}).then(res => {
+        console.log(res)
+        _that.loginshow=false;
+        let isShowJoinSize=res.result.isShowJoinSize;
+        let isShowWinningRecord=res.result.isShowWinningRecord;
+        _that.isShowJoinSize=isShowJoinSize;
+        _that.isShowWinningRecord=isShowWinningRecord;
+        if(isShowJoinSize==1){
+          //获取抽奖人数
+          api.ap_prizedraw_users({'activityCode':id}).then(res => {
+            console.log(res)
+            _that.allNumber=res.result.joinSize
+          }).catch(error => {
+            console.log(error)
+          });
+        }
+        if(isShowWinningRecord==0){
+          //获取最近中奖
+          api.ap_prizedraw_log({'activityCode':id}).then(res => {
+            console.log(res)
+            _that.titlelistaa=res.result;
+          }).catch(error => {
+            console.log(error)
+          });
+        }
+        _that.loadingShow=false;
+      }).catch(error => {
+        console.log(error)
+      })
+      //获取抽奖次数
+      api.ap_prizedraw_number({'activityCode':id}).then(res => {
+        console.log(res)
+        _that.remainnumber=res.result.surplusCount
+      }).catch(error => {
+        console.log(error)
+      })
+
+
+
+
+
+    },
+  }
 
 </script>
 <style>
