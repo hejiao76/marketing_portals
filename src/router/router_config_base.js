@@ -21,7 +21,7 @@ const routerConfig = [{
     component: coupons
   }
   , {
-    path: 'coupon/couponlist', //我的抵扣券
+    path: '/coupon/couponlist', //我的抵扣券
     component: couponlist
   }
   , {
