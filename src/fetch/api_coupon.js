@@ -11,12 +11,12 @@ export default {
         return fetch.fetch('user/coupon/couponActivityInfo', params,"post","json");
       },
       /**
-       * 审核通过
+       * 获取验证码
        * @param params
        * @returns {*}
        */
-      ap_audit_agree_withdrawals(params) {
-        return fetch.fetch('/wuliu-web-user/emp/trade/auditAgreeWithdrawals.action', params);
+      ap_get_auth_code(params) {
+        return fetch.fetch('user/getAuthCode', params,'post');
       },
       /**
        * 审核不通过

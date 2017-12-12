@@ -8,11 +8,11 @@
         </div>
 
         <div class="login" v-show="status==1">
-            <input type="text" class="logintext username" placeholder="请填写真实购车人姓名" />
-            <input type="number" class="logintext mobile" placeholder="请输入手机号" />
+            <input type="text" class="logintext username" v-model="userNmae" placeholder="请填写真实购车人姓名" />
+            <input type="number" class="logintext mobile" v-model="userPhone" placeholder="请输入手机号" />
             <div class="Verification">
-              <input type="number" class="logintext code" placeholder="请输入验证码" />
-              <span class="btn_code">获取验证码</span>
+              <input type="number" class="logintext code" v-model="userCode" placeholder="请输入验证码" />
+              <span class="btn_code" @click="getAuthCode()">获取验证码</span>
             </div>
             <button class="codebtn" @click="getcoupon">点击领卷</button>
         </div>
@@ -105,9 +105,9 @@
   export default {
       data() {
           return {
-              username:"",
-              usermobile:"",
-              usercode:"",
+            userNmae:"",
+            userPhone:"",
+            userCode:"",
             loadingShow:false,
             status:0,
             endTime:null,
@@ -119,15 +119,7 @@
       mounted (){
           let id = this.$route.params.id;
           console.log(id);
-          api.ap_coupon({'id':id}).then(res => {
-            console.log(res)
-            if(res.couponList)
-            this.endTime=res.endTime
-            this.beginTime=res.beginTime
-            this.couponlist=res.couponList;
-          }).catch(error => {
-            console.log(error)
-          })
+          this.getCouponActivityInfo(id);
       },
       created (){
         //alert("create");
@@ -136,6 +128,39 @@
         loading
       },
       methods : {
+        /**
+         * 获取抵扣券详情即抵扣券列表
+         * @returns {}
+         */
+        getCouponActivityInfo(id){
+          api.ap_coupon({'id':1}).then(res => {
+            console.log(res)
+            if(res.couponList)
+              this.endTime=res.endTime
+              this.beginTime=res.beginTime
+              this.couponlist=res.couponList;
+          }).catch(error => {
+            console.log(error)
+          })
+        },
+        /**
+         * 获取验证码
+         * @returns {}
+         */
+        getAuthCode(){
+          api.ap_get_auth_code({userPhone:112323})
+            .then(res => {
+              if(res.status){
+
+              }
+            }).catch(error => {
+              console.log(error)
+            })
+        },
+        /**
+         * 验证是否可以领取
+         * @returns {}
+         */
         Pickclick : function (data){
           if(data.isGet==2){
             return false;
@@ -150,6 +175,10 @@
           }
           this.status=1;
         },
+        /**
+         * 存储用户数据
+         * @returns {}
+         */
         setlocal:function(mesg){
           localStorage.realName=mesg.realName;
           localStorage.mobile=mesg.mobile;
@@ -158,9 +187,16 @@
           localStorage.weixin_id=mesg.weixin_id;
           localStorage.photo=mesg.photo;
         },
+        /**
+         * 点击领券。即登录
+         * @returns {}
+         */
         getcoupon:function(){
-
-          api.base_login({userPhone:'15010357825',checkCode:'2343242'})
+          if(!this.userName || !this.userPhone || !this.userCode){
+            return;
+          }
+        //api.base_login({userPhone:this.userPhone,checkCode:this.userCode,username :this.userName})
+          api.base_login({userPhone:'15010357825',checkCode:'2343242',username :'ere'})
             .then(res => {
               console.log(res)
               if (res.status) {
@@ -174,10 +210,20 @@
           });
 //          this.status=2;
         },
+        /**
+         * 跳转到我的礼券列表
+         * @returns {}
+         */
         tolist:function(){
           location.href='/#/couponlist'
         },
-        getsplit:function(detail){
+        /**
+         * 用来截取啥东西的？？？
+         * @returns {}
+         */
+       // getsplit:function(detail){
+        getsplit:function(){
+          let detail = 'rererwe';   //测试用的，上线一定要删除
           if(detail.indexOf('\r\n')!=-1){
             return detail.split("\r\n");
           }else{
