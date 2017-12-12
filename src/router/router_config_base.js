@@ -21,19 +21,19 @@ const routerConfig = [{
     component: coupons
   }
   , {
-    path: 'coupon/couponlist',
+      path: 'me/couponlist',
     component: couponlist
   }
   , {
-    path: '/coupon/coupondetail/:id',
+    path: '/me/coupondetail/:id',
     component: coupondetail
   }
   , {
-    path: '/sedKill',
+    path: '/sedKill/:id',
     component: secondkill
   },
   {
-    path: '/sedKill/secondlist',
+    path: '/me/sedKilllist',
     component: secondlist
   }
 

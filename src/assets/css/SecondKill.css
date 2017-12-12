@@ -1,6 +1,7 @@
 .killbox { padding: .15rem; background: #FC7926; font-size: .14rem;}
+.killbox.nolist { padding: 0;}
 .killbanner,.killbanner>.bannerimg {width:100%;}
-.killbanner { position: relative; padding-bottom: .1rem;}
+.killbanner { position: relative; padding-bottom: .1rem; z-index: 11;}
 .banner_list { text-align: center; overflow: hidden; width: 90%;left: 5%; position: absolute; bottom: .1rem; }
 .banner_list li {float: left; width: 30%; background: #FCA167; border-radius: .03rem; color: #ffffff; height: .36rem; position: relative;}
 .banner_list li:not(:last-child) { margin-right: 5%;}
