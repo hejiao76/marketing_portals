@@ -14,26 +14,26 @@ const routerConfig = [{
   path: '',
   redirect:"/prizedraw"
 }, {
-    path: '/prizedraw/:id',
+    path: '/prizedraw/:id', // 抽奖活动入口
     component: prizedraw
   }, {
-    path: '/coupon/:id',
+    path: '/coupon/:id', //抵扣券活动入口
     component: coupons
   }
   , {
-    path: 'coupon/couponlist',
+    path: '/coupon/couponlist', //我的抵扣券
     component: couponlist
   }
   , {
-    path: '/coupon/coupondetail/:id',
+    path: '/coupon/coupondetail/:id', //抵扣券详情
     component: coupondetail
   }
   , {
-    path: '/sedKill',
+    path: '/sedKill/:code', //秒杀活动入口
     component: secondkill
   },
   {
-    path: '/sedKill/secondlist',
+    path: '/sedKill/secondlist',  //我的秒杀列表
     component: secondlist
   }
 
