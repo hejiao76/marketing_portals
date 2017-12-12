@@ -8,7 +8,7 @@
         </div>
 
         <div class="login" v-show="status==1">
-            <input type="text" class="logintext username" v-model="userNmae" placeholder="请填写真实购车人姓名" />
+            <input type="text" class="logintext username" v-model="userName" placeholder="请填写真实购车人姓名" />
             <input type="number" class="logintext mobile" v-model="userPhone" placeholder="请输入手机号" />
             <div class="Verification">
               <input type="number" class="logintext code" v-model="userCode" placeholder="请输入验证码" />
@@ -33,52 +33,48 @@
 
         <!--领取状态-->
         <div class="getist" v-show="status==2">
-          <div class="getBox getSucceed">
+
+          <div class="getBox getSucceed"  v-if="addUserCoupon.status">
             <div class="gettop">
-              恭喜您，领取成功！
+              {{addUserCoupon.message}}
             </div>
-            <div class="centerlist">
-              <div>
-                <span class="spa">核销码</span>
-                <span class="spb">{{discount.code}}</span>
-              </div>
-              <div>
-                <span class="spa">适用车系</span>
-                <span class="spb">{{discount.text}}</span>
-              </div>
-              <div>
-                <span class="spa">购车人姓名</span>
-                <span class="spb">{{discount.name}}</span>
-              </div>
+            <div>
+              <span class="spa">核销码</span>
+              <span class="spb">{{addUserCoupon.result.couponCode}}</span>
+            </div>
+            <div>
+              <span class="spa">适用车系</span>
+              <span class="spb"> {{Final.SERIALTYPE[addUserCoupon.result.serialType]}}</span>
+            </div>
+            <div>
+              <span class="spa">购车人姓名</span>
+              <span class="spb">{{addUserCoupon.result.userName}}</span>
             </div>
             <div class="centerlist qy_list">
               <span class="spa">抵扣权益</span>
               <ul class="qy_ul">
-                <li v-for="(item,index,key) in discount.qylist" :key="index">{{item}}</li>
+                <li v-for="(item,index,key) in addUserCoupon.result.couponContent" :key="index">{{item.name}},</li>
               </ul>
             </div>
             <div class="centerlist validity">
               <span class="spa">有效期</span>
-              <span class="spb" style="color: #FF0036">{{discount.timeout}}日前使用有效</span>
+              <span class="spb" style="color: #FF0036">{{addUserCoupon.result.validity}}日前使用有效</span>
             </div>
-
+            <div class="getbtn" @click="tolist">查看我的礼券</div>
           </div>
-          <div class="getbtn" @click="tolist">查看我的礼券</div>
-        </div>
-        <div class="getist" v-show="status==3||status==4">
-          <div class="getBox getSucceed">
-            <div class="gettop">
-             {{status==3?'很遗憾，抵扣券已发放完':'您已领取过相同的抵扣券'}}
-            </div>
-            <div class="get_bg">
+          <div class="getist" v-if="!addUserCoupon.status">
 
+            <div class="getBox getSucceed">
+              <div class="gettop">
+                {{!addUserCoupon.status && addUserCoupon.code== 201 ?'很遗憾，抵扣券已发放完':'您已领取过相同的抵扣券'}}
+              </div>
+              <div class="get_bg">
+
+              </div>
             </div>
+            <div class="getbtn">查看其他活动</div>
           </div>
-          <div class="getbtn">查看其他活动</div>
         </div>
-
-
-
         <div class="ruleDestail">
             <div class="ruletitle">活动细则</div>
             <div class="rulelist">
@@ -105,11 +101,23 @@
   export default {
       data() {
           return {
-            userNmae:"",
+            userName:"",
             userPhone:"",
             userCode:"",
+            activecouponId:'',
+            addUserCoupon:{
+              result:{
+                couponContent:[
+                  {
+
+                  }
+                ],
+              },
+            },
+            activityCode:'JytRVQcGx1FQ725G',//活动Id
             loadingShow:false,
             status:0,
+            Final: Final,
             endTime:null,
             beginTime:null,
             couponlist:[{id:12,status:1,img:'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=169726949,11506498&fm=27&gp=0.jpg',title:'xxxxx',alllist:['xsss','xxx','xssdsd']},{id:12,status:2,img:'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=169726949,11506498&fm=27&gp=0.jpg',title:'xxxxx',alllist:['xsss','xxx','xssdsd']}],
@@ -132,13 +140,13 @@
          * 获取抵扣券详情即抵扣券列表
          * @returns {}
          */
-        getCouponActivityInfo(id){
-          api.ap_coupon({'id':1}).then(res => {
+        getCouponActivityInfo(){
+          api.ap_coupon({'activityCode':this.activityCode}).then(res => {
             console.log(res)
             if(res.couponList)
               this.endTime=res.endTime
               this.beginTime=res.beginTime
-              this.couponlist=res.couponList;
+              this.couponlist=res.result.couponList;
           }).catch(error => {
             console.log(error)
           })
@@ -148,7 +156,7 @@
          * @returns {}
          */
         getAuthCode(){
-          api.ap_get_auth_code({userPhone:112323})
+          api.ap_get_auth_code({userPhone:this.userPhone})
             .then(res => {
               if(res.status){
 
@@ -162,9 +170,11 @@
          * @returns {}
          */
         Pickclick : function (data){
+          console.log('data==-=-=-=', data);
           if(data.isGet==2){
             return false;
           }
+          this.activecouponId = data.id; // 储存抵扣券ID
            // this.loadingShow=true;
           let mobile=localStorage.mobile;
           let realName=localStorage.realName;
@@ -188,19 +198,41 @@
           localStorage.photo=mesg.photo;
         },
         /**
-         * 点击领券。即登录
+         * 领取抵扣券
+         * @returns {}
+         */
+        addUserCouponFun(){
+          var obj = {userName:this.userName, userPhone:this.userPhone, checkCode:this.userCode, couponId: this.activecouponId, activityCode:this.activityCode}
+          api.ap_add_user_coupon(obj)
+            .then(res => {
+              if (res.status) {
+                this.addUserCoupon = res
+                console.log('领取成功');
+              }else {
+                if(res.code == 201){
+                  this.addUserCoupon = res;
+                }else if(res.code == 202){
+                  this.addUserCoupon = res;
+                }
+              }
+            }).catch(err => {
+
+          });
+        },
+        /**
+         * 点击领券前验证是否登录
          * @returns {}
          */
         getcoupon:function(){
           if(!this.userName || !this.userPhone || !this.userCode){
             return;
           }
-        //api.base_login({userPhone:this.userPhone,checkCode:this.userCode,username :this.userName})
-          api.base_login({userPhone:'15010357825',checkCode:'2343242',username :'ere'})
+           api.base_login({userPhone:this.userPhone,checkCode:this.userCode,username :this.userName})
             .then(res => {
               console.log(res)
               if (res.status) {
-                this.setlocal(res.result)
+                this.setlocal(res.result);
+                this.addUserCouponFun()
                 this.status=2;
               }else {
 
@@ -215,7 +247,7 @@
          * @returns {}
          */
         tolist:function(){
-          location.href='/#/couponlist'
+          this.$router.push({name: 'mycouponlist', params: {}})
         },
         /**
          * 用来截取啥东西的？？？

@@ -4,7 +4,7 @@ const home = r => require.ensure([], () => r(require('../page/home')), 'home');
 const login = r => require.ensure([], () => r(require('../page/login')), 'login');
 const prizedraw = r => require.ensure([], () => r(require('../page/raffle')), 'prizedraw');
 const coupons = r => require.ensure([], () => r(require('../page/coupons')), 'coupons');
-const couponlist = r => require.ensure([], () => r(require('../page/couponlist')), 'couponlist');
+const mycouponlist = r => require.ensure([], () => r(require('../page/couponList')), 'mycouponlist');
 const secondkill = r => require.ensure([], () => r(require('../page/secondkill')), 'secondkill');
 const secondlist = r => require.ensure([], () => r(require('../page/secondlist')), 'secondlist');
 const coupondetail = r => require.ensure([], () => r(require('../page/coupondetail')), 'coupondetail');
@@ -15,17 +15,21 @@ const routerConfig = [{
   redirect:"/prizedraw"
 }, {
     path: '/prizedraw/:id', // 抽奖活动入口
+    name:"prizedraw",
     component: prizedraw
   }, {
     path: '/coupon/:id', //抵扣券活动入口
+    name:"coupons",
     component: coupons
   }
   , {
-    path: '/coupon/couponlist', //我的抵扣券
-    component: couponlist
+    path: '/mycoupon/couponlist', //我的抵扣券
+    name:"mycouponlist",
+    component: mycouponlist
   }
   , {
     path: '/coupon/coupondetail/:id', //抵扣券详情
+    name:"coupondetail",
     component: coupondetail
   }
   , {
