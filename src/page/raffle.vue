@@ -113,7 +113,7 @@ export default {
             remainnumber:0,
             allNumber:0,
             islogin:false,
-            loginshow:true,
+            loginshow:false,
             status:null,//状态
             titlelistaa:[],//获奖list
             errormesg:"",//失败原因
