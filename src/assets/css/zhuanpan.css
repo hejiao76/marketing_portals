@@ -6,7 +6,7 @@ body{color:#333; font-family:"Microsoft YaHei"}
 .protocolBtn { margin: .13rem auto 0; width: 1rem; text-align: center; color: #ffffff; background: #FB6362; height: .3rem; line-height: .3rem; border-radius: .15rem; display: block;}
 .title .cjnumber { color: #ffffff;}
 .raffle_number { color: #ffffff; margin-bottom: .1rem;}
-.raffle_number>span { font-size: .2rem; color: #FAF169; font-weight: bold; margin-bottom: 0 .05rem;}
+.raffle_number>span { font-size: .2rem; color: #FAF169; font-weight: bold; margin-bottom: 0.05rem;}
 .all_number>span  { font-size: .2rem; margin: 0 .05rem .06rem .05rem;}
 .showmesg { width:3rem; text-align: center; height:.23rem; padding: 0 .1rem; font-size: .1rem; overflow: hidden; line-height: .23rem; background: rgba(0,0,0,.8); margin: .06rem auto .13rem; border-radius: .125rem;color: #ffffff;}
 .showmesg>Span {color: #FAF169; margin-left: .05rem; }
@@ -21,6 +21,7 @@ body{color:#333; font-family:"Microsoft YaHei"}
   float: left;
   width:60%;}
 .Verification .btn_code { width: 35%;border-radius: 3px; height: .42rem; line-height:.42rem; text-align: center; float: right; border:1px solid #FB6362; color: #FB6362;}
+.Verification .btn_code.clicked { font-size:.12rem; }
 .codebtn { height:.44rem; width: 100%;  border-radius: 3px; background: #FB6362; font-size: .18rem; color: #ffffff; line-height: .44rem; text-align: center}
 .out_box .tishi { margin-bottom: .48rem; font-size: .12rem; color: #b7b7b7; text-align: center;}
 .out_box .tishi >span { margin-right: .05rem;}
@@ -49,4 +50,6 @@ body{color:#333; font-family:"Microsoft YaHei"}
 
 
 
-
+.errortext {    color: #ff0036;
+  font-size: .12rem;
+  margin-top: .05rem;}

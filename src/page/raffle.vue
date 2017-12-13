@@ -1,6 +1,7 @@
 <template>
   	<div class="raffle">
       <loading v-show="loadingShow"></loading>
+      <mesg v-bind:mesg="mesg"></mesg>
       <div class="title">
         <img class="title_bc" src="../assets/img/title_bc.png"></img>
         <div class="raffle_number">您还有 <span>{{remainnumber}}</span> 次抽奖机会</div>
@@ -13,13 +14,15 @@
         <div class="out_boxa">
         <span class="close iconfont icon-guanbi"></span>
         <div class="title_name">登录</div>
-          <input type="number" class="username" placeholder="请输入手机号" />
+          <input type="number" class="username" :onchange="isiphone()"  v-model="userPhone" placeholder="请输入手机号" />
+          <div class="errortext" v-show="ipone_err">请输入正确的手机号</div>
           <div class="Verification">
-            <input type="number" class="logintext code" placeholder="请输入验证码" />
-            <span class="btn_code">获取验证码</span>
+            <input type="number"  v-model="userCode" class="logintext code" placeholder="请输入验证码" />
+            <span :class="['btn_code',{clicked:!codestatus}]" @click="getcode">{{codestatus?'获取验证码':timeout+'s后再次获取'}}</span>
           </div>
+          <div class="errortext" v-if="code_err">请输入验证码</div>
           <div class="tishi"><span class="iconfont icon-tishi"></span>未注册过的手机号将自动创建帐户</div>
-          <div class="codebtn">立即登录</div>
+          <div class="codebtn" @click="loginin">立即登录</div>
         </div>
 
       </div>
@@ -99,6 +102,7 @@ import api from "./../fetch/api"
   import zhuanpan from "../components/zhuanpan";
   import titleaa from "../components/titleaa";
   import loading from "../components/loading";
+  import mesg from "../components/mesg";
   import wxShare from '../mixin/wxShare.js'
   var xxUrl = window.location.origin
 export default {
@@ -109,13 +113,21 @@ export default {
             remainnumber:0,
             allNumber:0,
             islogin:false,
-            loginshow:false,
+            loginshow:true,
             status:null,//状态
             titlelistaa:[],//获奖list
             errormesg:"",//失败原因
             jl_mesg:{name:'',jllist:[]},
             isShowJoinSize:null,
-            isShowWinningRecord:null
+            isShowWinningRecord:null,
+            codestatus:true,//code 状态
+            timeout:60,
+            interval:null,
+            userPhone:'',
+            userCode:'',
+            ipone_err:false,
+            code_err:false,
+            mesg:'',
           }
       },
       created (){
@@ -127,7 +139,8 @@ export default {
         VConNav,
         zhuanpan,
         titleaa,
-        loading
+        loading,
+        mesg
       },
       methods : {
         getstatus : function (data){
@@ -152,10 +165,58 @@ export default {
               this.jl_mesg.name=mesg.giftDetail.giftGroupName;
               this.jl_mesg.jllist=mesg.giftDetail.giftInfoList;
             }
-            this.remainnumber
+            this.remainnumber=mesg.surplusCount;
           }
           console.log(data.result);
+          },
+        getcode:function(){
+          var _that=this;
+          if(_that.codestatus){
+            _that.codestatus=false;
+            _that.interval=setInterval(function(){
+              if(_that.timeout>0){
+                _that.timeout--
+              }else {
+                _that.codestatus=true;
+                _that.timeout=60;
+                clearInterval(_that.interval);
+              }
+            },1000)
           }
+        },
+        loginin:function(){
+          var _that=this;
+          if(this.userCode==""){
+            this.code_err=true;
+          }else{
+            this.code_err=false;
+          }
+          api.base_login({userPhone:this.userPhone,checkCode:this.userCode})
+            .then(res => {
+              console.log(res)
+              if (res.status) {
+                _that.mesg='登录成功';
+              }else {
+                _that.mesg='登录失败';
+              }
+            }).catch(err => {
+              _that.mesg='登录失败';
+          });
+        },
+        isiphone:function () { //校验是否是手机号
+          var phone=this.userPhone;
+          console.log(phone)
+          if(phone.length>=11){
+            this.userPhone=phone.substr(0,11)
+            if(!(/^1[345789]\d{9}$/.test(phone))){
+              this.ipone_err=true;
+            }else{
+              this.ipone_err=false;
+            }
+          }else{
+            this.ipone_err=false;
+          }
+        }
       },
     mounted (){
 //      var shareInfo={
