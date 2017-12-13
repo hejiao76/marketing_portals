@@ -4,10 +4,11 @@ const home = r => require.ensure([], () => r(require('../page/home')), 'home');
 const login = r => require.ensure([], () => r(require('../page/login')), 'login');
 const prizedraw = r => require.ensure([], () => r(require('../page/raffle')), 'prizedraw');
 const coupons = r => require.ensure([], () => r(require('../page/coupons')), 'coupons');
-const mycouponlist = r => require.ensure([], () => r(require('../page/couponList')), 'mycouponlist');
+const mycouponlist = r => require.ensure([], () => r(require('../page/couponlist')), 'couponlist');
 const secondkill = r => require.ensure([], () => r(require('../page/secondkill')), 'secondkill');
 const secondlist = r => require.ensure([], () => r(require('../page/secondlist')), 'secondlist');
 const coupondetail = r => require.ensure([], () => r(require('../page/coupondetail')), 'coupondetail');
+const seconddetail = r => require.ensure([], () => r(require('../page/seconddetail')), 'seconddetail');
 
 
 const routerConfig = [{
@@ -39,7 +40,11 @@ const routerConfig = [{
   {
     path: '/sedKill/secondlist',  //我的秒杀列表
     component: secondlist
-  }
+  },{
+    path: '/seconddetail',
+    component: seconddetail
+  },
+
 
 ];
 

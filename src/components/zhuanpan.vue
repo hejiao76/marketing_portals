@@ -39,6 +39,7 @@ var turnplate={
             levelType:['谢谢惠顾','一等奖','二等奖','三等奖','四等奖','五等奖','六等奖'],
           }
       },
+    props:['loginstatus'],
       beforeMount (){
         //alert("create");
 
@@ -184,6 +185,10 @@ var turnplate={
       };
 
       $('.pointer').click(function (){
+        if(!_that.loginstatus){
+          _that.sendmesgtoparent(false);
+          return false;
+        }
         if(_that.bRotate)return;
         _that.bRotate = !_that.bRotate;
         //获取随机数(奖品个数范围内)

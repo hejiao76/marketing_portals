@@ -1,11 +1,11 @@
 <template>
   	<div>
       <loading v-show="loadingShow"></loading>
-      <div class="killbox">
+      <div :class="['killbox', {nolist:killlist.length==0}]">
           <div class="killbanner">
             <img class="bannerimg" src="../assets/img/ms_bc.png" />
             <div class="actionTime">活动时间：2017-04-13 ~ 2017-06-17</div>
-            <ul class="banner_list">
+            <ul class="banner_list" v-if="killlist.length!=0">
               <li><span class="float iconfont icon-jushouxin"></span>
                 <span class="list_text float">报名秒杀</span>
               </li>
@@ -26,7 +26,7 @@
                       <div><span class="smallicon iconfont  icon-miaobiao"></span>
                       即将开始</div>
                     </div>
-                    <img class="headimg" src="../assets/img/get_bg.png" />
+                    <img class="headimg" :src="item.shareImg" />
                 </div>
                 <div class="killright">
                   <div class="killtitle">{{item.itemName}}<span class="number">仅{{item.surplusCount}}张</span></div>
@@ -43,6 +43,9 @@
                 </div>
               </div>
           </div>
+          <div class="noShow" v-if="killlist.length==0" style="height:100%; position: absolute;width:100%; left: 0; top:0; background: #eee; z-index: 9; display: flex; align-items: center;">
+              <img style="width:100%" src="../assets/img/ms_end.png" />
+          </div>
       </div>
       <div class="brankout" v-show="enrol_show">
         <div class="out_box">
@@ -55,15 +58,15 @@
 </template>
 <script>
   import Final from "../util/Final";
-  import API from "./../fetch/api";
+  import api from "./../fetch/api";
   import loading from "../components/loading";
   export default {
       data() {
           return {
             loadingShow:false,
-            killlist:[{itemId:1213,surplusCount:9,amount:4000,status:0,itemName:'新人注册抵车款超级优',beginTime:'2017.8.1',enrollStartTime:'2017.8.1',enrollEndTime:'2017.8.1'},
-              {itemId:1213,surplusCount:9,amount:4000,status:0,itemName:'新人注册抵车款超级优',beginTime:'2017.8.1',enrollStartTime:'2017.8.1',enrollEndTime:'2017.8.1'},
-              {itemId:1213,surplusCount:9,amount:4000,status:0,itemName:'新人注册抵车款超级优',beginTime:'2017.8.1',enrollStartTime:'2017.8.1',enrollEndTime:'2017.8.1'}
+            killlist:[{itemId:1213,shareImg:'',surplusCount:9,amount:4000,status:0,itemName:'新人注册抵车款超级优',beginTime:'2017.8.1',enrollStartTime:'2017.8.1',enrollEndTime:'2017.8.1'},
+              {itemId:1213,shareImg:'',surplusCount:9,amount:4000,status:0,itemName:'新人注册抵车款超级优',beginTime:'2017.8.1',enrollStartTime:'2017.8.1',enrollEndTime:'2017.8.1'},
+              {itemId:1213,shareImg:'',surplusCount:9,amount:4000,status:0,itemName:'新人注册抵车款超级优',beginTime:'2017.8.1',enrollStartTime:'2017.8.1',enrollEndTime:'2017.8.1'}
               ],
             status:['快速报名','报名未开始','报名已结束','已报名'],
             enrol_show:false,
@@ -92,6 +95,16 @@
           this.actiontimeone=item.killtime;
           this.enrol_show=true;
         }
+      },mounted (){
+      let id = this.$route.params.id;
+      var _that=this;
+        api.ap_sedkill_detail({'activityCode':id})
+        .then(res => {
+          console.log(res)
+          _that.titlelistaa=res.result;
+        }).catch(error => {
+          console.log(error)
+        });
       }
   }
 
