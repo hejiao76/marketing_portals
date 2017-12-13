@@ -15,7 +15,7 @@
         <span class="close iconfont icon-guanbi"></span>
         <div class="title_name">登录</div>
           <input type="number" class="username" :onchange="isiphone()"  v-model="userPhone" placeholder="请输入手机号" />
-          <div class="errortext" v-show="ipone_err">请输入正确的手机号</div>
+          <div class="errortext" v-if="ipone_err">请输入正确的手机号</div>
           <div class="Verification">
             <input type="number"  v-model="userCode" class="logintext code" placeholder="请输入验证码" />
             <span :class="['btn_code',{clicked:!codestatus}]" @click="getcode">{{codestatus?'获取验证码':timeout+'s后再次获取'}}</span>
@@ -171,37 +171,49 @@ export default {
           },
         getcode:function(){
           var _that=this;
-          if(_that.codestatus){
-            _that.codestatus=false;
-            _that.interval=setInterval(function(){
-              if(_that.timeout>0){
-                _that.timeout--
-              }else {
-                _that.codestatus=true;
-                _that.timeout=60;
-                clearInterval(_that.interval);
-              }
-            },1000)
+          if(this.userPhone.length>=11 && this.ipone_err==false){
+            if(_that.codestatus){
+              _that.codestatus=false;
+              _that.interval=setInterval(function(){
+                if(_that.timeout>0){
+                  _that.timeout--
+                }else {
+                  _that.codestatus=true;
+                  _that.timeout=60;
+                  clearInterval(_that.interval);
+                }
+              },1000)
+            }
           }
         },
         loginin:function(){
           var _that=this;
           if(this.userCode==""){
             this.code_err=true;
+            return false;
           }else{
             this.code_err=false;
           }
+          if(this.userPhone==""){
+            this.ipone_err=true;
+            return false;
+          }else{
+            this.code_err=false;
+          }
+          if(!this.ipone_err){
           api.base_login({userPhone:this.userPhone,checkCode:this.userCode})
             .then(res => {
               console.log(res)
               if (res.status) {
                 _that.mesg='登录成功';
+                _that.loginshow=false;
               }else {
                 _that.mesg='登录失败';
               }
             }).catch(err => {
               _that.mesg='登录失败';
           });
+          }
         },
         isiphone:function () { //校验是否是手机号
           var phone=this.userPhone;
@@ -213,8 +225,6 @@ export default {
             }else{
               this.ipone_err=false;
             }
-          }else{
-            this.ipone_err=false;
           }
         }
       },
