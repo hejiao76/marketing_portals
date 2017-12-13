@@ -5,9 +5,10 @@ const login = r => require.ensure([], () => r(require('../page/login')), 'login'
 const prizedraw = r => require.ensure([], () => r(require('../page/raffle')), 'prizedraw');
 const coupons = r => require.ensure([], () => r(require('../page/coupons')), 'coupons');
 const couponlist = r => require.ensure([], () => r(require('../page/couponlist')), 'couponlist');
+const coupondetail = r => require.ensure([], () => r(require('../page/coupondetail')), 'coupondetail');
 const secondkill = r => require.ensure([], () => r(require('../page/secondkill')), 'secondkill');
 const secondlist = r => require.ensure([], () => r(require('../page/secondlist')), 'secondlist');
-const coupondetail = r => require.ensure([], () => r(require('../page/coupondetail')), 'coupondetail');
+const seconddetail = r => require.ensure([], () => r(require('../page/seconddetail')), 'seconddetail');
 
 
 const routerConfig = [{
@@ -29,13 +30,17 @@ const routerConfig = [{
     component: coupondetail
   }
   , {
-    path: '/secondkill',
+    path: '/secondkill/:id',
     component: secondkill
   },
   {
     path: '/secondlist',
     component: secondlist
-  }
+  },{
+    path: '/seconddetail',
+    component: seconddetail
+  },
+
 
 ];
 
