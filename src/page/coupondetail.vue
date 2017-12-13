@@ -6,17 +6,17 @@
         <div class="getist">
           <div class="getBox getSucceed">
             <div class="gettop">
-              <div>{{detail.titlename}}</div>
+              <div>{{resDetails.name}}</div>
             </div>
             <div class="detail_code">
-              <div class="amount"><span>￥</span>{{detail.amount}}</div>
-              <img class="codeimg" :src="detail.codeimg" />
+              <div class="amount"><span>￥</span>{{resDetails.amount}}</div>
+              <!--<img class="codeimg" :src="detail.codeimg" />-->
             </div>
             <div class="centerlist">
               <div>
                 <span class="spa">核销码</span>
                 <span class="spb codee">{{detail.code}}</span>
-                <span class="statustype">已使用</span>
+                <span class="statustype">{{detail.status}}</span>
               </div>
               <div>
                 <span class="spa">可用的购车人</span>
@@ -24,11 +24,11 @@
               </div>
               <div>
                 <span class="spa">适用范围</span>
-                <span class="spb">{{detail.text}}</span>
+                <span class="spb">{{detail.description}}</span>
               </div>
               <div class="">
                 <span class="spa">有效期</span>
-                <span class="spb">{{detail.timeout}}日前使用有效</span>
+                <span class="spb">{{detail.validity}}日前使用有效</span>
               </div>
 
             </div>
@@ -55,21 +55,13 @@
       data() {
           return {
               loadingShow:false,
+              resDetails:'',
               detail:{titlename:'抵扣卷名称',status:1,amount:'888',codeimg:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3256036687,742666259&fm=27&gp=0.jpg',code:'ewwewewe',text:'祥云全系',name:'张三',timeout:'2019.08.23',qylist:['3000元保险增值礼包\n','3000元线上购车专享礼金\n', '2000元贴膜\n','2000元新车大礼包\n']}
           }
       },
       mounted (){
-          let id = this.$route.params.id;
-          console.log(id);
-          api.ap_coupon({'id':id}).then(res => {
-            console.log(res)
-            if(res.couponList)
-            this.endTime=res.endTime
-            this.beginTime=res.beginTime
-            this.couponlist=res.couponList;
-          }).catch(error => {
-            console.log(error)
-          })
+          let Code = this.$route.params.Code;
+          this.getmyCouponInfo({couponCode:Code})
       },
       created (){
         //alert("create");
@@ -78,6 +70,21 @@
         loading
       },
       methods : {
+        /**
+         * 获取我的抵扣券列表
+         * @param params
+         * @returns {*}
+         */
+        getmyCouponInfo(){
+          api.ap_my_coupon_info()
+           .then(res => {
+              if(res.status){
+                this.resDetails = res.result;
+              }
+          }).catch(error => {
+
+          })
+        },
         Pickclick : function (data){
           if(data.isGet==2){
             return false;

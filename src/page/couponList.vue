@@ -3,17 +3,17 @@
       <loading v-show="loadingShow"></loading>
       <div class="couponlist">
         <div class="listitem" :class="[ {user: item.status == 1}, {outofdate: item.status == 2},{outwilldate: item.status == 3}, {dikou: item.type == 1}, {youhui: item.type == 2}]" v-for="(item,index,key) in couponlist">
-            <div class="itemleft">
-              <span class="status">{{item.status == 1?'已使用':(item.status == 2?'已过期':'快过期')}}</span>
+            <div class="itemleft" @click="getDetail(item.couponCode)">
+              <span class="status">{{Final.COUPON_STATUS[item.status]}}</span>
               <div><span>￥</span>{{item.amount}}</div>
             </div>
             <div class="itemright">
                 <div class="righttop">
-                  <span class="type">{{item.type==1?'优惠券':'抵扣券'}}</span>
+                  <span class="type">{{Final.COUPON_TYPE[item.type]}}</span>
                   <span class="name">{{item.name}}</span>
                 </div>
               <div class="rightcenter">
-                <span class="time">{{'有效期:'+item.timeout+'前使用有效'}}</span>
+                <span class="time">{{'有效期:'+item.validity+'前使用有效'}}</span>
                 <span class="userbtn ft_tight">立即使用</span>
               </div>
               <div class="rightbottom">
@@ -22,7 +22,7 @@
               </div>
             </div>
             <div class="xz_detail">
-              {{item.detail}}
+              {{item.description}}
             </div>
         </div>
       </div>
@@ -34,11 +34,12 @@
 </template>
 <script>
   import Final from "../util/Final";
-  import API from "./../fetch/api";
+  import api from "./../fetch/api";
   import loading from "../components/loading";
   export default {
       data() {
           return {
+            Final:Final,
             loadingShow:false,
             couponlist:[{amount:4000,type:1,status:1,name:'新人注册抵车款超级优惠券',timeout:'2017.8.1',detail:'1. 活动最终解释权归平台所有2. 活动最终解释权归平台所有。'},
               {amount:4000,type:2,status:2,name:'新人注册抵车款超级优惠券',timeout:'2017.8.1',detail:'1. 活动最终解释权归平台所有2. 活动最终解释权归平台所有。'},
@@ -47,12 +48,37 @@
           }
       },
       created (){
-        //alert("create");
+        this.getmyCouponList(1);
       },
       components :{
         loading
       },
       methods : {
+        /**
+         * 获取我的抵扣券列表
+         * @param params
+         * @returns {*}
+         */
+        getmyCouponList(){
+          api.ap_get_myCouponList()
+            .then(res => {
+              if (res.status) {
+                this.couponlist = res.result;
+              }else {
+
+              }
+            }).catch(err => {
+
+          });
+        },
+        /**
+         * 跳转到列表详情页
+         * @param params
+         * @returns {*}
+         */
+        getDetail(couponCode){
+          this.$router.push({name:'coupondetail', params: {Code: couponCode}})
+        },
         Pickclick : function (data){
             this.loadingShow=true;
         },

@@ -11,19 +11,35 @@ export default {
         return fetch.fetch('user/coupon/couponActivityInfo', params,"post","json");
       },
       /**
-       * 审核通过
+       * 获取验证码
        * @param params
        * @returns {*}
        */
-      ap_audit_agree_withdrawals(params) {
-        return fetch.fetch('/wuliu-web-user/emp/trade/auditAgreeWithdrawals.action', params);
+      ap_get_auth_code(params) {
+        return fetch.fetch('user/getAuthCode', params,'post');
       },
       /**
-       * 审核不通过
+       * 获取我的抵扣券列表
        * @param params
        * @returns {*}
        */
-      ap_audit_reject_withdrawals(params) {
-        return fetch.fetch('/wuliu-web-user/emp/trade/auditRejectWithdrawals.action', params);
+      ap_get_myCouponList(params) {
+        return fetch.fetch('user/coupon/myCouponList', params,'post',"json");
+      },
+      /**
+       * 领券
+       * @param params
+       * @returns {*}
+       */
+      ap_add_user_coupon(params) {
+        return fetch.fetch('user/coupon/addUserCoupon', params,'post',"json");
+      },
+      /**
+       * 我的抵扣券详情
+       * @param params
+       * @returns {*}
+       */
+      ap_my_coupon_info(params) {
+        return fetch.fetch('user/coupon/myCouponInfo', params,'post',"json");
       },
 }
