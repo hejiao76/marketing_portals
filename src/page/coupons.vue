@@ -179,8 +179,10 @@
           let mobile=localStorage.mobile;
           let realName=localStorage.realName;
           if(mobile&&realName){
-            $(".login .username").val(realName);
-            $(".login .mobile").val(mobile);
+//            $(".login .username").val(realName); // 弃用JQ
+//            $(".login .mobile").val(mobile); // 弃用JQ
+              this.userName = realName;
+              this.userPhone = mobile;
 
           }
           this.status=1;
