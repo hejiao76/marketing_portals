@@ -4,10 +4,11 @@ const home = r => require.ensure([], () => r(require('../page/home')), 'home');
 const login = r => require.ensure([], () => r(require('../page/login')), 'login');
 const prizedraw = r => require.ensure([], () => r(require('../page/raffle')), 'prizedraw');
 const coupons = r => require.ensure([], () => r(require('../page/coupons')), 'coupons');
-const couponlist = r => require.ensure([], () => r(require('../page/couponlist')), 'couponlist');
+const mycouponlist = r => require.ensure([], () => r(require('../page/couponlist')), 'couponlist');
 const secondkill = r => require.ensure([], () => r(require('../page/secondkill')), 'secondkill');
 const secondlist = r => require.ensure([], () => r(require('../page/secondlist')), 'secondlist');
 const coupondetail = r => require.ensure([], () => r(require('../page/coupondetail')), 'coupondetail');
+const seconddetail = r => require.ensure([], () => r(require('../page/seconddetail')), 'seconddetail');
 
 
 const routerConfig = [{

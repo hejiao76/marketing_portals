@@ -16,6 +16,11 @@ const base = {
   base_getPhoneCode (params){
     return fetch.fetch('user/getAuthCode',params);
   },
+  // 是否登录
+  base_veifyToken (params){
+    return fetch.fetch('user/veifyToken',params);
+  },
+
 }
 
 export  default  Object.assign(base,apiApproval,apiPrizedraw,apiCoupon,apisedkill);

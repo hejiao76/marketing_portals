@@ -5,11 +5,11 @@
         <img class="title_bc" src="../assets/img/title_bc.png"></img>
         <div class="raffle_number">您还有 <span>{{remainnumber}}</span> 次抽奖机会</div>
       </div>
-      <zhuanpan v-on:listenstatus="getstatus"></zhuanpan>
+      <zhuanpan v-on:listenstatus="getstatus" v-bind:loginstatus="islogin" ></zhuanpan>
       <div class="all_number" v-if="isShowJoinSize===1">已有<span class="number">{{allNumber}}</span>人参加</div>
       <titleaa :titlelist="titlelistaa" v-if="isShowWinningRecord===1 && titlelistaa.length>0" ></titleaa>
       <div class="protocolBtn" @click="status=0">活动须知</div>
-      <div class="out_box sigin" v-if="loginshow">
+      <div class="out_box sigin" v-show="loginshow">
         <div class="out_boxa">
         <span class="close iconfont icon-guanbi"></span>
         <div class="title_name">登录</div>
@@ -108,6 +108,7 @@ export default {
             loadingShow:true,
             remainnumber:0,
             allNumber:0,
+            islogin:false,
             loginshow:false,
             status:null,//状态
             titlelistaa:[],//获奖list
@@ -131,6 +132,9 @@ export default {
       methods : {
         getstatus : function (data){
           let _that=this;
+          if(data==false){
+              _that.loginshow=true;
+          }
           if(data.code==2){
             _that.status=3;
           }
@@ -164,10 +168,18 @@ export default {
       let id = this.$route.params.id;
       var _that=this;
       console.log(id);
+      api.base_veifyToken().then(res => {
+        if(res.status==true){
+          _that.islogin=true;
+        }else{
+          _that.islogin=false;
+        }
+      }).catch(error => {
+        console.log(error)
+      });
       //获取详情
       api.ap_prizedraw({'activityCode':id}).then(res => {
         console.log(res)
-        _that.loginshow=false;
         let isShowJoinSize=res.result.isShowJoinSize;
         let isShowWinningRecord=res.result.isShowWinningRecord;
         _that.isShowJoinSize=isShowJoinSize;
