@@ -49,7 +49,7 @@
             </div>
             <div  class="centerlist ">
               <span class="spa">适用车系</span>
-              <span class="spb"> {{Final.SERIALTYPE[addUserCoupon.result.serialType]}}</span>
+              <span class="spb"> {{addUserCoupon.result.serialName}}</span>
             </div>
             <div  class="centerlist ">
               <span class="spa">购车人姓名</span>
@@ -80,7 +80,7 @@
             <div class="getbtn" @click="todetail">查看其他活动</div>
           </div>
         </div>
-        <div class="ruleDestail">
+        <div class="ruleDestail"v-show="status!=2">
             <div class="ruletitle">活动细则</div>
             <div class="rulelist">
               <div>1. 10000元线上专享礼包，含3000元保险增值礼包+3000元延保现金补贴+2000元贴膜+2000元购车大礼包。<br>
@@ -93,6 +93,13 @@
                 <div>4. 1000元延保现金抵扣说明:<br>
                   本券仅用于购买北京汽车延长质保产品使用、上汽大众延长质量担保提供重要部件、全面保障两种保障范围；时限分为一年或者两年。延保现金抵扣券可线下议价后厨师抵扣相应金额，具体产品价格及相关明细咨询当地经销商。</div>
             </div>
+        </div>
+
+        <div class="ruleDestail" v-show="status==2" style="padding-bottom: 1rem;">
+          <div class="ruletitle">使用细则</div>
+          <div class="rulelist">
+              {{juanxize}}
+          </div>
         </div>
       </div>
 
@@ -132,6 +139,7 @@
             interval:null,
             timeout:60,
             activityId:null,
+            juanxize:''
           }
       },
       mounted (){
@@ -221,7 +229,6 @@
          * @returns {}
          */
         Pickclick : function (data){
-          console.log('data==-=-=-=', data);
           if(data.isGet==2){
             return false;
           }
@@ -229,6 +236,7 @@
            // this.loadingShow=true;
           let mobile=localStorage.mobile;
           let realName=localStorage.realName;
+          this.juanxize=data.description;
           if(mobile&&realName){
 //            $(".login .username").val(realName); // 弃用JQ
 //            $(".login .mobile").val(mobile); // 弃用JQ
@@ -312,11 +320,8 @@
        // getsplit:function(detail){
         getsplit:function(detail){
           //let detail = 'rererwe';   //测试用的，上线一定要删除
-          if(detail.indexOf('\n')>-1){
-            return detail.split("\n");
-          }else{
-            return detail
-          }
+            return detail.split("\r\n");
+
         }
       },
   }

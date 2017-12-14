@@ -22,7 +22,7 @@
               </div>
             </div>
             <div class="xz_detail">
-              {{item.description}}
+              {{item.details}}
             </div>
         </div>
       </div>

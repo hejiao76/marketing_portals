@@ -18,14 +18,13 @@
                 <span class="spb codee">{{detail.couponCode}}</span>
                 <span class="statustype">{{Final.COUPON_STATUS[detail.status]}}</span>
               </div>
-              <img :src={} />
               <div>
                 <span class="spa">可用的购车人</span>
                 <span class="spb">{{detail.name}}</span>
               </div>
               <div>
                 <span class="spa">适用范围</span>
-                <span class="spb">{{Final.COUPON_TYPE[detail.type]}}</span>
+                <span class="spb">{{detail.serialName}}</span>
               </div>
               <div class="">
                 <span class="spa">有效期</span>
@@ -36,7 +35,7 @@
             <div class="centerlist qy_list">
               <span class="spa">使用细则</span>
               <ul class="qy_ul">
-                <li :key="index" v-for="(item,index,key) in  detail.description.indexOf('\n')>-1?getsplit(detail.description):detail.description" v-if="index<4" >{{item}}</li>
+                <li :key="index" v-for="(item,index,key) in  getsplit(detail.description)" v-if="index<4" >{{item}}</li>
               </ul>
             </div>
           </div>
@@ -104,11 +103,7 @@
           }
         },
         getsplit:function(detail){
-          if(detail.indexOf('\n')>-1){
-            return detail.split("\n");
-          }else{
-            return detail
-          }
+            return detail.split("\r\n");
         }
       },
   }
