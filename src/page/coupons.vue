@@ -320,7 +320,7 @@
        // getsplit:function(detail){
         getsplit:function(detail){
           //let detail = 'rererwe';   //测试用的，上线一定要删除
-            return detail.split("\r\n");
+            return detail.split("\n");
 
         }
       },
