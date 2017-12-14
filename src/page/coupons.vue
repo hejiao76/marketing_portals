@@ -120,14 +120,14 @@
             Final: Final,
             endTime:null,
             beginTime:null,
-            couponlist:[{id:12,status:1,img:'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=169726949,11506498&fm=27&gp=0.jpg',title:'xxxxx',alllist:['xsss','xxx','xssdsd']},{id:12,status:2,img:'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=169726949,11506498&fm=27&gp=0.jpg',title:'xxxxx',alllist:['xsss','xxx','xssdsd']}],
-            discount:{code:47927498,text:'迈腾全系车型',name:'任宝生',timeout:'2018.05.20',qylist:['3000元保险增值礼包\n','3000元线上购车专享礼金\n', '2000元贴膜\n','2000元新车大礼包\n']}
+            couponlist:[],
+            discount:{}
           }
       },
       mounted (){
-          let id = this.$route.params.id;
-          console.log(id);
-          this.getCouponActivityInfo(id);
+          this.activityCode = window.location.href.split('coupon/')[1];
+          console.log(this.activityCode);
+          this.getCouponActivityInfo();
       },
       created (){
         //alert("create");
