@@ -1,0 +1,19 @@
+.banner { width: 100%;}
+.cardetail { background: #f1f1f1;}
+.detail_mesg {
+  width: 90%; margin: 0 5%;background: #FFFFFF; padding: .15rem .1rem;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.20);
+  border-radius: 2px;position: relative;
+  top: -.2rem;
+}
+.mesg_title { font-size: .16rem; margin-bottom: .06rem;}
+.begintime { font-size: .12rem; color: #ff0036; margin-bottom: .2rem;}
+.list { margin-bottom: .06rem; font-size: .12rem;}
+.list .spa { color: #666666; width: .64rem; display: inline-block;}
+.city  {color: #007AFF; font-size: .1rem; text-align: right; margin-top: .2rem;}
+.bannr_title { height: .4rem; background: #ffffff; width: 100%;}
+.bannr_titlea {height: .4rem; width: 100%;  background: #475669; line-height: .4rem; color: #ffffff; text-align: center;  }
+.btnbox {
+  height:.5rem; line-height: .5rem; text-align: center; color: #ffffff; font-size: .18rem;}
+.btnbox .btna { width: 60%; height: 100%; background: #ff0036;color: #ffffff;float: left; display: inline-block;}
+.btnbox .btnb { color: #FF002D; background: #ffffff; width: 40%;float: left; display: inline-block; }

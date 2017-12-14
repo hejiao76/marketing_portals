@@ -1,9 +1,9 @@
 <template>
-  	<div class="raffle">
+  	<div class="raffle" v-if='bc_img' :style="{background: 'url('+ bc_img +')',backgroundSize:'cover' }">
       <loading v-show="loadingShow"></loading>
       <mesg v-bind:mesg="mesg"></mesg>
       <div class="title">
-        <img class="title_bc" src="../assets/img/title_bc.png"></img>
+        <img class="title_bc" :src="title_img"></img>
         <div class="raffle_number">您还有 <span>{{remainnumber}}</span> 次抽奖机会</div>
       </div>
       <zhuanpan v-on:listenstatus="getstatus" v-bind:loginstatus="islogin" ></zhuanpan>
@@ -128,6 +128,8 @@ export default {
             ipone_err:false,
             code_err:false,
             mesg:'',
+            bc_img:null,
+            title_img:null,
           }
       },
       created (){
@@ -151,7 +153,7 @@ export default {
           if(data.code==2){
             _that.status=3;
           }
-          if(data.code==3 || data.code==4||data.code==5){
+          if(data.code==3 || data.code==4||data.code==5||data.code==6||data.code==7||data.code==8){
             _that.status=4;
             _that.errormesg=data.message;
           }
@@ -255,6 +257,8 @@ export default {
         let isShowWinningRecord=res.result.isShowWinningRecord;
         _that.isShowJoinSize=isShowJoinSize;
         _that.isShowWinningRecord=isShowWinningRecord;
+        _that.bc_img=res.result.bgImg;
+        _that.title_img=res.result.titleImg;
         if(isShowJoinSize==1){
           //获取抽奖人数
           api.ap_prizedraw_users({'activityCode':id}).then(res => {
