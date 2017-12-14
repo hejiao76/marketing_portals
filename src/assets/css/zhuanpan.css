@@ -1,6 +1,11 @@
 html,body { height: 100%;}
 body{color:#333; font-family:"Microsoft YaHei"}
-.raffle { font-size: .14rem; height: 100%;}
+.raffle {     font-size: .14rem;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;}
 .title,.all_number { text-align: center; color: #ffffff;}
 .title .title_bc { width:82%; margin: .12rem auto; }
 .protocolBtn { margin: .13rem auto 0; width: 1rem; text-align: center; color: #ffffff; background: #FB6362; height: .3rem; line-height: .3rem; border-radius: .15rem; display: block;}

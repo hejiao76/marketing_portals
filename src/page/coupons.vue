@@ -143,6 +143,10 @@
         getCouponActivityInfo(){
           api.ap_coupon({'activityCode':this.activityCode}).then(res => {
             console.log(res)
+            if(!res.status){
+              this.endTime=
+              this.beginTime=res.beginTime
+            }
             if(res.couponList)
               this.endTime=res.endTime
               this.beginTime=res.beginTime

@@ -68,7 +68,7 @@
           <span class="close iconfont icon-guanbi" @click="status=null"></span>
           <div class="title_name">很遗憾，您没中奖</div>
           <div class="remainnumber">今日您还有 <span>{{remainnumber}}</span> 次抽奖机会</div>
-          <div class="color_btn" @click="status=null">再次抽奖</div>
+          <div class="color_btn" @click="rafflealigon">再次抽奖</div>
         </div>
       </div>
 
@@ -228,6 +228,10 @@ export default {
               this.ipone_err=false;
             }
           }
+        },
+        rafflealigon:function(){
+          this.status=null;
+          $(".pointer").trigger("click");
         }
       },
     mounted (){

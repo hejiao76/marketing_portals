@@ -2,7 +2,7 @@
   	<div>
       <loading v-show="loadingShow"></loading>
       <div class="couponlist">
-        <div class="listitem" :class="[ {user: item.status == 1}, {outofdate: item.status == 2},{outwilldate: item.status == 3}, {dikou: item.type == 1}, {youhui: item.type == 2}]" v-for="(item,index,key) in couponlist">
+        <div class="listitem" :class="[ {user: item.status == 0}, {outofdate: item.status == 1},{outwilldate: item.status == 2}, {dikou: item.type == 1}, {youhui: item.type == 2}]" v-for="(item,index,key) in couponlist">
             <div class="itemleft" @click="getDetail(item.couponCode)">
               <span class="status">{{Final.COUPON_STATUS[item.status]}}</span>
               <div><span>￥</span>{{item.amount}}</div>
@@ -13,7 +13,7 @@
                   <span class="name">{{item.name}}</span>
                 </div>
               <div class="rightcenter">
-                <span class="time">{{'有效期:'+item.validity+'前使用有效'}}</span>
+                <span class="time">{{'有效期:'+item.validity}}</span>
                 <span class="userbtn ft_tight">立即使用</span>
               </div>
               <div class="rightbottom">
