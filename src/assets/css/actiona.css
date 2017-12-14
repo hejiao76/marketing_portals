@@ -41,7 +41,7 @@
 
 #mark{width: 100%;height: 100%;background: rgba(0,0,0,0.5);position: fixed;top: 0;left: 0;display: none;}
 .red-img{position: fixed;top: 10%;left: 5%;width: 90%;}
-#app { background:url("../img/outbg.jpg") }
+/*#app { background:url("../img/outbg.jpg") }*/
 
 .centermesg {
   width:2em; display: inline-block; position: absolute;left: 50%;

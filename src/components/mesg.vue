@@ -16,11 +16,10 @@ export default {
     mesg (val, oldval) {
       console.log(val, oldval)
       var _that=this;
-      if(val!="" &&val!=oldval){
+      if(val!="" && val!=oldval){
         this.showstatus=true;
         setTimeout(function(){
           _that.showstatus=false;
-          _that.mesg='';
         },2000)
       }
     }

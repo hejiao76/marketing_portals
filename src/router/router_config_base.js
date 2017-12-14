@@ -9,7 +9,9 @@ const secondkill = r => require.ensure([], () => r(require('../page/secondkill')
 const secondlist = r => require.ensure([], () => r(require('../page/secondlist')), 'secondlist');
 const coupondetail = r => require.ensure([], () => r(require('../page/coupondetail')), 'coupondetail');
 const seconddetail = r => require.ensure([], () => r(require('../page/seconddetail')), 'seconddetail');
-
+const secondcardetail = r => require.ensure([], () => r(require('../page/secondcardetail')), 'secondcardetail');
+const secondkilllogin = r => require.ensure([], () => r(require('../page/secondkilllogin')), 'secondkilllogin');
+const secondkillpay = r => require.ensure([], () => r(require('../page/secondkillpay')), 'secondkillpay');
 
 const routerConfig = [{
   path: '',
@@ -43,8 +45,16 @@ const routerConfig = [{
   },{
     path: '/seconddetail',
     component: seconddetail
+  },{
+    path: '/secondcardetail',
+    component: secondcardetail
+  },{
+    path: '/secondkilllogin',
+    component: secondkilllogin
+  },{
+    path: '/secondkillpay',
+    component: secondkillpay
   },
-
 
 ];
 

@@ -104,7 +104,7 @@ var turnplate={
 
                 var img= document.getElementById("imglist"+i);
              if(img){
-               ctx.drawImage(img,-25,30,50,50);
+               ctx.drawImage(img,-20,30,40,40);
              }
               ctx.restore();
               //----绘制奖品结束----

@@ -1,9 +1,9 @@
 <template>
-  	<div class="raffle">
+  	<div class="raffle" v-if='bc_img' :style="{background: 'url('+ bc_img +')',backgroundSize:'cover' }">
       <loading v-show="loadingShow"></loading>
       <mesg v-bind:mesg="mesg"></mesg>
       <div class="title">
-        <img class="title_bc" src="../assets/img/title_bc.png"></img>
+        <img class="title_bc" :src="title_img"></img>
         <div class="raffle_number">您还有 <span>{{remainnumber}}</span> 次抽奖机会</div>
       </div>
       <zhuanpan v-on:listenstatus="getstatus" v-bind:loginstatus="islogin" ></zhuanpan>
@@ -15,7 +15,7 @@
         <span class="close iconfont icon-guanbi"></span>
         <div class="title_name">登录</div>
           <input type="number" class="username" :onchange="isiphone()"  v-model="userPhone" placeholder="请输入手机号" />
-          <div class="errortext" v-show="ipone_err">请输入正确的手机号</div>
+          <div class="errortext" v-if="ipone_err">请输入正确的手机号</div>
           <div class="Verification">
             <input type="number"  v-model="userCode" class="logintext code" placeholder="请输入验证码" />
             <span :class="['btn_code',{clicked:!codestatus}]" @click="getcode">{{codestatus?'获取验证码':timeout+'s后再次获取'}}</span>
@@ -128,6 +128,8 @@ export default {
             ipone_err:false,
             code_err:false,
             mesg:'',
+            bc_img:null,
+            title_img:null,
           }
       },
       created (){
@@ -151,7 +153,7 @@ export default {
           if(data.code==2){
             _that.status=3;
           }
-          if(data.code==3 || data.code==4||data.code==5){
+          if(data.code==3 || data.code==4||data.code==5||data.code==6||data.code==7||data.code==8){
             _that.status=4;
             _that.errormesg=data.message;
           }
@@ -171,37 +173,49 @@ export default {
           },
         getcode:function(){
           var _that=this;
-          if(_that.codestatus){
-            _that.codestatus=false;
-            _that.interval=setInterval(function(){
-              if(_that.timeout>0){
-                _that.timeout--
-              }else {
-                _that.codestatus=true;
-                _that.timeout=60;
-                clearInterval(_that.interval);
-              }
-            },1000)
+          if(this.userPhone.length>=11 && this.ipone_err==false){
+            if(_that.codestatus){
+              _that.codestatus=false;
+              _that.interval=setInterval(function(){
+                if(_that.timeout>0){
+                  _that.timeout--
+                }else {
+                  _that.codestatus=true;
+                  _that.timeout=60;
+                  clearInterval(_that.interval);
+                }
+              },1000)
+            }
           }
         },
         loginin:function(){
           var _that=this;
           if(this.userCode==""){
             this.code_err=true;
+            return false;
           }else{
             this.code_err=false;
           }
+          if(this.userPhone==""){
+            this.ipone_err=true;
+            return false;
+          }else{
+            this.code_err=false;
+          }
+          if(!this.ipone_err){
           api.base_login({userPhone:this.userPhone,checkCode:this.userCode})
             .then(res => {
               console.log(res)
               if (res.status) {
                 _that.mesg='登录成功';
+                _that.loginshow=false;
               }else {
                 _that.mesg='登录失败';
               }
             }).catch(err => {
               _that.mesg='登录失败';
           });
+          }
         },
         isiphone:function () { //校验是否是手机号
           var phone=this.userPhone;
@@ -213,8 +227,6 @@ export default {
             }else{
               this.ipone_err=false;
             }
-          }else{
-            this.ipone_err=false;
           }
         }
       },
@@ -245,6 +257,8 @@ export default {
         let isShowWinningRecord=res.result.isShowWinningRecord;
         _that.isShowJoinSize=isShowJoinSize;
         _that.isShowWinningRecord=isShowWinningRecord;
+        _that.bc_img=res.result.bgImg;
+        _that.title_img=res.result.titleImg;
         if(isShowJoinSize==1){
           //获取抽奖人数
           api.ap_prizedraw_users({'activityCode':id}).then(res => {
