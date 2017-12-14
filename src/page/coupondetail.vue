@@ -6,36 +6,37 @@
         <div class="getist">
           <div class="getBox getSucceed">
             <div class="gettop">
-              <div>{{resDetails.name}}</div>
+              <div>{{detail.name}}</div>
             </div>
             <div class="detail_code">
-              <div class="amount"><span>￥</span>{{resDetails.amount}}</div>
-              <!--<img class="codeimg" :src="detail.codeimg" />-->
+              <div class="amount"><span>￥</span>{{detail.amount}}</div>
+              <img class="codeimg" :src="imgurl"  />
             </div>
             <div class="centerlist">
               <div>
                 <span class="spa">核销码</span>
-                <span class="spb codee">{{detail.code}}</span>
-                <span class="statustype">{{detail.status}}</span>
+                <span class="spb codee">{{detail.couponCode}}</span>
+                <span class="statustype">{{Final.COUPON_STATUS[detail.status]}}</span>
               </div>
+              <img :src={} />
               <div>
                 <span class="spa">可用的购车人</span>
                 <span class="spb">{{detail.name}}</span>
               </div>
               <div>
                 <span class="spa">适用范围</span>
-                <span class="spb">{{detail.description}}</span>
+                <span class="spb">{{Final.COUPON_TYPE[detail.type]}}</span>
               </div>
               <div class="">
                 <span class="spa">有效期</span>
-                <span class="spb">{{detail.validity}}日前使用有效</span>
+                <span class="spb">{{detail.validity.split(" ")[0]}}日前使用有效</span>
               </div>
 
             </div>
             <div class="centerlist qy_list">
               <span class="spa">使用细则</span>
               <ul class="qy_ul">
-                <li v-for="(item,index,key) in detail.qylist" :key="index">{{item}}</li>
+                <li :key="index" v-for="(item,index,key) in  detail.description.indexOf('\n')>-1?getsplit(detail.description):detail.description" v-if="index<4" >{{item}}</li>
               </ul>
             </div>
           </div>
@@ -54,14 +55,18 @@
   export default {
       data() {
           return {
+              Final:Final,
+              imgurl:'',
               loadingShow:false,
               resDetails:'',
+            activityId:'',
               detail:{titlename:'抵扣卷名称',status:1,amount:'888',codeimg:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3256036687,742666259&fm=27&gp=0.jpg',code:'ewwewewe',text:'祥云全系',name:'张三',timeout:'2019.08.23',qylist:['3000元保险增值礼包\n','3000元线上购车专享礼金\n', '2000元贴膜\n','2000元新车大礼包\n']}
           }
       },
       mounted (){
-          let Code = this.$route.params.Code;
-          this.getmyCouponInfo({couponCode:Code})
+          this.activityId = this.$route.params.id;
+          this.imgurl=Final.QRCODE+"/v1/gift/qrcode?activityId="+this.activityId+"&activityType=201&couponCode=yunyong"
+          this.getmyCouponInfo({couponCode:this.activityId})
       },
       created (){
         //alert("create");
@@ -75,11 +80,11 @@
          * @param params
          * @returns {*}
          */
-        getmyCouponInfo(){
-          api.ap_my_coupon_info()
+        getmyCouponInfo(data){
+          api.ap_my_coupon_info(data)
            .then(res => {
               if(res.status){
-                this.resDetails = res.result;
+                this.detail = res.result;
               }
           }).catch(error => {
 
@@ -99,8 +104,8 @@
           }
         },
         getsplit:function(detail){
-          if(detail.indexOf('\r\n')!=-1){
-            return detail.split("\r\n");
+          if(detail.indexOf('\n')>-1){
+            return detail.split("\n");
           }else{
             return detail
           }
@@ -121,5 +126,5 @@
   .detailbox .qy_list { border-bottom: none;}
   .detailbox .spa { color:#666;}
   .detailbox .codee { font-size: .18rem;}
-  .statustype { background: #d8d8d8; font-size: .12rem; padding: .02rem .05rem; color: #666666; float: right; border-radius: .03rem;}
+  .statustype { background: #d8d8d8; font-size: .12rem; padding: .02rem .05rem; color: #666666; float: right; border-radius: .03rem; position: absolute; right: 0;}
 </style>

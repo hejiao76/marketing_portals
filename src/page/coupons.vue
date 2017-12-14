@@ -3,16 +3,17 @@
       <loading v-show="loadingShow"></loading>
       <div class="center_box">
         <div class="bannerbox">
-          <img class="banner" v-show="status==0||status==1" src="../assets/img/couponBanner.png"/>
+          <img class="banner" v-show="status==0||status==1 ||status==10" src="../assets/img/couponBanner.png"/>
           <div class="bottomtext">活动日期：<br>{{beginTime+'至'+endTime}}</div>
         </div>
 
         <div class="login" v-show="status==1">
             <input type="text" class="logintext username" v-model="userName" placeholder="请填写真实购车人姓名" />
-            <input type="number" class="logintext mobile" v-model="userPhone" placeholder="请输入手机号" />
-            <div class="Verification">
+            <input type="number" class="logintext mobile" v-model="userPhone"  :onchange="isiphone()"  placeholder="请输入手机号" />
+            <div class="errortext" v-if="ipone_err">请输入正确的手机号</div>
+          <div class="Verification">
               <input type="number" class="logintext code" v-model="userCode" placeholder="请输入验证码" />
-              <span class="btn_code" @click="getAuthCode()">获取验证码</span>
+              <span class="btn_code" @click="getAuthCode()" >{{codestatus?'获取验证码':timeout+'s后再次获取'}}</span>
             </div>
             <button class="codebtn" @click="getcoupon">点击领卷</button>
         </div>
@@ -31,6 +32,10 @@
           <div  :class="['couponBottom',{getend:item.isGet==2}]"  @click="Pickclick(item)">{{item.isGet==1?'立即领取':'已领取'}}</div>
         </div>
 
+        <div style="font-size: .2rem; text-align: center; margin:0.5rem auto 0;" v-if="status==10||status==11">
+                  {{status==10?'活动已下线~~':'活动未开始~~'}}
+        </div>
+
         <!--领取状态-->
         <div class="getist" v-show="status==2">
 
@@ -38,15 +43,15 @@
             <div class="gettop">
               {{addUserCoupon.message}}
             </div>
-            <div>
+            <div class="centerlist ">
               <span class="spa">核销码</span>
               <span class="spb">{{addUserCoupon.result.couponCode}}</span>
             </div>
-            <div>
+            <div  class="centerlist ">
               <span class="spa">适用车系</span>
               <span class="spb"> {{Final.SERIALTYPE[addUserCoupon.result.serialType]}}</span>
             </div>
-            <div>
+            <div  class="centerlist ">
               <span class="spa">购车人姓名</span>
               <span class="spb">{{addUserCoupon.result.userName}}</span>
             </div>
@@ -58,7 +63,7 @@
             </div>
             <div class="centerlist validity">
               <span class="spa">有效期</span>
-              <span class="spb" style="color: #FF0036">{{addUserCoupon.result.validity}}日前使用有效</span>
+              <span class="spb" style="color: #FF0036">{{addUserCoupon.result.validity.split(" ")[0]}}日前使用有效</span>
             </div>
             <div class="getbtn" @click="tolist">查看我的礼券</div>
           </div>
@@ -72,7 +77,7 @@
 
               </div>
             </div>
-            <div class="getbtn">查看其他活动</div>
+            <div class="getbtn" @click="todetail">查看其他活动</div>
           </div>
         </div>
         <div class="ruleDestail">
@@ -114,14 +119,19 @@
                 ],
               },
             },
-            activityCode:'JytRVQcGx1FQ725G',//活动Id
+            activityCode:'',//活动Id
             loadingShow:false,
             status:0,
             Final: Final,
             endTime:null,
             beginTime:null,
             couponlist:[],
-            discount:{}
+            discount:{},
+            ipone_err:false,
+            codestatus:true,//code 状态
+            interval:null,
+            timeout:60,
+            activityId:null,
           }
       },
       mounted (){
@@ -143,16 +153,26 @@
         getCouponActivityInfo(){
           api.ap_coupon({'activityCode':this.activityCode}).then(res => {
             console.log(res)
-            if(!res.status){
-              this.endTime=
-              this.beginTime=res.beginTime
-            }
-            if(res.couponList)
-              this.endTime=res.endTime
-              this.beginTime=res.beginTime
+            if(res.status){
+              if(res.result.status==3){
+                this.status=10;
+              }else if(res.result.status==1){
+                this.status=11;
+              }
+              this.endTime=res.result.endTime
+              this.beginTime=res.result.beginTime
               this.couponlist=res.result.couponList;
+              this.activityId=res.result.id
+            }else{
+              this.status=10;
+              this.endTime="";
+              this.beginTime="";
+            }
           }).catch(error => {
             console.log(error)
+            this.status=10;
+            this.endTime="";
+            this.beginTime="";
           })
         },
         /**
@@ -160,14 +180,41 @@
          * @returns {}
          */
         getAuthCode(){
-          api.ap_get_auth_code({userPhone:this.userPhone})
-            .then(res => {
-              if(res.status){
+          var _that=this;
+          if(this.userPhone.length>=11 && this.ipone_err==false){
+            if(_that.codestatus){
+              _that.codestatus=false;
+              api.ap_get_auth_code({userPhone:this.userPhone})
+                .then(res => {
+                  if(res.status){
+                    _that.interval=setInterval(function(){
+                      if(_that.timeout>0){
+                        _that.timeout--
+                      }else {
+                        _that.codestatus=true;
+                        _that.timeout=60;
+                        clearInterval(_that.interval);
+                      }
+                    },1000)
+                  }
+                }).catch(error => {
+                console.log(error)
+              })
+            }
+          }
 
-              }
-            }).catch(error => {
-              console.log(error)
-            })
+        },
+        isiphone:function () { //校验是否是手机号
+          var phone=this.userPhone;
+          console.log(phone)
+          if(phone.length>=11){
+            this.userPhone=phone.substr(0,11)
+            if(!(/^1[345789]\d{9}$/.test(phone))){
+              this.ipone_err=true;
+            }else{
+              this.ipone_err=false;
+            }
+          }
         },
         /**
          * 验证是否可以领取
@@ -208,7 +255,7 @@
          * @returns {}
          */
         addUserCouponFun(){
-          var obj = {userName:this.userName, userPhone:this.userPhone, checkCode:this.userCode, couponId: this.activecouponId, activityCode:this.activityCode}
+          var obj = {userName:this.userName, userPhone:this.userPhone, checkCode:this.userCode, couponId: this.activecouponId, activityId:this.activityId}
           api.ap_add_user_coupon(obj)
             .then(res => {
               if (res.status) {
@@ -241,7 +288,7 @@
                 this.addUserCouponFun()
                 this.status=2;
               }else {
-
+                alert('领卷失败')
               }
             }).catch(err => {
 
@@ -255,15 +302,18 @@
         tolist:function(){
           this.$router.push({name: 'mycouponlist', params: {}})
         },
+        todetail:function(){
+          this.status=0;
+        },
         /**
          * 用来截取啥东西的？？？
          * @returns {}
          */
        // getsplit:function(detail){
-        getsplit:function(){
-          let detail = 'rererwe';   //测试用的，上线一定要删除
-          if(detail.indexOf('\r\n')!=-1){
-            return detail.split("\r\n");
+        getsplit:function(detail){
+          //let detail = 'rererwe';   //测试用的，上线一定要删除
+          if(detail.indexOf('\n')>-1){
+            return detail.split("\n");
           }else{
             return detail
           }

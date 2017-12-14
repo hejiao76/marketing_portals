@@ -5,6 +5,7 @@ const OBJ ={
     SERIALTYPE:{
     1:"全车系", 2:"指定车系"
   },
+  QRCODE:'http://wiki.yunyang.work/pages/viewpage.action?pageId=889806',
   COUPON_TYPE:{
     1:"抵扣车款", 2:"其他权益" ,3:"抵扣车款,其他权益"
   },

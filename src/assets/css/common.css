@@ -131,6 +131,7 @@ textarea {
   cursor: pointer;
 }
 #app { max-width: 500px;
+  position: relative;
   width:100%;  margin: 0 auto; min-height: 100%;  font-size: 14px; }
 html { font-size: 100px;}
 html,body { height: 100%;}
