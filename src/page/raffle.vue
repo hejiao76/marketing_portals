@@ -31,17 +31,18 @@
           <span class="close iconfont icon-guanbi" @click="status=null"></span>
           <div class="title_name">活动须知</div>
           <div class="action_detail">
-            <div>1. 玩家通过签到来增加游戏的抽奖次数。</div>
-            <div>2. 转盘转动停止后，指针会停在装盘中的
-            某一个空格。</div>
-              <div>3. 中奖后会跳转进入奖品页面，未中奖可根据
-            主办方所确定的规则进行再抽奖。</div>
-                <div>4、奖品：
-            一等奖：iPhone 8 5台
-            二等奖：小米净化器 10台
-            三等奖：礼品卡 50张</div>
-                  <div>5、活动时间：2017.11.01——2017.11.30</div>
-                    <div>6、活动最终解释权归厂商所有</div>
+            <!--<div>1. 玩家通过签到来增加游戏的抽奖次数。</div>-->
+            <!--<div>2. 转盘转动停止后，指针会停在装盘中的-->
+            <!--某一个空格。</div>-->
+              <!--<div>3. 中奖后会跳转进入奖品页面，未中奖可根据-->
+            <!--主办方所确定的规则进行再抽奖。</div>-->
+                <!--<div>4、奖品：-->
+            <!--一等奖：iPhone 8 5台-->
+            <!--二等奖：小米净化器 10台-->
+            <!--三等奖：礼品卡 50张</div>-->
+                  <!--<div>5、活动时间：2017.11.01——2017.11.30</div>-->
+                    <!--<div>6、活动最终解释权归厂商所有</div>-->
+            <div>{{description}}</div>
           </div>
         </div>
 
@@ -68,7 +69,7 @@
           <span class="close iconfont icon-guanbi" @click="status=null"></span>
           <div class="title_name">很遗憾，您没中奖</div>
           <div class="remainnumber">今日您还有 <span>{{remainnumber}}</span> 次抽奖机会</div>
-          <div class="color_btn" @click="status=null">再次抽奖</div>
+          <div class="color_btn" @click="rafflealigon">再次抽奖</div>
         </div>
       </div>
 
@@ -130,6 +131,8 @@ export default {
             mesg:'',
             bc_img:null,
             title_img:null,
+            timeout:60,
+            description:''
           }
       },
       created (){
@@ -176,15 +179,22 @@ export default {
           if(this.userPhone.length>=11 && this.ipone_err==false){
             if(_that.codestatus){
               _that.codestatus=false;
-              _that.interval=setInterval(function(){
-                if(_that.timeout>0){
-                  _that.timeout--
-                }else {
-                  _that.codestatus=true;
-                  _that.timeout=60;
-                  clearInterval(_that.interval);
-                }
-              },1000)
+              api.ap_get_auth_code({userPhone:this.userPhone})
+                .then(res => {
+                  if(res.status){
+                    _that.interval=setInterval(function(){
+                      if(_that.timeout>0){
+                        _that.timeout--
+                      }else {
+                        _that.codestatus=true;
+                        _that.timeout=60;
+                        clearInterval(_that.interval);
+                      }
+                    },1000)
+                  }
+                }).catch(error => {
+                console.log(error)
+              })
             }
           }
         },
@@ -228,6 +238,10 @@ export default {
               this.ipone_err=false;
             }
           }
+        },
+        rafflealigon:function(){
+          this.status=null;
+          $(".pointer").trigger("click");
         }
       },
     mounted (){
@@ -257,6 +271,7 @@ export default {
         let isShowWinningRecord=res.result.isShowWinningRecord;
         _that.isShowJoinSize=isShowJoinSize;
         _that.isShowWinningRecord=isShowWinningRecord;
+        _that.description=res.result.description;
         _that.bc_img=res.result.bgImg;
         _that.title_img=res.result.titleImg;
         if(isShowJoinSize==1){
@@ -268,7 +283,7 @@ export default {
             console.log(error)
           });
         }
-        if(isShowWinningRecord==0){
+        if(isShowWinningRecord==1){
           //获取最近中奖
           api.ap_prizedraw_log({'activityCode':id}).then(res => {
             console.log(res)

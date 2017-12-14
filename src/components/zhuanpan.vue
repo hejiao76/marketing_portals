@@ -1,12 +1,12 @@
 <template>
   <div  style="background-size:cover;">
     <div class="img_box" style="display: none;">
-      <img class="imgitem" :id="['imglist'+index]" :src="item.bgImg" v-for="(item,index,key) in imglist" />
+      <img class="imgitem" :id="['imglist'+index]" :src="item.bgImg" v-for="(item,index,key) in imglist" onerror="javascript:item.bgImg='../assets/img/timg.jpeg'"  />
     </div>
   <div class="banner">
     <div class="turnplate" >
       <canvas class="item" id="wheelcanvas" width=300 height=300 ></canvas>
-      <div class="pointer"><span :class="['centermesg',{poining: bRotate},{end: !bRotatea}]">{{bRotatea?'正在抽奖':'点击抽奖'}}</span></div>
+      <div class="pointer" ref="pointer"><span :class="['centermesg',{poining: bRotate},{end: !bRotatea}]">{{bRotatea?'正在抽奖':'点击抽奖'}}</span></div>
     </div>
   </div>
   </div>
@@ -147,9 +147,9 @@ var turnplate={
         turnplate.restaraunts = res.result.prizeList;
         var thanks={bgImg: "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3256036687,742666259&fm=27&gp=0.jpg", giftGroupName: "谢谢惠顾", level: 0}
         turnplate.restaraunts.unshift(thanks);
-        turnplate.colors = ["#FD767B","#FD5B5D", "#FC4B4D","#FD767B","#FD5B5D", "#FC4B4D" ];
+        turnplate.colors = ["#FD767B","#FD5B5D", "#FC4B4D","#FD5B5D","#FD767B", "#FC4B4D" ];
         this.imglist=turnplate.restaraunts;
-          setTimeout(function(){_that.drawRouletteWheel();},200)
+          setTimeout(function(){_that.drawRouletteWheel();},500)
       }).catch(error => {
         console.log(error)
       })
@@ -191,7 +191,6 @@ var turnplate={
         }
         if(_that.bRotate)return;
         _that.bRotate = !_that.bRotate;
-        //获取随机数(奖品个数范围内)
         let id = self.$route.params.id;
         console.log(id)
         api.ap_prizedraw_go({'activityCode':id})

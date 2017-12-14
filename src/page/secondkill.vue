@@ -96,7 +96,7 @@
           this.enrol_show=true;
         }
       },mounted (){
-      let id = this.$route.params.id;
+      let id = this.$route.params.code;
       var _that=this;
         api.ap_sedkill_detail({'activityCode':id})
         .then(res => {
