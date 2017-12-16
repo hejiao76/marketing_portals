@@ -21,8 +21,7 @@
                 <span class="bt_tight iconfont icon-jiantou" @click="showdetail(index)"></span>
               </div>
             </div>
-            <div class="xz_detail">
-              {{item.details}}
+            <div class="xz_detail" v-html="item.details">
             </div>
         </div>
       </div>

@@ -18,8 +18,14 @@
                 </div>
             </div>
             <div class="list_item">
+              <div class="item_list">
               <span class="spa">活动说明</span>
               <span class="spb">秒杀成功即可第扣车款2万元</span>
+              </div>
+              <div class="item_list">
+                <span class="spa">秒杀券价值</span>
+                <span class="spb">{{detailmesg.couponAmount}}</span>
+              </div>
             </div>
 
           <div class="list_item">

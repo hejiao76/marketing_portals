@@ -12,6 +12,8 @@ const seconddetail = r => require.ensure([], () => r(require('../page/seconddeta
 const secondcardetail = r => require.ensure([], () => r(require('../page/secondcardetail')), 'secondcardetail');
 const secondkilllogin = r => require.ensure([], () => r(require('../page/secondkilllogin')), 'secondkilllogin');
 const secondkillpay = r => require.ensure([], () => r(require('../page/secondkillpay')), 'secondkillpay');
+const loginchecked = r => require.ensure([], () => r(require('../page/loginchecked')), 'loginchecked');
+const sedkillloginchecked = r => require.ensure([], () => r(require('../page/sedkillloginchecked')), 'sedkillloginchecked');
 
 const routerConfig = [{
   path: '',
@@ -24,6 +26,10 @@ const routerConfig = [{
     path: '/coupon/:id', //抵扣券活动入口
     name:"coupons",
     component: coupons
+    }, {
+    path: '/coupon/:id/loginchecked', //抵扣券选择经销商
+    name:"loginchecked",
+    component: loginchecked
   }
   , {
     path: '/mycoupon/couponlist', //我的抵扣券
@@ -46,16 +52,24 @@ const routerConfig = [{
     path: '/mysedKill/seconddetail',
     component: seconddetail
   },{
-    path: '/mysedKill/secondcardetail',
+    path: '/mysedKill/secondcardetail/:itemId',
     component: secondcardetail
   },{
-    path: '/mysedKill/secondkilllogin',
+    path: '/mysedKill/secondkilllogin/:itemId',
     component: secondkilllogin
+  },{
+    path: '/mysedKill/sedkillloginchecked/:itemId',
+    component: sedkillloginchecked
   },{
     path: '/mysedKill/secondkillpay',
     component: secondkillpay
   },
+  {
+    path: '/mysedKill/secondkillpay',
+    component: secondkillpay
+  },
 
+  //sedkillloginchecked
 ];
 
 export default routerConfig;

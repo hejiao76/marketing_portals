@@ -4,7 +4,7 @@
       <div :class="['killbox', {nolist:killlist.length==0}]">
           <div class="killbanner">
             <img class="bannerimg" src="../assets/img/ms_bc.png" />
-            <div class="actionTime">活动时间：2017-04-13 ~ 2017-06-17</div>
+            <div class="actionTime">活动时间：{{beginTime}} ~ {{endTime}}</div>
             <ul class="banner_list" v-if="killlist.length!=0">
               <li><span class="float iconfont icon-jushouxin"></span>
                 <span class="list_text float">报名秒杀</span>
@@ -18,33 +18,36 @@
             </ul>
           </div>
           <div class="killlist" :key="item.itemId" v-for="(item,index,key) in killlist">
-              <div class="timetolset"><span class="iconfont icon-miaobiao_kuai"></span>{{item.beginTime}}</div>
+              <div class="timetolset"><span class="iconfont icon-miaobiao_kuai"></span>{{util.toFullDateString(item.beginTime)}}</div>
               <div class="killdetail">
                 <div class="killleft">
                     <div class="label">
-                      <span class="bigicon iconfont icon-biaoqianx"></span>
-                      <div><span class="smallicon iconfont  icon-miaobiao"></span>
-                      即将开始</div>
+                      <span class="bigicon"></span>
+                      <!--<div><span class="smallicon iconfont  icon-miaobiao"></span>-->
+                      <!--即将开始</div>-->
                     </div>
-                    <img class="headimg" :src="item.shareImg" />
+                    <img @click="todetail(item)"  class="headimg"  :src="item.whitePic"  />
                 </div>
                 <div class="killright">
-                  <div class="killtitle">{{item.itemName}}<span class="number">仅{{item.surplusCount}}张</span></div>
+                  <div class="killtitle" @click="todetail(item)">{{item.itemName}}<span class="number">仅{{item.surplusCount}}张</span></div>
                     <div class="right_center">
                       <div>
-                        <div class="killtime">报名时间：{{item.enrollStartTime}} 至 {{item.enrollEndTime}}</div>
-                         <div class="killprice">秒杀价 <span class="redcolor">￥{{item.amount}}</span></div>
+                        <div class="killtime">报名时间：{{util.toFullDateString(item.enrollStartTime)}} 至<br> {{util.toFullDateString(item.enrollEndTime)}}</div>
+                        <div class="killprice">秒杀价 <span class="redcolor">￥{{item.amount}}</span> <span style="color: #999999;font-size: .16rem; margin-left:10px;text-decoration:line-through;">￥{{item.couponAmount}}</span></div>
                       </div>
                     </div>
                     <div class="btn_box">
-                      <button class="btn btna">立即秒杀</button>
-                      <button @click="miaosha(item)" :class="['btn','btnb',{active:item.status==0}]">{{status[item.status]}}</button>
+                     <button class="btn btna">{{'立即秒杀'}}</button> <!--statustype[item.status]-->
+                      <button :class="['btn','btnb',{active:item.status==2}]" @click="tosign(item)">{{status[item.status]}}</button>
                     </div>
                 </div>
               </div>
           </div>
           <div class="noShow" v-if="killlist.length==0" style="height:100%; position: absolute;width:100%; left: 0; top:0; background: #eee; z-index: 9; display: flex; align-items: center;">
+            <div>
               <img style="width:100%" src="../assets/img/ms_end.png" />
+              <div class="errmeg" style="width: 100%; text-align: center; font-size: .2rem; color: #666666;">你来迟啦 活动{{errormesg}}</div>
+            </div>
           </div>
       </div>
       <div class="brankout" v-show="enrol_show">
@@ -60,17 +63,22 @@
   import Final from "../util/Final";
   import api from "./../fetch/api";
   import loading from "../components/loading";
+  import * as util from "../util/util"
   export default {
       data() {
           return {
-            loadingShow:false,
-            killlist:[{itemId:1213,shareImg:'',surplusCount:9,amount:4000,status:0,itemName:'新人注册抵车款超级优',beginTime:'2017.8.1',enrollStartTime:'2017.8.1',enrollEndTime:'2017.8.1'},
-              {itemId:1213,shareImg:'',surplusCount:9,amount:4000,status:0,itemName:'新人注册抵车款超级优',beginTime:'2017.8.1',enrollStartTime:'2017.8.1',enrollEndTime:'2017.8.1'},
-              {itemId:1213,shareImg:'',surplusCount:9,amount:4000,status:0,itemName:'新人注册抵车款超级优',beginTime:'2017.8.1',enrollStartTime:'2017.8.1',enrollEndTime:'2017.8.1'}
-              ],
-            status:['快速报名','报名未开始','报名已结束','已报名'],
+            loadingShow:true,
+            util:util,
+            statustype:{1:'已上架',2:'已下架',3:'已过期',4:'已删除'},
+            mesgdata:{},
+            killlist:[],
+            status:['活动已结束','报名未开始','快速报名','已报名','报名已结束'],
             enrol_show:false,
-            actiontimeone:""
+            actiontimeone:"",
+            beginTime:'',
+            endTime:'',
+            errormesg:'',
+
           }
       },
       created (){
@@ -87,21 +95,32 @@
           $(".listitem:eq("+index+") .xz_detail").toggleClass('active');
           $(".listitem:eq("+index+") .iconfont").toggleClass('active');
         },
-        miaosha:function(item){
-          console.log(item)
-          if(item.status!=0){
-            return false;
+        todetail:function(item){
+          this.$router.push({path: '/mysedKill/secondcardetail/'+item.itemId, params: {}})
+        },
+        tosign:function (item) {
+          if(item.status==2){
+            this.$router.push({path: '/mysedKill/secondkilllogin/'+item.itemId, params: {}})
           }
-          this.actiontimeone=item.killtime;
-          this.enrol_show=true;
         }
-      },mounted (){
+      },
+    mounted (){
       let id = this.$route.params.code;
-      var _that=this;
+      localStorage.sedkillcode=id;
+//      var _that=this;
         api.ap_sedkill_detail({'activityCode':id})
         .then(res => {
           console.log(res)
-          _that.titlelistaa=res.result;
+          this.loadingShow=false;
+          if(res.result.status==1){
+            this.killlist=res.result.itemList;
+
+          }else{
+            this.errormesg=this.statustype[res.result.status]
+          }
+          this.beginTime=util.toDateString(res.result.beginTime)
+          console.log("a----",this.beginTime);
+          this.endTime=util.toDateString(res.result.endTime)
         }).catch(error => {
           console.log(error)
         });

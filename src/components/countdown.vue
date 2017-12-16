@@ -26,8 +26,13 @@
         default :''
       }
     },
+    watch:{
+      endTime(){
+        this.countdowm(this.endTime/1000)
+      }
+    },
     mounted () {
-      this.countdowm(this.endTime)
+
     },
     methods: {
       countdowm(timestamp){

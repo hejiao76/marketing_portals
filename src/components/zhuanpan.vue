@@ -1,7 +1,7 @@
 <template>
   <div  style="background-size:cover;">
     <div class="img_box" style="display: none;">
-      <img class="imgitem" :id="['imglist'+index]" :src="item.bgImg" v-for="(item,index,key) in imglist" onerror="javascript:item.bgImg='../assets/img/timg.jpeg'"  />
+      <img class="imgitem" :id="['imglist'+index]" :src="item.bgImg" v-for="(item,index,key) in imglist"  />
     </div>
   <div class="banner">
     <div class="turnplate" >
@@ -102,10 +102,12 @@ var turnplate={
 
               //添加对应图标
 
-                var img= document.getElementById("imglist"+i);
-             if(img){
-               ctx.drawImage(img,-20,30,40,40);
+              var img= document.getElementById("imglist"+i);
+              console.log("这里判断图片---->",img.src);
+             if(this.imglist[i].bgImg){
+                 ctx.drawImage(img,-20,30,40,40);
              }
+
               ctx.restore();
               //----绘制奖品结束----
             }
@@ -145,7 +147,7 @@ var turnplate={
       api.ap_prizedraw({'activityCode':id}).then(res => {
         console.log('xxxdetail',res.result.prizeList)
         turnplate.restaraunts = res.result.prizeList;
-        var thanks={bgImg: "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3256036687,742666259&fm=27&gp=0.jpg", giftGroupName: "谢谢惠顾", level: 0}
+        var thanks={bgImg: undefined, giftGroupName: "谢谢惠顾", level: 0}
         turnplate.restaraunts.unshift(thanks);
         turnplate.colors = ["#FD767B","#FD5B5D", "#FC4B4D","#FD5B5D","#FD767B", "#FC4B4D" ];
         this.imglist=turnplate.restaraunts;

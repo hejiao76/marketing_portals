@@ -20,7 +20,7 @@
               </div>
               <div>
                 <span class="spa">可用的购车人</span>
-                <span class="spb">{{detail.name}}</span>
+                <span class="spb">{{detail.userName}}</span>
               </div>
               <div>
                 <span class="spa">适用范围</span>
@@ -120,6 +120,6 @@
   .detailbox .getBox { padding-bottom: .2rem;}
   .detailbox .qy_list { border-bottom: none;}
   .detailbox .spa { color:#666;}
-  .detailbox .codee { font-size: .18rem;}
+  .detailbox .codee { font-size: .14rem;}
   .statustype { background: #d8d8d8; font-size: .12rem; padding: .02rem .05rem; color: #666666; float: right; border-radius: .03rem; position: absolute; right: 0;}
 </style>

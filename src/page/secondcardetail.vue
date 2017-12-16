@@ -1,56 +1,103 @@
 <template>
   	<div>
       <loading v-show="loadingShow"></loading>
+      <mesg v-bind:mesg="mesg"></mesg>
       <div class="cardetail">
-          <img class="banner" src="../assets/img/timg.jpeg" />
+          <img class="banner" :src="datamesg.whitePic" />
           <div class="detail_mesg">
-            <div class="mesg_title">北汽新能源万元车款抵扣</div>
-            <div class="begintime">2017年02月08日  19:00 开抢</div>
+            <div class="mesg_title">{{datamesg.itemName}}</div>
+            <div class="begintime">{{util.toFullDateString(datamesg.beginTime)}}开抢</div>
             <div class="list">
               <span class="spa">秒杀价 </span>
-              <span class="spb"></span>
+              <span class="spb"><span>{{datamesg.amount}}</span><span>{{datamesg.couponAmount}}</span></span>
             </div>
             <div class="list">
               <span class="spa">报名时间 </span>
-              <span class="spb"></span>
+              <span class="spb">{{util.toFullDateString(datamesg.enrollStartTime)}}至{{util.toFullDateString(datamesg.enrollEndTime)}}</span>
             </div>
             <div class="list">
               <span class="spa">秒杀说明  </span>
-              <span class="spb"></span>
+              <span class="spb">{{datamesg.description}}</span>
             </div>
             <div class="city">查看适用城市</div>
           </div>
           <div class="bannr_title"></div>
-        <div class="bannr_titlea"> <countdown endTime="1514061620" :callback="callback" endText="已经结束了"></countdown>后开始</div>
+        <div class="bannr_titlea" v-show="reversedMessage>0"> <countdown :endTime="datamesg.beginTime" :callback="callback" endText="00：00：00"></countdown>后开始</div>
         <div class="btnbox">
-          <div class="btna">即将开始</div>
-          <div class="btnb">马上报名</div>
+          <div class="btna" @click="sedkill">{{reversedMessage>5000?'即将开始':(reversedMessage>0?reversedMessage/1000+'秒后即将开始':'立即秒杀')}}</div>
+          <div class="btnb" @click="tosign(datamesg)">{{status[datamesg.status]}}</div>
         </div>
-        <img class="banner" src="../assets/img/timg.jpeg" />
+        <div v-html="datamesg.details"></div>
       </div>
     </div>
 </template>
 <script>
   import Final from "../util/Final";
-  import API from "./../fetch/api";
+  import api from "./../fetch/api";
   import loading from "../components/loading";
   import countdown from "../components/countdown";
+  import * as util from "./../util/util"
+  import mesg from "../components/mesg";
   export default {
       data() {
           return {
-
+            mesg:'',
+            util:util,
+            status:['活动已结束','报名未开始','快速报名','已报名','报名已结束'],
+            loadingShow:true,
+            itemId:'',
+            datamesg:{},
           }
       },
       components :{
         loading,
-        countdown
+        countdown,
+        mesg
       },
+    computed: {
+      reversedMessage: function () {
+        let enrollStartTime= this.datamesg.enrollStartTime;
+        let newdata=Date.parse(new Date());
+        return enrollStartTime-newdata;
+      }
+    },
       methods : {
-
         callback:function(){
 
         },
+        tosign:function (item) {
+          if(item.status==2){
+            this.$router.push({path: '/mysedKill/secondkilllogin/'+this.itemId, params: {}})
+          }
+        },
+        sedkill:function () {
+          api.ap_sedkill_seckill({clicktype:1,itemId:this.itemId})
+            .then(res => {
+              if(res.status){
 
+              }else{
+                  this.mesg=res.message;
+              }
+              console.log(res)
+            }).catch(error => {
+            console.log(error)
+          });
+        }
+
+
+      },mounted (){
+        this.itemId=this.$route.params.itemId;
+        api.ap_sedkill_info({itemId:this.itemId})
+          .then(res => {
+            console.log(res)
+            this.loadingShow=false;
+            if(res.status){
+              this.datamesg=res.result
+            }
+          }).catch(error => {
+          this.loadingShow=false;
+          console.log(error)
+        });
       }
   }
 

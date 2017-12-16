@@ -20,6 +20,7 @@ export default {
         this.showstatus=true;
         setTimeout(function(){
           _that.showstatus=false;
+          _that.mesg="";
         },2000)
       }
     }
@@ -30,5 +31,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.showmesg { position: fixed; width:1rem; height: .6rem; z-index: 333; font-size: .14rem; left: 0; right:0; top:0; bottom:0; margin: auto; display: flex; align-items: center;justify-content:center; text-align: center; border-radius: .04rem; background: rgba(0,0,0,0.5); color: #ffffff;}
+.showmesg { position: fixed; width:2rem; height: .6rem; z-index: 333; font-size: .14rem; left: 0; right:0; top:0; bottom:0; margin: auto; display: flex; align-items: center;justify-content:center; text-align: center; border-radius: .04rem; background: rgba(0,0,0,0.5); color: #ffffff;}
 </style>

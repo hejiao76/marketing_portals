@@ -14,7 +14,9 @@
           <div class="Verification">
               <input type="number" class="logintext code" v-model="userCode" placeholder="请输入验证码" />
               <span class="btn_code" @click="getAuthCode()" >{{codestatus?'获取验证码':timeout+'s后再次获取'}}</span>
-            </div>
+        </div>
+
+            <span class="checked">请选择提车经销商参与活动<i class="iconfont icon-jiantou"></i></span>
             <button class="codebtn" @click="getcoupon">点击领卷</button>
         </div>
         <div class="couponList"  v-show="status==0"  v-for="item in couponlist" :key="item.id">
@@ -58,7 +60,7 @@
             <div class="centerlist qy_list">
               <span class="spa">抵扣权益</span>
               <ul class="qy_ul">
-                <li v-for="(item,index,key) in addUserCoupon.result.couponContent" :key="index">{{item.name}},</li>
+                <li v-for="(item,index,key) in addUserCoupon.result.couponContent" :key="index">{{item.name}}</li>
               </ul>
             </div>
             <div class="centerlist validity">
@@ -97,8 +99,7 @@
 
         <div class="ruleDestail" v-show="status==2" style="padding-bottom: 1rem;">
           <div class="ruletitle">使用细则</div>
-          <div class="rulelist">
-              {{juanxize}}
+          <div class="rulelist" v-html="addUserCoupon.result.details">
           </div>
         </div>
       </div>
@@ -144,6 +145,7 @@
       },
       mounted (){
           this.activityCode = window.location.href.split('coupon/')[1];
+        this.activityCode =this.$route.params.id;
           console.log(this.activityCode);
           this.getCouponActivityInfo();
       },
@@ -209,6 +211,8 @@
                 console.log(error)
               })
             }
+          }else {
+            this.ipone_err=true
           }
 
         },
@@ -236,7 +240,7 @@
            // this.loadingShow=true;
           let mobile=localStorage.mobile;
           let realName=localStorage.realName;
-          this.juanxize=data.description;
+
           if(mobile&&realName){
 //            $(".login .username").val(realName); // 弃用JQ
 //            $(".login .mobile").val(mobile); // 弃用JQ
@@ -296,7 +300,7 @@
                 this.addUserCouponFun()
                 this.status=2;
               }else {
-                alert('领券失败')
+                alert('登录失败')
               }
             }).catch(err => {
 

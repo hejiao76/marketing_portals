@@ -15,8 +15,8 @@ export default {
       * @param params
       * @returns {*}
     */
-    ap_sedkill_detail(params) {
-      return fetch.fetch('user/seckill/activity', params,'get');
+    ap_sedkill_info(params) {
+      return fetch.fetch('user/seckill/info', params,"get");
     },
     /**
      * 秒杀报名
@@ -32,7 +32,7 @@ export default {
      * @returns {*}
      */
     ap_sedkill_enroll(params) {
-      return fetch.fetch('user/seckill/dealer', params,'post');
+      return fetch.fetch('user/seckill/dealer', params,'get');
     },
     /**
      * 秒杀

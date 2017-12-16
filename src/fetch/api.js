@@ -20,6 +20,10 @@ const base = {
   base_veifyToken (params){
     return fetch.fetch('user/veifyToken',params);
   },
+  // 查询省市
+  base_getcity (params){
+    return fetch.fetch('sys/location',params,"get");
+  }
 
 }
 

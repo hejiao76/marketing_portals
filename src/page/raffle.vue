@@ -59,7 +59,7 @@
                 <li class="jl_list" v-for="(item,index,key) in jl_mesg.jllist">{{item.giftName}}</li>
               </ul>
           </div>
-          <div class="color_btn">立即领取</div>
+          <div class="color_btn" @click="tomyraddle">立即领取</div>
         </div>
 
       </div>
@@ -242,6 +242,9 @@ export default {
         rafflealigon:function(){
           this.status=null;
           $(".pointer").trigger("click");
+        },
+        tomyraddle:function(){
+            location.href="http://ec.web.dev.chinameds.cn/web/html/gift/giftlist.html"
         }
       },
     mounted (){
