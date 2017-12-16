@@ -16,7 +16,7 @@
               <span class="btn_code" @click="getAuthCode()" >{{codestatus?'获取验证码':timeout+'s后再次获取'}}</span>
         </div>
 
-            <span class="checked">请选择提车经销商参与活动<i class="iconfont icon-jiantou"></i></span>
+            <span class="checked" @click="tochecked">请选择提车经销商参与活动<i class="iconfont icon-jiantou"></i></span>
             <button class="codebtn" @click="getcoupon">点击领卷</button>
         </div>
         <div class="couponList"  v-show="status==0"  v-for="item in couponlist" :key="item.id">
@@ -140,12 +140,11 @@
             interval:null,
             timeout:60,
             activityId:null,
-            juanxize:''
+            juanxize:'',
           }
       },
       mounted (){
-          this.activityCode = window.location.href.split('coupon/')[1];
-        this.activityCode =this.$route.params.id;
+          this.activityCode = this.$route.params.code;
           console.log(this.activityCode);
           this.getCouponActivityInfo();
       },
@@ -285,6 +284,13 @@
           });
         },
         /**
+         * 选择经销商
+         * @returns {}
+         */
+        tochecked(){
+          this.$router.push({path:'/coupon/'+this.activityCode+'/loginchecked',query:{itemId:this.activecouponId}})
+        },
+        /**
          * 点击领券前验证是否登录
          * @returns {}
          */
@@ -312,7 +318,7 @@
          * @returns {}
          */
         tolist:function(){
-          this.$router.push({name: 'mycouponlist', params: {}})
+          this.$router.push({path: '/mycoupon/couponlist', params: {}})
         },
         todetail:function(){
           this.status=0;

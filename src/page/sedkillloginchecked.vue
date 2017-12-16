@@ -98,7 +98,7 @@
 
       },
       mounted (){
-        this.itemId= this.$route.params.itemId;
+        this.itemId= this.$route.query.id;
         api.base_getcity().then(res => {
           console.log(res)
           this.alllist=res.result;

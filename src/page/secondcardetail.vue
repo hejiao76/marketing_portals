@@ -22,7 +22,7 @@
             <div class="city">查看适用城市</div>
           </div>
           <div class="bannr_title"></div>
-        <div class="bannr_titlea" v-show="reversedMessage>0"> <countdown :endTime="datamesg.beginTime" :callback="callback" endText="00：00：00"></countdown>后开始</div>
+        <div class="bannr_titlea" v-show="reversedMessage>0"> <countdown :endTime="String(datamesg.beginTime)" :callback="callback" endText="00：00：00"></countdown>后开始</div>
         <div class="btnbox">
           <div class="btna" @click="sedkill">{{reversedMessage>5000?'即将开始':(reversedMessage>0?reversedMessage/1000+'秒后即将开始':'立即秒杀')}}</div>
           <div class="btnb" @click="tosign(datamesg)">{{status[datamesg.status]}}</div>
@@ -46,7 +46,10 @@
             status:['活动已结束','报名未开始','快速报名','已报名','报名已结束'],
             loadingShow:true,
             itemId:'',
-            datamesg:{},
+            datamesg:{beginTime:''},
+            reversedMessage:null,
+            codeId:'',
+            timeval:null
           }
       },
       components :{
@@ -55,27 +58,25 @@
         mesg
       },
     computed: {
-      reversedMessage: function () {
-        let enrollStartTime= this.datamesg.enrollStartTime;
-        let newdata=Date.parse(new Date());
-        return enrollStartTime-newdata;
-      }
+
     },
       methods : {
         callback:function(){
 
         },
+
         tosign:function (item) {
           if(item.status==2){
-            this.$router.push({path: '/mysedKill/secondkilllogin/'+this.itemId, params: {}})
+            this.$router.push({path: '/sedKill/'+this.codeId+'/secondkilllogin', params: {id:this.itemId}})
           }
         },
         sedkill:function () {
-          api.ap_sedkill_seckill({clicktype:1,itemId:this.itemId})
+          api.ap_sedkill_seckill({clientType:1,itemId:this.itemId})
             .then(res => {
               if(res.status){
 
               }else{
+                  this.mesg=""
                   this.mesg=res.message;
               }
               console.log(res)
@@ -86,13 +87,24 @@
 
 
       },mounted (){
-        this.itemId=this.$route.params.itemId;
+        let self=this;
+        setInterval(function(){
+          if(self.datamesg.beginTime){
+            let enrollStartTime=self.datamesg.beginTime
+            self.reversedMessage=enrollStartTime-Date.parse(new Date());
+          };
+      },1000)
+        this.codeId=this.$route.params.code;
+        this.itemId=this.$route.query.id;
         api.ap_sedkill_info({itemId:this.itemId})
           .then(res => {
             console.log(res)
             this.loadingShow=false;
             if(res.status){
               this.datamesg=res.result
+              var self=this;
+
+
             }
           }).catch(error => {
           this.loadingShow=false;

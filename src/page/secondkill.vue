@@ -78,7 +78,7 @@
             beginTime:'',
             endTime:'',
             errormesg:'',
-
+            codeId:''
           }
       },
       created (){
@@ -96,19 +96,18 @@
           $(".listitem:eq("+index+") .iconfont").toggleClass('active');
         },
         todetail:function(item){
-          this.$router.push({path: '/mysedKill/secondcardetail/'+item.itemId, params: {}})
+          this.$router.push({path: '/sedKill/'+this.codeId+'/secondcardetail', query: {id:item.itemId}})
         },
         tosign:function (item) {
           if(item.status==2){
-            this.$router.push({path: '/mysedKill/secondkilllogin/'+item.itemId, params: {}})
+            this.$router.push({path: '/sedKill/'+this.codeId+'/secondkilllogin', query: {id:item.itemId}})
           }
         }
       },
     mounted (){
-      let id = this.$route.params.code;
-      localStorage.sedkillcode=id;
+      this.codeId = this.$route.params.code;
 //      var _that=this;
-        api.ap_sedkill_detail({'activityCode':id})
+        api.ap_sedkill_detail({'activityCode':this.codeId})
         .then(res => {
           console.log(res)
           this.loadingShow=false;

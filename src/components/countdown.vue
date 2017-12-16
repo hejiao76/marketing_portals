@@ -1,5 +1,5 @@
 <template>
-  <span :endTime="endTime" :callback="callback" :endText="endText">
+  <span :endTime="String(endTime)" :callback="callback" :endText="endText">
     <slot>
       {{content}}
     </slot>

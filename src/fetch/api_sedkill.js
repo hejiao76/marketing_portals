@@ -23,7 +23,7 @@ export default {
      * @param params
      * @returns {*}
      */
-    ap_sedkill_enroll(params) {
+    ap_sedkill_enrollaa(params) {
       return fetch.fetch('user/seckill/enroll', params,'post');
     },
     /**

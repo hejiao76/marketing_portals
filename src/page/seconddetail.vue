@@ -24,7 +24,7 @@
               </div>
               <div class="item_list">
                 <span class="spa">秒杀券价值</span>
-                <span class="spb">{{detailmesg.couponAmount}}</span>
+                <span class="spb">{{}}</span>
               </div>
             </div>
 

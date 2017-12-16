@@ -255,7 +255,7 @@ export default {
 //        desc:'xq'
 //      }
 //      this.weChatShare(shareInfo)
-      let id = this.$route.params.id;
+      let id = this.$route.params.code;
       var _that=this;
       console.log(id);
       api.base_veifyToken().then(res => {

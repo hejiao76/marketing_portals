@@ -22,6 +22,7 @@
               </div>
             </div>
             <div class="xz_detail" v-html="item.details">
+              {{item.details}}
             </div>
         </div>
       </div>
@@ -43,11 +44,13 @@
             couponlist:[{amount:4000,type:1,status:1,name:'新人注册抵车款超级优惠券',timeout:'2017.8.1',detail:'1. 活动最终解释权归平台所有2. 活动最终解释权归平台所有。'},
               {amount:4000,type:2,status:2,name:'新人注册抵车款超级优惠券',timeout:'2017.8.1',detail:'1. 活动最终解释权归平台所有2. 活动最终解释权归平台所有。'},
               {amount:4000,type:1,status:3,name:'新人注册抵车款超级优惠券',timeout:'2017.8.1',detail:'1. 活动最终解释权归平台所有2. 活动最终解释权归平台所有。'}
-            ]
+            ],
+            codeId:'',
           }
       },
       created (){
-        this.getmyCouponList(1);
+        this.getmyCouponList();
+
       },
       components :{
         loading
@@ -76,7 +79,7 @@
          * @returns {*}
          */
         getDetail(couponCode){
-          this.$router.push({name:'coupondetail', params: {id: couponCode}})
+          this.$router.push({path:'/coupon/'+couponCode+'/coupondetail'})
         },
         Pickclick : function (data){
             this.loadingShow=true;

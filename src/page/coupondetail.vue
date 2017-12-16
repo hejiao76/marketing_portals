@@ -63,7 +63,7 @@
           }
       },
       mounted (){
-          this.activityId = this.$route.params.id;
+          this.activityId = this.$route.params.code;
           this.imgurl=Final.QRCODE+"/v1/gift/qrcode?activityId="+this.activityId+"&activityType=201&couponCode=yunyong"
           this.getmyCouponInfo({couponCode:this.activityId})
       },

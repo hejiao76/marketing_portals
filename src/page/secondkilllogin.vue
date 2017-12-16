@@ -47,8 +47,9 @@
             ipone_err:false,
             localname:"",
             itemId:'',
-            dealerId:'',
-            mesg:""
+            dealerId:10001,
+            mesg:"",
+            codeId:''
           }
       },
       components :{
@@ -101,7 +102,7 @@
           localStorage.photo=mesg.photo;
         },
         checkedlist:function(){
-            this.$router.push({path: '/mysedKill/sedkillloginchecked/'+this.itemId, params: {}})
+            this.$router.push({path: '/sedKill/'+this.codeId+'/sedkillloginchecked', query: {id:this.itemId}})
         },
         loginout:function(){
           localStorage.removeItem("realName");
@@ -128,12 +129,12 @@
 //          this.status=2;
         },
         addUserCouponFun(){
-          var obj = {userName:this.userName, userPhone:this.userPhone, checkCode:this.userCode, couponId: this.activecouponId, itemId:this.itemId,dealerId:this.dealerId}
-          api.ap_add_user_coupon(obj)
+          var obj = {userName:this.userName, userPhone:this.userPhone, checkCode:this.userCode,  itemId:this.itemId,dealerId:this.dealerId}
+          api.ap_sedkill_enrollaa(obj)
             .then(res => {
               if (res.status) {
                 this.addUserCoupon = res
-                console.log('领取成功');
+                console.log('报名');
               }else {
                 if(res.code == 201){
                   this.addUserCoupon = res;
@@ -147,7 +148,8 @@
         },
 
       },mounted (){
-      this.itemId= this.$route.params.itemId;
+        this.codeId= this.$route.params.code;
+      this.itemId= this.$route.query.id;
       let code = localStorage.sedkillcode;
       let mobile=localStorage.mobile;
       let realName=localStorage.realName;
