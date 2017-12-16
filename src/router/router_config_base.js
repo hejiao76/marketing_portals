@@ -17,56 +17,60 @@ const sedkillloginchecked = r => require.ensure([], () => r(require('../page/sed
 
 const routerConfig = [{
   path: '',
-  redirect:"/prizedraw"
+  redirect:""
 }, {
-    path: '/prizedraw/:id', // 抽奖活动入口
-    name:"prizedraw",
+    path: '/prizedraw/:code', // 抽奖活动入口
     component: prizedraw
   }, {
-    path: '/coupon/:id', //抵扣券活动入口
-    name:"coupons",
+    path: '/coupon/:code', //抵扣券活动入口
     component: coupons
-    }, {
-    path: '/coupon/:id/loginchecked', //抵扣券选择经销商
-    name:"loginchecked",
+    },
+  {
+    path: '/sedKill/:code', //秒杀活动入口
+    component: secondkill
+  },
+
+  /*****************抵扣券路由********************/
+  {
+    path: '/coupon/:code/loginchecked', //抵扣券选择经销商
     component: loginchecked
   }
   , {
     path: '/mycoupon/couponlist', //我的抵扣券
-    name:"mycouponlist",
     component: mycouponlist
   }
   , {
-    path: '/coupon/coupondetail/:id', //抵扣券详情
-    name:"coupondetail",
+    path: '/coupon/:code/coupondetail', //抵扣券详情 缺ItemId
     component: coupondetail
-  }
-  , {
-    path: '/sedKill/:code', //秒杀活动入口
-    component: secondkill
   },
+
+  /*****************秒杀活动路由********************/
+  {
+    path: '/sedKill/:code/secondcardetail', //秒杀券详情
+    component: secondcardetail
+  }, {
+    path: '/sedKill/:code/secondkilllogin', //秒杀登录 缺ItemId
+    component: secondkilllogin
+  },
+  {
+    path: '/sedKill/:code/sedkillloginchecked', //选择经销商 缺itemId
+    component: sedkillloginchecked
+  },{
+    path: '/sedKill/:code/secondkillpay', //秒杀支付
+    component: secondkillpay
+  },
+
+
+
+
+
   {
     path: '/mysedKill/secondlist',  //我的秒杀列表
     component: secondlist
-  },{
-    path: '/mysedKill/seconddetail',
-    component: seconddetail
-  },{
-    path: '/mysedKill/secondcardetail/:itemId',
-    component: secondcardetail
-  },{
-    path: '/mysedKill/secondkilllogin/:itemId',
-    component: secondkilllogin
-  },{
-    path: '/mysedKill/sedkillloginchecked/:itemId',
-    component: sedkillloginchecked
-  },{
-    path: '/mysedKill/secondkillpay',
-    component: secondkillpay
   },
   {
-    path: '/mysedKill/secondkillpay',
-    component: secondkillpay
+    path: '/mysedKill/seconddetail',//我的秒杀订单详情
+    component: seconddetail
   },
 
   //sedkillloginchecked
