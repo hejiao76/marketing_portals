@@ -40,19 +40,19 @@ const routerConfig = [{
     component: secondkill
   },
   {
-    path: '/sedKill/secondlist',  //我的秒杀列表
+    path: '/mysedKill/secondlist',  //我的秒杀列表
     component: secondlist
   },{
-    path: '/sedKill/seconddetail',
+    path: '/mysedKill/seconddetail',
     component: seconddetail
   },{
-    path: '/sedKill/secondcardetail',
+    path: '/mysedKill/secondcardetail',
     component: secondcardetail
   },{
-    path: '/sedKill/secondkilllogin',
+    path: '/mysedKill/secondkilllogin',
     component: secondkilllogin
   },{
-    path: '/sedKill/secondkillpay',
+    path: '/mysedKill/secondkillpay',
     component: secondkillpay
   },
 

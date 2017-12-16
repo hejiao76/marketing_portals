@@ -135,3 +135,19 @@ textarea {
   width:100%;  margin: 0 auto; min-height: 100%;  font-size: 14px; }
 html { font-size: 100px;}
 html,body { height: 100%;}
+
+@media screen and (max-width: 415px) {
+  html { font-size: 110px;}
+}
+@media screen and (max-width: 396px) {
+  html { font-size: 105px;}
+}
+@media screen and (max-width: 376px) {
+  html { font-size: 100px;}
+}
+@media screen and (max-width: 344px) {
+  html { font-size: 92px;}
+}
+@media screen and (max-width: 321px) {
+  html { font-size: 85px;}
+}

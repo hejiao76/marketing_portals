@@ -296,7 +296,7 @@
                 this.addUserCouponFun()
                 this.status=2;
               }else {
-                alert('领卷失败')
+                alert('领券失败')
               }
             }).catch(err => {
 
@@ -314,12 +314,9 @@
           this.status=0;
         },
         /**
-         * 用来截取啥东西的？？？
          * @returns {}
          */
-       // getsplit:function(detail){
         getsplit:function(detail){
-          //let detail = 'rererwe';   //测试用的，上线一定要删除
             return detail.split("\n");
 
         }

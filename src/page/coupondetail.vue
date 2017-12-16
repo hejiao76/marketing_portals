@@ -103,7 +103,7 @@
           }
         },
         getsplit:function(detail){
-            return detail.split("\r\n");
+            return detail.split("\n");
         }
       },
   }
