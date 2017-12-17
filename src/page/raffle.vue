@@ -250,7 +250,6 @@ export default {
 //      }
 //      this.weChatShare(shareInfo)
       let id = this.$route.params.code;
-      alert(id)
       var _that=this;
       console.log(id);
       api.base_veifyToken().then(res => {
@@ -263,6 +262,7 @@ export default {
         console.log(error)
       });
       //获取详情
+      console.log("raffle---->mounted")
       api.ap_prizedraw({'activityCode':id}).then(res => {
         console.log(res)
         let isShowJoinSize=res.result.isShowJoinSize;

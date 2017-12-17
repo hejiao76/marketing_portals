@@ -140,7 +140,7 @@ var turnplate={
         })
       }
       console.log(windowwidth)
-      let id = this.$route.params.id;
+      let id = this.$route.params.code;
       api.ap_prizedraw({'activityCode':id}).then(res => {
         console.log('xxxdetail',res.result.prizeList)
         turnplate.restaraunts = res.result.prizeList;
