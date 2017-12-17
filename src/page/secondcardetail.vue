@@ -28,8 +28,8 @@
           后开始
         </div>
         <div class="btnbox ">
-          <div class="btna" @click="sedkill">
-            {{reversedMessage > 5000 ? '即将开始' : (reversedMessage > 0 ? reversedMessage / 1000 + '秒后即将开始' : '立即秒杀')}}
+          <div :class="['btna',{close:datamesg.status==0}]" @click="sedkill">
+            {{datamesg.status==0?'活动已结束':(reversedMessage > 5000 ? '即将开始' : (reversedMessage > 0 ? reversedMessage / 1000 + '秒后即将开始' : '立即秒杀'))}}
           </div>
           <div class="btnb" @click="tosign(datamesg)">{{status[datamesg.status]}}</div>
         </div>
@@ -113,8 +113,11 @@
       },
       sedkill: function () {
         //校验是否登录
+        if(this.reversedMessage>0 || this.datamesg.status==0){
+          return false;
+        }
         this.checkLogin();
-        if (reversedMessage < 0) {
+        if (this.reversedMessage < 0) {
           this.checkLogin();
         } else {
 
@@ -141,9 +144,11 @@
       setInterval(function () {
         if (self.datamesg.beginTime) {
           let enrollStartTime = self.datamesg.beginTime
-          self.reversedMessage = enrollStartTime - Date.parse(new Date());
-        }
-        ;
+          self.reversedMessage = enrollStartTime - Date.parse(new Date())+1000;
+          if(self.reversedMessage<=0 &&  self.datamesg.status!=3){
+            self.datamesg.status=4;
+          }
+        };
       }, 1000);
       this.codeId = this.$route.params.code;
       this.itemId = this.$route.query.id;
@@ -155,8 +160,6 @@
           if (res.status) {
             this.datamesg = res.result
             var self = this;
-
-
           }
         }).catch(error => {
         this.loadingShow = false;

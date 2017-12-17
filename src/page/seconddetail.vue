@@ -82,8 +82,8 @@
       </div>
       <div class="detail_btn_box">
         <span class="btn brna" v-if="orderstatus==2">立即支付</span>
-        <span class="btn" @click="tocardetail(detailmesg)" v-if="orderstatus==1">前往秒杀</span>
-        <span class="btn" @click="todetail(detailmesg)" v-if="orderstatus !=1 && orderstatus!=2">查看秒杀</span>
+        <span class="btn" @click="tocardetail(detailmesg)" v-if="orderstatus==1 || orderstatus==10">前往秒杀</span>
+        <span class="btn" @click="tocardetail(detailmesg)" v-if="orderstatus !=1 && orderstatus!=2">查看秒杀</span>
       </div>
       <div class="codeimgshow" v-show="codeimgshow">
         <div class="imgbox">
@@ -110,6 +110,7 @@
         util: util,
         codeimgshow: null,
         loadingShow: false,
+        activityCode:'',
         statustext: {
           1: '已报名',
           2: '待支付',
@@ -120,7 +121,7 @@
           7: '已退款',
           8: '已使用',
           9: '已过期',
-          10: '去秒杀'
+          10: '秒杀中'
         },
         detailmesg: {itemId: 21212, status: 0, timetype: 1, itemName: 'xxxx', amount: 11, beginTime: 112121212,},
         orderstatus: null,
@@ -140,11 +141,12 @@
 
       callback: function () {
       },
-      todetail: function () {
-        this.$router.push({path: '/sedKill/' + this.codeId, query: {}})
+      todetail: function (item) {
+        this.$router.push({path: '/sedKill/' + item.codeId, query: {}})
       },
       tocardetail: function (item) {
-        this.$router.push({path: '/sedKill/' + this.codeId + '/secondcardetail', query: {id: item.itemId}})
+        this.activityCode=item.activityCode;
+        this.$router.push({path: '/sedKill/' + this.activityCode + '/secondcardetail', query: {id: item.itemId}})
       },
       tomap: function (item) {
         location.href = "http://ec.web.dev.chinameds.cn/web/html/dealer/dealersInMap.html?skuId=" + 10001

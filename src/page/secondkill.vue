@@ -22,7 +22,7 @@
         </div>
         <div class="killdetail">
           <div class="killleft" @click="todetail(item)">
-            <div class="label">
+            <div class="label" v-if="gettime(item.beginTime)">
               <span class="bigicon"></span>
               <!--<div><span class="smallicon iconfont  icon-miaobiao"></span>-->
               <!--即将开始</div>-->
@@ -107,6 +107,7 @@
       }
     },
     methods: {
+
       aliValid() {
         var nc_appkey = 'FFFF0000000001790EE8'; // 应用标识,不可更改
         var nc_scene = 'backup1_h5';  //场景,不可更改
@@ -147,6 +148,9 @@
         if (item.status == 2) {
           this.$router.push({path: '/sedKill/' + this.codeId + '/secondkilllogin', query: {id: item.itemId}})
         }
+      },
+      gettime:function(time){
+        let newdata=new data()
       }
     },
     mounted() {

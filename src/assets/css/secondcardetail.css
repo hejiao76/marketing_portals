@@ -92,7 +92,7 @@
   float: left;
   display: inline-block;
 }
-
+.btnbox .btna.close { background: #b7b7b7; border-color: #b7b7b7; color: #ffffff;}
 .btnbox .btnb {
   color: #FF002D;
   background: #ffffff;

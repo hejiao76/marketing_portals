@@ -43,7 +43,8 @@
   background: url("../img/kill.png") no-repeat;
   background-size: 100% 100%;
 }
-
+.center_left>img {
+  width:100%; height: 100%;}
 .killright {
   width: 60%;
   left: 37%;
@@ -98,13 +99,16 @@
 
 .timesigning {
   float: left;
+  font-size: .12rem;
 }
 
 .btn_box .btn {
-  width: .68rem;
+  width: .6rem;
   height: .24rem;
   line-height: .24rem;
   font-size: .12rem;
+  display: inline-block;
+  text-align: center;
 }
 
 .btn_box .btn:not(:last-child) {
@@ -138,4 +142,57 @@
   font-size: .16rem;
   margin-top: .15rem;
   text-align: center;
+}
+
+
+.codeimgshow {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 111;
+  background: rgba(0, 0, 0, 0.6);
+  top: 0;
+  left: 0;
+}
+
+.codeimgshow > .imgbox {
+  width: 2.5rem;
+  border-radius: .04rem;
+  height: 2.5rem;
+  position: absolute;
+  background: #fff;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.imgbox > img {
+  width: 1.6rem;
+  height: 1.6rem;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0.4rem;
+  margin: auto;
+  position: absolute;
+}
+
+.imgbox > .text {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: .4rem;
+  text-align: center;
+}
+
+.codeimgshow .close {
+  position: absolute;
+  right: -.55rem;
+  top: -.24rem;
+  padding: .2rem;
+  font-size: .28rem;
+  color: #ffffff;
+  z-index: 100;
 }
