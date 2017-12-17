@@ -38,7 +38,7 @@
 </template>
 <script>
   import Final from "../util/Final";
-  import API from "./../fetch/api";
+  import api from "./../fetch/api";
   import loading from "../components/loading";
   import countdown from "../components/countdown";
   export default {
@@ -151,7 +151,7 @@
           }
       },
       created (){
-        //alert("create");
+
       },
       components :{
         loading,
@@ -166,8 +166,13 @@
         }
 
       },
-      mounted:{
+      mounted () {
+        api.ap_sedkill_my_activity_list()
+        .then(res => {
 
+        }).catch(error => {
+
+        });
       }
   }
 

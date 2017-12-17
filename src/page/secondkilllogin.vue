@@ -23,7 +23,7 @@
         </div>
         <div class="list_item">
           <span class="title">选择经销商</span>
-          <span class="checked" @click="checkedlist">请选择提车经销商参与活动<i class="iconfont icon-jiantou"></i></span>
+          <span class="checked" @click="checkedlist">{{dealerName?dealerName.substr(0,12):'请选择提车经销商参与活动'}}<i class="iconfont icon-jiantou"></i></span>
         </div>
         <div class="siginout" v-show="localname" @click="loginout">不是{{localname}}? 点此退出</div>
         <div class="sedkillbtn" @click="login">报名秒杀</div>
@@ -47,14 +47,19 @@
             ipone_err:false,
             localname:"",
             itemId:'',
-            dealerId:10001,
             mesg:"",
-            codeId:''
+            codeId:'',
+            dealerId:'',
+            dealerName:''
           }
       },
       components :{
         loading,
         mesg
+      },
+      activated(){
+          this.dealerId= localStorage.dealerId;
+          this.dealerName= localStorage.dealerName;
       },
       methods : {
         Pickclick : function (data){
@@ -110,7 +115,9 @@
           location.reload()
         },
         login:function(){
-          if(!this.userName || !this.userPhone || !this.userCode){
+          if(!this.userName || !this.userPhone || !this.userCode ||!this.dealerId ){
+            this.mesg='';
+            this.mesg='请填入报名信息';
             return;
           }
           api.base_login({userPhone:this.userPhone,checkCode:this.userCode,username :this.userName})

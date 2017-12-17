@@ -3,7 +3,7 @@
       <loading v-show="loadingShow"></loading>
       <div class="center_box">
         <div class="bannerbox">
-          <img class="banner" v-show="status==0||status==1 ||status==10" src="../assets/img/couponBanner.png"/>
+          <img class="banner" v-show="status==0||status==1 ||status==10||status==11" src="../assets/img/couponBanner.png"/>
           <div class="bottomtext">活动日期：<br>{{beginTime+'至'+endTime}}</div>
         </div>
 

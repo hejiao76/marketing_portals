@@ -6,13 +6,13 @@
 .banner .turnplate{display:block; width:336px; height: 336px; margin: 0 auto; position:relative;}
 .banner .turnplate canvas.item{position: absolute; left: 0; right:0; top:0; bottom:0; margin: auto;}
 .banner .turnplate .pointer {position: absolute;
-  width: 50%;
-  height: 50%;
+  width: 60%;
+  height: 60%;
   background: url("../img/jt2.png") no-repeat;
   background-size: 100% 100%;
-  left: 25%;
-  top: 21.5%;
-  transform-origin: 51% 58%;}
+  left: 19.6%;
+  top: 20%;
+  transform-origin: 50% 50%;}
 .turnplate { background: url("../img/cj_bg.png") no-repeat; background-size:100% 100%; }
 /*.more{display: block;width: 100%;position: fixed;top: 0;left: 0;height: 150px;}*/
 .cloud{position: fixed;left: 0;top: 70%;width: 150px;}
@@ -47,6 +47,6 @@
   width:2em; display: inline-block; position: absolute;left: 50%;
   margin-left: -1em;
   top: 50%; font-size: .2rem; line-height: 1.2;
-  margin-top: -0.6em;}
+  margin-top: -1.2em;}
 .centermesg.end { color: #C75D0D;}
 .centermesg.poining { color: #C75D0D;}

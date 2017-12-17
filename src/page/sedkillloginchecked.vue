@@ -20,7 +20,7 @@
 
         </div>
         <div class="checkedlist">
-            <div class="listitem" v-for="item in checkedlist">
+            <div class="listitem" v-for="item in checkedlist" @click="checkedDealer(item)">
                 <img class="logoimg" :src="item.dealerPicUrl" />
                 <div class="mesg_right">
                   <div class="title">{{item.dealerFullName}}</div>
@@ -94,6 +94,11 @@
           }).catch(error => {
             console.log(error)
           });
+        },
+        checkedDealer:function(item){
+          localStorage.dealerId=item.dealerId;
+          localStorage.dealerName=item.dealerFullName;
+          this.$router.back()
         }
 
       },

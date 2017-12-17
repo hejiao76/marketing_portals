@@ -7,7 +7,8 @@
   z-index:1;}
 .list_item .title { text-indent: .04rem; width: .9rem; display: inline-block; position: relative;z-index: 9; text-align: left;}
 .list_item:not(:last-child)::before { content: ""; width: auto; left: .15rem; right: .15rem; position: absolute; height: 1px; background: #f1f1f1; bottom: 0; z-index: 9; }
-.checked,.checked>i { float: right; color: #B7B7B7;}
+.checked,.checked>i { color: #B7B7B7;}
+.checked>i { float: right;}
 .getcode { position: absolute; width: .72rem; right: .15rem; font-size: .12rem; text-align: center; top: .11rem;
   height:.28rem; line-height: .28rem; border: 1px solid #57B5F2; color: #57B5F2; z-index: 13;}
 .siginout { text-align: right; font-size: .12rem; color: #52B4F5; margin-top: .12rem;}

@@ -64,7 +64,7 @@ export default {
    * @returns {*}
    */
   ap_sedkill_my_activity_list(params) {
-    return fetch.fetch('user/seckill/myActivityList', params,'post');
+    return fetch.fetch('user/seckill/myActivityList', params,'get');
   },
   /**
    * 我的活动详情
