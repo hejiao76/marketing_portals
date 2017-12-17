@@ -20,20 +20,20 @@
           <div class="killlist" :key="item.itemId" v-for="(item,index,key) in killlist">
               <div class="timetolset"><span class="iconfont icon-miaobiao_kuai"></span>{{util.toFullDateString(item.beginTime)}}</div>
               <div class="killdetail">
-                <div class="killleft">
+                <div class="killleft"  @click="todetail(item)" >
                     <div class="label">
                       <span class="bigicon"></span>
                       <!--<div><span class="smallicon iconfont  icon-miaobiao"></span>-->
                       <!--即将开始</div>-->
                     </div>
-                    <img @click="todetail(item)"  class="headimg"  :src="item.whitePic"  />
+                    <img class="headimg"  :src="item.whitePic"  />
                 </div>
                 <div class="killright">
                   <div class="killtitle" @click="todetail(item)">{{item.itemName}}<span class="number">仅{{item.surplusCount}}张</span></div>
                     <div class="right_center">
                       <div>
-                        <div class="killtime">报名时间：{{util.toFullDateString(item.enrollStartTime)}} 至<br> {{util.toFullDateString(item.enrollEndTime)}}</div>
-                        <div class="killprice">秒杀价 <span class="redcolor">￥{{item.amount}}</span> <span style="color: #999999;font-size: .16rem; margin-left:10px;text-decoration:line-through;">￥{{item.couponAmount}}</span></div>
+                        <div class="killtime">报名时间：{{util.toFullDateString(item.enrollStartTime).split(" ")[0]}} 至<br> {{util.toFullDateString(item.enrollEndTime).split(" ")[0]}}</div>
+                        <div class="killprice">秒杀价 <span class="redcolor">￥{{item.amount}}</span> <span style="color: #999999;font-size: .14rem; margin-left:10px;text-decoration:line-through;">￥{{item.couponAmount}}</span></div>
                       </div>
                     </div>
                     <div class="btn_box">
@@ -89,6 +89,11 @@
       },
       components :{
         loading
+      },
+      computed:{
+          willbegin:function(){
+            let beginTime=this.beginTime;
+          }
       },
       methods : {
           aliValid (){

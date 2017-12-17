@@ -111,9 +111,18 @@
             this.$router.push({path: '/sedKill/'+this.codeId+'/sedkillloginchecked', query: {id:this.itemId}})
         },
         loginout:function(){
-          localStorage.removeItem("realName");
-          localStorage.removeItem("mobile");
-          location.reload()
+          api.base_logout()
+            .then(res => {
+              if (res.status) {
+                this.mesg("退出成功");
+                localStorage.removeItem("realName");
+                localStorage.removeItem("mobile");
+                location.reload();
+              }else {
+                this.mesg("退出失败")
+              }
+            }).catch(err => {
+          });
         },
         login:function(){
           if(!this.userName || !this.userPhone || !this.userCode ||!this.dealerId ){
