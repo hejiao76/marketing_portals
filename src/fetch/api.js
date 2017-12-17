@@ -1,6 +1,5 @@
 import * as fetch from "./fetch.js"
 
-import  apiApproval from './api_approval'
 import  apiPrizedraw from './api_prizedraw'
 import  apiCoupon from './api_coupon'
 import  apisedkill from './api_sedkill'
@@ -27,4 +26,4 @@ const base = {
 
 }
 
-export  default  Object.assign(base,apiApproval,apiPrizedraw,apiCoupon,apisedkill);
+export  default  Object.assign(base,apiPrizedraw,apiCoupon,apisedkill);

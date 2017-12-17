@@ -57,6 +57,9 @@
           <div class="bottom"  @click="enrol_show=false" style="height: .42rem; line-height: .42rem; font-size: .16rem; color: #007aff;">关闭</div>
         </div>
       </div>
+
+      <div id="_umfp" style="display:inline;width:1px;height:1px;overflow:hidden"></div>
+      <div id="dom_id" style="display:inline;width:1px;height:1px;overflow:hidden"></div>
     </div>
 </template>
 <script>
@@ -88,6 +91,32 @@
         loading
       },
       methods : {
+          aliValid (){
+            var nc_appkey =  'FFFF0000000001790EE8'; // 应用标识,不可更改
+            var nc_scene = 'backup1_h5';  //场景,不可更改
+            var nc_token = [nc_appkey, (new Date()).getTime(), Math.random()].join(':');
+            var nc_option = {
+              renderTo: '#dom_id',//渲染到该DOM ID指定的Div位置
+              appkey: nc_appkey,
+              scene: nc_scene,
+              token: nc_token,
+              trans: '{"name1":"code100"}',//测试用，特殊nc_appkey时才生效，正式上线时请务必要删除；code0:通过;code100:点击验证码;code200:图形验证码;code300:恶意请求拦截处理
+              callback: function (data) {// 校验成功回调
+                document.getElementById('csessionid').value = data.csessionid;
+                document.getElementById('sig').value = data.sig;
+                document.getElementById('token').value = nc_token;
+                document.getElementById('scene').value = nc_scene;
+              },
+              error: function (s) {
+              },
+              verifycallback: function (data) {
+                if (data.code == "200") {
+                }
+              }
+            };
+            NoCaptcha.init(nc_option);
+            NoCaptcha.setEnabled(true);
+          },
         Pickclick : function (data){
             this.loadingShow=true;
         },
@@ -105,6 +134,7 @@
         }
       },
     mounted (){
+//          this.aliValid();
       this.codeId = this.$route.params.code;
 //      var _that=this;
         api.ap_sedkill_detail({'activityCode':this.codeId})

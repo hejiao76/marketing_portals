@@ -13,11 +13,8 @@
 </template>
 <script>
   import api from "./../fetch/api"
-  import VHeader from "./header";
   import $ from 'jquery'
   import xx from '@/assets/js/awardRotate';
-  import VLeft from "./left";
-  import VConNav from "./con_nav";
   import Final from "../util/Final";
   import API from "../fetch/api";
   var widthaa=300;
