@@ -19,15 +19,31 @@
               <span class="spa">秒杀说明  </span>
               <span class="spb">{{datamesg.description}}</span>
             </div>
-            <div class="city">查看适用城市</div>
+            <div class="city" @click="saycity">查看适用城市</div>
           </div>
-          <div class="bannr_title"></div>
-        <div class="bannr_titlea" v-show="reversedMessage>0"> <countdown :endTime="String(datamesg.beginTime)" :callback="callback" endText="00：00：00"></countdown>后开始</div>
-        <div class="btnbox">
-          <div class="btna" @click="sedkill">{{reversedMessage>5000?'即将开始':(reversedMessage>0?reversedMessage/1000+'秒后即将开始':'立即秒杀')}}</div>
-          <div class="btnb" @click="tosign(datamesg)">{{status[datamesg.status]}}</div>
+        <div class="carbtnbox" v-if="datamesg.areaStatus==1">
+          <div class="bannr_titlea" v-show="reversedMessage>0"> <countdown :endTime="String(datamesg.beginTime)" :callback="callback" endText="00：00：00"></countdown>后开始</div>
+          <div class="btnbox ">
+            <div class="btna" @click="sedkill">{{reversedMessage>5000?'即将开始':(reversedMessage>0?reversedMessage/1000+'秒后即将开始':'立即秒杀')}}</div>
+            <div class="btnb" @click="tosign(datamesg)">{{status[datamesg.status]}}</div>
+          </div>
         </div>
-        <div v-html="datamesg.details"></div>
+        <div class="carbtnbox"  v-if="datamesg.areaStatus==0">
+          <div class="btnbox noaction">您所在的城市暂无秒杀</div>
+        </div>
+        <div class="detailbox" v-html="datamesg.details"></div>
+      </div>
+
+      <div class="citybox" v-show="citylist">
+        <div class="citylist">
+              <div class="title"><span class="iconfont icon-dingwei"></span>适用城市</div>
+              <ul class="itemlistcity">
+                <li class="cityname"  v-for="(item,index,key) in datamesg.areaNames?datamesg.areaNames.split(','):[]">
+                  {{item}}
+                </li>
+              </ul>
+            <div class="closebtn" @click="citylist=false">关闭</div>
+        </div>
       </div>
     </div>
 </template>
@@ -49,7 +65,8 @@
             datamesg:{beginTime:''},
             reversedMessage:null,
             codeId:'',
-            timeval:null
+            timeval:null,
+            citylist:false,
           }
       },
       components :{
@@ -109,8 +126,10 @@
 //            }).catch(error => {
 //            console.log(error)
 //          });
+        },
+        saycity:function(){
+          this.citylist=true;
         }
-
 
       },mounted (){
         let self=this;

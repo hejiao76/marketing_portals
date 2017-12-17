@@ -142,7 +142,6 @@ var turnplate={
       console.log(windowwidth)
       let id = this.$route.params.code;
       api.ap_prizedraw({'activityCode':id}).then(res => {
-        console.log('xxxdetail',res.result.prizeList)
         turnplate.restaraunts = res.result.prizeList;
         var thanks={bgImg: undefined, giftGroupName: "谢谢惠顾", level: 0}
         turnplate.restaraunts.unshift(thanks);
@@ -190,7 +189,7 @@ var turnplate={
         }
         if(_that.bRotate)return;
         _that.bRotate = !_that.bRotate;
-        let id = self.$route.params.id;
+        let id = self.$route.params.code;
         console.log(id)
         api.ap_prizedraw_go({'activityCode':id})
           .then(res => {

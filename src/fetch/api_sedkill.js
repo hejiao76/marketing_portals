@@ -72,7 +72,7 @@ export default {
    * @returns {*}
    */
   ap_sedkill_my_activity_info(params) {
-    return fetch.fetch('user/seckill/myActivityInfo', params,'post');
+    return fetch.fetch('user/seckill/myActivityInfo', params,'get');
   },
   /**
    * 秒杀活动删除

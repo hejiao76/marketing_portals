@@ -42,7 +42,7 @@
             <!--三等奖：礼品卡 50张</div>-->
                   <!--<div>5、活动时间：2017.11.01——2017.11.30</div>-->
                     <!--<div>6、活动最终解释权归厂商所有</div>-->
-            <div>{{description}}</div>
+            <div :key="index" v-for="(item,index,key) in  getsplit(description)" v-if="index<4" >{{item}}</div>
           </div>
         </div>
 
@@ -191,6 +191,9 @@ export default {
               })
             }
           }
+        },
+        getsplit:function(detail){
+          return detail.split("\n");
         },
         loginin:function(){
           var _that=this;

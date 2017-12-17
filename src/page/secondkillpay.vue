@@ -59,7 +59,7 @@
         }
 
       },mounted (){
-      let id = this.$route.params.id;
+      let id = this.$route.params.code;
 
       }
   }

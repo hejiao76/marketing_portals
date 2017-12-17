@@ -50,7 +50,9 @@
             mesg:"",
             codeId:'',
             dealerId:'',
-            dealerName:''
+            dealerName:'',
+            logining:true,
+            logintext:'报名秒杀'
           }
       },
       components :{
@@ -91,6 +93,9 @@
                 console.log(error)
               })
             }
+          }else{
+            _that.mesg="";
+            _that.mesg='请输入完整用户信息';
           }
 
         },
@@ -107,7 +112,6 @@
           localStorage.photo=mesg.photo;
         },
         checkedlist:function(){
-            alert(this.itemId);
             this.$router.push({path: '/sedKill/'+this.codeId+'/sedkillloginchecked', query: {id:this.itemId}})
         },
         loginout:function(){
@@ -125,11 +129,15 @@
           });
         },
         login:function(){
+          if(!this.logining){
+            return;
+          }
           if(!this.userName || !this.userPhone || !this.userCode ||!this.dealerId ){
             this.mesg='';
             this.mesg='请填入报名信息';
             return;
           }
+          this.logining=false;
           api.base_login({userPhone:this.userPhone,checkCode:this.userCode,username :this.userName})
             .then(res => {
               console.log(res)
@@ -137,11 +145,14 @@
                 this.setlocal(res.result);
                 this.addUserCouponFun()
                 this.status=2;
+                this.logintext='报名成功'
+                this.$router.back();
               }else {
                 this.mesg("登录失败")
+                this.logining=true;
               }
             }).catch(err => {
-
+            this.logining=true;
           });
 //          this.status=2;
         },
@@ -152,15 +163,12 @@
               if (res.status) {
                 this.addUserCoupon = res
                 console.log('报名');
+                this.mesg("报名成功")
               }else {
-                if(res.code == 201){
-                  this.addUserCoupon = res;
-                }else if(res.code == 202){
-                  this.addUserCoupon = res;
-                }
+                this.mesg("报名失败")
               }
             }).catch(err => {
-
+            this.mesg("报名失败")
           });
         },
 

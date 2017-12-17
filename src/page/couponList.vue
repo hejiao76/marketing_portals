@@ -41,10 +41,7 @@
           return {
             Final:Final,
             loadingShow:false,
-            couponlist:[{amount:4000,type:1,status:1,name:'新人注册抵车款超级优惠券',timeout:'2017.8.1',detail:'1. 活动最终解释权归平台所有2. 活动最终解释权归平台所有。'},
-              {amount:4000,type:2,status:2,name:'新人注册抵车款超级优惠券',timeout:'2017.8.1',detail:'1. 活动最终解释权归平台所有2. 活动最终解释权归平台所有。'},
-              {amount:4000,type:1,status:3,name:'新人注册抵车款超级优惠券',timeout:'2017.8.1',detail:'1. 活动最终解释权归平台所有2. 活动最终解释权归平台所有。'}
-            ],
+            couponlist:[],
             codeId:'',
           }
       },

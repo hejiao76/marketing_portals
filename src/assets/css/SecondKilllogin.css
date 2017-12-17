@@ -1,7 +1,7 @@
 .loginbox { padding: .15rem; background: #F5F5F5;}
 .input_list { margin-bottom: .1rem; }
 .list_item { background: #ffffff; min-height: .5rem; font-size: .16rem; line-height: .5rem; position: relative; width: auto;  padding: 0 .15rem;}
-.list_item>input { position: absolute; height: .5rem; font-size: .16rem;   left: 5%;
+.list_item>input { position: absolute; height: .5rem; font-size: .16rem;   left: 5%; line-height: .5rem; padding: .1rem 0;
   width: 90%;
   right: 5%; text-indent: .9rem;
   z-index:1;}

@@ -21,7 +21,8 @@ const routerConfig = [{
     component: prizedraw
   }, {
     path: '/coupon/:code', //抵扣券活动入口
-    component: coupons
+    component: coupons,
+    meta:{KeepAlive:true}
     },
   {
     path: '/sedKill/:code', //秒杀活动入口
@@ -48,20 +49,17 @@ const routerConfig = [{
     component: secondcardetail
   }, {
     path: '/sedKill/:code/secondkilllogin', //秒杀登录 缺ItemId
-    component: secondkilllogin
+    component: secondkilllogin,
+    meta:{keepAlive:true}
   },
   {
     path: '/sedKill/:code/sedkillloginchecked', //选择经销商 缺itemId
-    component: sedkillloginchecked
+    component: sedkillloginchecked,
+    meta:{keepAlive:true}
   },{
     path: '/sedKill/:code/secondkillpay', //秒杀支付
     component: secondkillpay
   },
-
-
-
-
-
   {
     path: '/mysedKill/secondlist',  //我的秒杀列表
     component: secondlist

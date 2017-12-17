@@ -1,5 +1,5 @@
 .banner { width: 100%;}
-.cardetail { background: #f1f1f1;}
+.cardetail { background: #f1f1f1; padding-bottom: 1rem;}
 .detail_mesg {
   width: 90%; margin: 0 5%;background: #FFFFFF; padding: .15rem .1rem;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.20);
@@ -8,12 +8,38 @@
 }
 .mesg_title { font-size: .16rem; margin-bottom: .06rem;}
 .begintime { font-size: .12rem; color: #ff0036; margin-bottom: .2rem;}
-.list { margin-bottom: .06rem; font-size: .12rem;}
-.list .spa { color: #666666; width: .64rem; display: inline-block;}
+.list { margin-bottom: .06rem; font-size: .12rem; overflow: hidden;}
+.list .spa { color: #666666; width:22%;float: left; display: inline-block;}
+.list .spb {width:78%; float: left; }
 .city  {color: #007AFF; font-size: .1rem; text-align: right; margin-top: .2rem;}
 .bannr_title { height: .4rem; background: #ffffff; width: 100%;}
 .bannr_titlea {height: .4rem; width: 100%;  background: #475669; line-height: .4rem; color: #ffffff; text-align: center;  }
 .btnbox {
-  height:.5rem; line-height: .5rem; text-align: center; color: #ffffff; font-size: .18rem;}
+  height:.5rem; line-height: .5rem; text-align: center; color: #ffffff; font-size: .18rem; }
+.carbtnbox { position: fixed; width: 100%; bottom: 0; left: 0; }
+
 .btnbox .btna { width: 60%; height: 100%; background: #ff0036;color: #ffffff;float: left; display: inline-block;}
 .btnbox .btnb { color: #FF002D; background: #ffffff; width: 40%;float: left; display: inline-block; }
+#app{ background: #f1f1f1;}
+.detailbox img { width: 100%;}
+.carbtnbox .btnbox.noaction{ color: #ffffff;font-size: .18rem; background: #B7B7B7; }
+
+
+.citybox { position: fixed; width:100%;
+  height:100%; left: 0;top:0; background: rgba(0,0,0,.6); z-index:99;}
+.citylist { width:70%; height: 3rem; background: #ffffff; position: absolute; left: 0; right: 0;
+  bottom:0; top:0; margin: auto;text-align: center;}
+.closebtn { position: absolute;
+  width:100%;
+  height:.3rem; line-height: .3rem;color: #007AFF; bottom: 0; left: 0;}
+
+.itemlistcity{    position: absolute;
+  width: 100%;
+  top: .6rem;
+  bottom: .3rem;
+  height: auto;
+  overflow: auto;}
+.itemlistcity li {
+  line-height: 1.9; width:33.33%; text-align: center; float: left;}
+.citybox .title { padding: .2rem 0; font-size: .18rem;}
+.citybox .title>span { margin-right: .06rem; color: #999999; display: inline-block;}

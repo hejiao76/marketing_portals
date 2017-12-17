@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="nolist" v-if="checkedlist.length==0">
-          <img src="../assets/img/couponNulla.png" />
+          <img src="../assets/img/couponNulld.png" />
           <div class="mesg">该地区暂无经销商</div>
         </div>
       </div>
@@ -121,8 +121,6 @@
           console.log(error)
         });
         this.cityId=localStorage.cityId
-        this.activityCode = window.location.href.split('coupon/')[1];
-        console.log(this.activityCode);
       },
   }
 
