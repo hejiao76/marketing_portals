@@ -1,27 +1,141 @@
-.secondlist { background: #f5f5f5;}
-.listitem { padding: 0 .15rem; position: relative; margin-bottom: .11rem; background: #ffffff;}
-.status_top { height: .25rem; line-height: .25rem; font-size: .1rem; text-align: right;}
-.itemcenter { width: 100%; height: .88rem; position: relative; padding: .09rem 0 .12rem; border-bottom: 1px dashed #f1f1f1;border-top: 1px dashed #f1f1f1;}
+.secondlist {
+  background: #f5f5f5;
+}
 
+.listitem {
+  padding: 0 .15rem;
+  position: relative;
+  margin-bottom: .11rem;
+  background: #ffffff;
+}
 
-.center_left { width: 33%;
-  height:100%; background: #f1f1f1; position: relative;}
-.center_left::after { content: ""; position: absolute; left: 0; top:0;z-index: 10;
-  width:.25rem;
-  height:.25rem; background: url("../img/kill.png") no-repeat; background-size: 100% 100%;}
-.killright { width: 60%;  left:37%;top: .08rem;  position: absolute; height: 100%;}
-.right_center { position: absolute; width:100%; top:0rem; bottom: .16rem; left: 0; margin: auto 0;    display: flex;
-  align-items: center;}
-.killprice { font-size: .1rem;}
-.killprice .redcolor { font-size: .16rem; color: #ff0036; }
-.killright .killtitle {}
-.killtime { font-size: .1rem; color: #666666;}
-.rightbottom { font-size: .12rem;  color: #666666; position: absolute; width:100%; left: 0; bottom: .17rem;}
+.status_top {
+  height: .25rem;
+  line-height: .25rem;
+  font-size: .1rem;
+  text-align: right;
+}
 
-.btn_box { height: .4rem; line-height: .4rem;  width:100%; text-align: right;}
-.timesigning { float: left;}
-.btn_box .btn { width:.68rem; height:.24rem; line-height: .24rem; font-size: .12rem;}
-.btn_box .btn:not(:last-child) { margin-right: .06rem;}
-.btn_box .btn.btna { color: #ffffff; background: #ff0036; }
-.btn_box .btn.btnb { border: 1px solid #b7b7b7; color: #b7b7b7; background: #ffffff;}
-.btn_box .btn.btnb.active { color: #ff0036; border: 1px solid #ff0036;}
+.itemcenter {
+  width: 100%;
+  height: .88rem;
+  position: relative;
+  padding: .09rem 0 .12rem;
+  border-bottom: 1px dashed #f1f1f1;
+  border-top: 1px dashed #f1f1f1;
+}
+
+.center_left {
+  width: 33%;
+  height: 100%;
+  background: #f1f1f1;
+  position: relative;
+}
+
+.center_left::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  width: .25rem;
+  height: .25rem;
+  background: url("../img/kill.png") no-repeat;
+  background-size: 100% 100%;
+}
+
+.killright {
+  width: 60%;
+  left: 37%;
+  top: .08rem;
+  position: absolute;
+  height: 100%;
+}
+
+.right_center {
+  position: absolute;
+  width: 100%;
+  top: 0rem;
+  bottom: .16rem;
+  left: 0;
+  margin: auto 0;
+  display: flex;
+  align-items: center;
+}
+
+.killprice {
+  font-size: .1rem;
+}
+
+.killprice .redcolor {
+  font-size: .16rem;
+  color: #ff0036;
+}
+
+.killright .killtitle {
+}
+
+.killtime {
+  font-size: .1rem;
+  color: #666666;
+}
+
+.rightbottom {
+  font-size: .12rem;
+  color: #666666;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: .17rem;
+}
+
+.btn_box {
+  height: .4rem;
+  line-height: .4rem;
+  width: 100%;
+  text-align: right;
+}
+
+.timesigning {
+  float: left;
+}
+
+.btn_box .btn {
+  width: .68rem;
+  height: .24rem;
+  line-height: .24rem;
+  font-size: .12rem;
+}
+
+.btn_box .btn:not(:last-child) {
+  margin-right: .06rem;
+}
+
+.btn_box .btn.btna {
+  color: #ffffff;
+  background: #ff0036;
+}
+
+.btn_box .btn.btnb {
+  border: 1px solid #b7b7b7;
+  color: #b7b7b7;
+  background: #ffffff;
+}
+
+.btn_box .btn.btnb.active {
+  color: #ff0036;
+  border: 1px solid #ff0036;
+}
+
+.nolist img {
+  width: 90%;
+  margin: 0 auto;
+  display: block;
+}
+
+.nolist .mesg {
+  color: #999999;
+  font-size: .16rem;
+  margin-top: .15rem;
+  text-align: center;
+}

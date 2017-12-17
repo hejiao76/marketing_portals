@@ -1,5 +1,5 @@
 <template>
-  <div  class="loading_box">
+  <div class="loading_box">
     <div class="item loading">
       <div class="item-inner">
         <div class="item-loader-container">
@@ -19,16 +19,31 @@
   </div>
 </template>
 <style>
-  .loading_box { position: fixed; height: 100%;
-    width:100%; z-index: 100;}
-  .loading_box::after { content: ""; z-index: 9; position:absolute; background: rgba(0,0,0,0.5); width: 100%; height: 100%; left: 0;
-    top:0; }
-  .loading { position: absolute;
-    width:64px;
-    height:64px;
-    left:0;
-    right:0;
-    top:0;
+  .loading_box {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+  }
+
+  .loading_box::after {
+    content: "";
+    z-index: 9;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  .loading {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    left: 0;
+    right: 0;
+    top: 0;
     bottom: 0;
     margin: auto;
     z-index: 101;
@@ -207,6 +222,7 @@
       transform: scale(0);
     }
   }
+
   @-moz-keyframes ball-spin {
     0%,
     100% {
@@ -223,6 +239,7 @@
       transform: scale(0);
     }
   }
+
   @-o-keyframes ball-spin {
     0%,
     100% {
@@ -239,6 +256,7 @@
       transform: scale(0);
     }
   }
+
   @keyframes ball-spin {
     0%,
     100% {

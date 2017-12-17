@@ -1,27 +1,103 @@
-.boxtop { padding: .13rem 0; border-bottom: 1px solid #f1f1f1;    text-align: center;}
-.itemlist { width: 1.5rem;  line-height: .44rem; height: .44rem; position: relative; font-size: .18rem; background: #A2B0C4; display: inline-block;}
-.dowmlist { width: 100%; position: absolute; transition: all 0.3s ease; top: .44rem; z-index: 10; background: #ffffff; border: 1px solid #f1f1f1; height: 0rem; overflow: auto;}
-.dowmlist.active {  height: 2.2rem; }
-.dowmlist li:hover { background: #f1f1f1;}
-.itemlist:nth-child(1) { margin-right: .2rem;}
-.itemlist .text { min-width: 1rem; display: inline-block; color: #ffffff;}
-.input_box>i { display: inline-block; font-size: .18rem;
-  transform:rotate(90deg);
+.boxtop {
+  padding: .13rem 0;
+  border-bottom: 1px solid #f1f1f1;
+  text-align: center;
+}
+
+.itemlist {
+  width: 1.5rem;
+  line-height: .44rem;
+  height: .44rem;
+  position: relative;
+  font-size: .18rem;
+  background: #A2B0C4;
+  display: inline-block;
+}
+
+.dowmlist {
+  width: 100%;
+  position: absolute;
+  transition: all 0.3s ease;
+  top: .44rem;
+  z-index: 10;
+  background: #ffffff;
+  border: 1px solid #f1f1f1;
+  height: 0rem;
+  overflow: auto;
+}
+
+.dowmlist.active {
+  height: 2.2rem;
+}
+
+.dowmlist li:hover {
+  background: #f1f1f1;
+}
+
+.itemlist:nth-child(1) {
+  margin-right: .2rem;
+}
+
+.itemlist .text {
+  min-width: 1rem;
+  display: inline-block;
+  color: #ffffff;
+}
+
+.input_box > i {
+  display: inline-block;
+  font-size: .18rem;
+  transform: rotate(90deg);
   color: #FFFFFF;
-  -moz-transform:rotate(90deg); 	/* Firefox */
-  -webkit-transform:rotate(90deg); /* Safari 和 Chrome */
-  -o-transform:rotate(90deg);
-  }
-.checkedlist { padding: 0 .15rem;}
-.checkedlist .listitem { height: 1.2rem; padding:.15rem 0; border-bottom: 1px solid #f1f1f1; position: relative; overflow: hidden;}
+  -moz-transform: rotate(90deg); /* Firefox */
+  -webkit-transform: rotate(90deg); /* Safari 和 Chrome */
+  -o-transform: rotate(90deg);
+}
 
+.checkedlist {
+  padding: 0 .15rem;
+}
 
-.logoimg { float: left; height: .9rem; width:.9rem;}
-.mesg_right { position: absolute; height: .12rem; left: 1.1rem;
-  right:0; width: auto;}
-.mesg_right .title { font-size: .16rem;}
-.mesg_right .where { color: #999999; margin-top: .1rem;}
+.checkedlist .listitem {
+  height: 1.2rem;
+  padding: .15rem 0;
+  border-bottom: 1px solid #f1f1f1;
+  position: relative;
+  overflow: hidden;
+}
 
+.logoimg {
+  float: left;
+  height: .9rem;
+  width: .9rem;
+}
 
-.nolist img  {width: 90%; margin: 0 auto; display: block; }
-.nolist .mesg { color: #999999; font-size: .16rem; margin-top: .15rem; text-align: center;}
+.mesg_right {
+  position: absolute;
+  height: .12rem;
+  left: 1.1rem;
+  right: 0;
+  width: auto;
+}
+
+.mesg_right .title {
+  font-size: .16rem;
+}
+
+.mesg_right .where {
+  color: #999999;
+  margin-top: .1rem;
+}
+
+.nolist img {
+  width: 90%;
+  margin: 0 auto;
+  display: block;
+}
+
+.nolist .mesg {
+  color: #999999;
+  font-size: .16rem;
+  margin-top: .15rem;
+  text-align: center;
+}

@@ -1,27 +1,103 @@
-.paybox { padding: .15rem; background: #F5F5F5;}
-#app { background: #f5f5f5;}
-.paytop { background: #ffffff; position: relative; padding: .12rem; overflow: hidden;
-  height:1.04rem;}
-.paytypebox { margin-top: .2rem; background: #ffffff;}
+.paybox {
+  padding: .15rem;
+  background: #F5F5F5;
+}
+
+#app {
+  background: #f5f5f5;
+}
+
+.paytop {
+  background: #ffffff;
+  position: relative;
+  padding: .12rem;
+  overflow: hidden;
+  height: 1.04rem;
+}
+
+.paytypebox {
+  margin-top: .2rem;
+  background: #ffffff;
+}
+
 .carimg {
   float: left;
-  width:.8rem;
-  height:.8rem;}
-.top_right { position: absolute;
-  height:100%; left: 1.16rem;}
-.title { font-size: .14rem; color: #666666;}
-.paynumber { font-size: .16rem; margin-top: .08rem; color: #000000;}
-.paynumber>span { color: #ff0036;}
-.paylist { height: .5rem; line-height: .5rem;}
-.paylist:not(:last-child) { border-bottom: 1px solid #f1f1f1;}
-.paylist .iconleft { font-size: .3rem; color: #2AD800;  float: left; margin-right: .13rem; margin-left: .11rem;}
-.paylist .iconleft.icon-zhifubao {  color: #009EFB;}
-.iconright { color: #999999; font-size: .16rem; float: right; margin-right: .11rem;}
+  width: .8rem;
+  height: .8rem;
+}
 
-.paybox.error .paytypebox .iconleft { color: #B7B7B7 !important;}
+.top_right {
+  position: absolute;
+  height: 100%;
+  left: 1.16rem;
+}
 
-.mesgbox { margin-top: .33rem; text-align: center; line-height: 1.8; display: none;}
-.mesgbox>div { color: #666666;}
-.errmesgbox { display: none;}
-.paybox.true .truemesg { display: block;}
-.paybox.error .errmesgbox { display: block;}
+.title {
+  font-size: .14rem;
+  color: #666666;
+}
+
+.paynumber {
+  font-size: .16rem;
+  margin-top: .08rem;
+  color: #000000;
+}
+
+.paynumber > span {
+  color: #ff0036;
+}
+
+.paylist {
+  height: .5rem;
+  line-height: .5rem;
+}
+
+.paylist:not(:last-child) {
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.paylist .iconleft {
+  font-size: .3rem;
+  color: #2AD800;
+  float: left;
+  margin-right: .13rem;
+  margin-left: .11rem;
+}
+
+.paylist .iconleft.icon-zhifubao {
+  color: #009EFB;
+}
+
+.iconright {
+  color: #999999;
+  font-size: .16rem;
+  float: right;
+  margin-right: .11rem;
+}
+
+.paybox.error .paytypebox .iconleft {
+  color: #B7B7B7 !important;
+}
+
+.mesgbox {
+  margin-top: .33rem;
+  text-align: center;
+  line-height: 1.8;
+  display: none;
+}
+
+.mesgbox > div {
+  color: #666666;
+}
+
+.errmesgbox {
+  display: none;
+}
+
+.paybox.true .truemesg {
+  display: block;
+}
+
+.paybox.error .errmesgbox {
+  display: block;
+}

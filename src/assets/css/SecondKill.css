@@ -1,26 +1,99 @@
-.killbox { padding: .15rem; background: #FC7926; font-size: .14rem;}
-.killbox.nolist { padding: 0;}
-.killbanner,.killbanner>.bannerimg {width:100%;}
-.killbanner { position: relative; padding-bottom: .1rem; z-index: 11;}
-.banner_list { text-align: center; overflow: hidden; width: 90%;left: 5%; position: absolute; bottom: .1rem; }
-.banner_list li {float: left; width: 30%; background: #FCA167; border-radius: .03rem; color: #ffffff; height: .36rem; position: relative;}
-.banner_list li:not(:last-child) { margin-right: 5%;}
-.list_text { display: flex; align-items: center;     position: absolute;
-  left: 0.32rem;}
-.actionTime { position: absolute; bottom: .55rem; left: 0; width: 100%; text-align: center; font-size: .12rem; color: #ffffff;}
-.banner_list li>.list_text { display: inline-block; height:.36rem; font-size: .12rem;}
-.banner_list li .float {  float: left; line-height: .36rem;}
-.banner_list li .iconfont { font-size: .18rem; margin-left: .07rem; margin-right: .05rem;}
-.killlist { background: #ffffff; border-radius: .03rem; padding-top: .1rem; margin-bottom: .13rem; box-shadow: 0 .02rem .04rem rgba(0,0,0,0.15)}
-.timetolset{
+.killbox {
+  padding: .15rem;
+  background: #FC7926;
+  font-size: .14rem;
+}
+
+.killbox.nolist {
+  padding: 0;
+}
+
+.killbanner, .killbanner > .bannerimg {
+  width: 100%;
+}
+
+.killbanner {
+  position: relative;
+  padding-bottom: .1rem;
+  z-index: 11;
+}
+
+.banner_list {
+  text-align: center;
+  overflow: hidden;
+  width: 90%;
+  left: 5%;
+  position: absolute;
+  bottom: .1rem;
+}
+
+.banner_list li {
+  float: left;
+  width: 30%;
+  background: #FCA167;
+  border-radius: .03rem;
+  color: #ffffff;
+  height: .36rem;
+  position: relative;
+}
+
+.banner_list li:not(:last-child) {
+  margin-right: 5%;
+}
+
+.list_text {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 0.32rem;
+}
+
+.actionTime {
+  position: absolute;
+  bottom: .55rem;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: .12rem;
+  color: #ffffff;
+}
+
+.banner_list li > .list_text {
+  display: inline-block;
+  height: .36rem;
+  font-size: .12rem;
+}
+
+.banner_list li .float {
+  float: left;
+  line-height: .36rem;
+}
+
+.banner_list li .iconfont {
+  font-size: .18rem;
+  margin-left: .07rem;
+  margin-right: .05rem;
+}
+
+.killlist {
+  background: #ffffff;
+  border-radius: .03rem;
+  padding-top: .1rem;
+  margin-bottom: .13rem;
+  box-shadow: 0 .02rem .04rem rgba(0, 0, 0, 0.15)
+}
+
+.timetolset {
   min-width: 1.36rem;
   display: inline-block;
-  padding-right: .1rem; height:.2rem; line-height: .2rem;
-  background: -webkit-linear-gradient(left,#FC7926,#FF3A3A);
-  background: -o-linear-gradient(left,#FC7926,#FF3A3A);
-  background: -moz-linear-gradient(left,#FC7926,#FF3A3A);
-  background: -mos-linear-gradient(left,#FC7926,#FF3A3A);
-  background: linear-gradient(left,#FC7926,#FF3A3A);
+  padding-right: .1rem;
+  height: .2rem;
+  line-height: .2rem;
+  background: -webkit-linear-gradient(left, #FC7926, #FF3A3A);
+  background: -o-linear-gradient(left, #FC7926, #FF3A3A);
+  background: -moz-linear-gradient(left, #FC7926, #FF3A3A);
+  background: -mos-linear-gradient(left, #FC7926, #FF3A3A);
+  background: linear-gradient(left, #FC7926, #FF3A3A);
   border-radius: 3px;
   margin: 0rem 0 .08rem;
   position: relative;
@@ -28,38 +101,177 @@
   left: -.1rem;
   padding-left: 0.15rem;
 }
-.timetolset span { margin-right: .05rem;}
-.killdetail { padding: 0 3% 3% 3%; clear: both; overflow: hidden; position: relative;}
-.killdetail .killleft { width: 33%; position: relative; float: left;    border: 1px solid #eaeaea; margin-right: 3%; padding-bottom: 33%; height:0;}
-.killleft .label { position: absolute; width:.7rem; z-index: 9; height: .2rem; top:.06rem; left: -.02rem;}
+
+.timetolset span {
+  margin-right: .05rem;
+}
+
+.killdetail {
+  padding: 0 3% 3% 3%;
+  clear: both;
+  overflow: hidden;
+  position: relative;
+}
+
+.killdetail .killleft {
+  width: 33%;
+  position: relative;
+  float: left;
+  border: 1px solid #eaeaea;
+  margin-right: 3%;
+  padding-bottom: 33%;
+  height: 0;
+}
+
+.killleft .label {
+  position: absolute;
+  width: .7rem;
+  z-index: 9;
+  height: .2rem;
+  top: .06rem;
+  left: -.02rem;
+}
+
 .killleft .bigicon {
-   color: #ff0036; position: absolute;     left: -.02rem; width: .7rem; height: .24rem; background-size:100% 100% !important;
+  color: #ff0036;
+  position: absolute;
+  left: -.02rem;
+  width: .7rem;
+  height: .24rem;
+  background-size: 100% 100% !important;
   background: url("../img/willopen.png") no-repeat;
   top: -.04rem;
 }
-.killleft .smallicon { display: inline-block;}
-.label>div { position: relative; z-index: 9; color: #ffffff; font-size: .12rem; line-height: .26rem;}
-.killleft .headimg { width:100%; position: absolute; left: 0; top:0; bottom:0; margin: auto;}
-.killdetail .killright { width: 60%;  left:37%;  position: absolute; height: 100%;}
-.right_center { position: absolute; width:100%; top:.1rem; bottom: .3rem; left: 0; margin: auto 0;    display: flex;
-  align-items: center;}
-.killprice { font-size: .1rem;}
-.killprice .redcolor { font-size: .16rem; color: #ff0036; }
-.killright .killtitle {}
-.killright .killtitle>span { font-size: .1rem; border: 1px solid #ff0036; color: #ff0036; float: right; border-radius: .03rem; padding: 0rem .05rem; display: inline-block;}
-.killtime { font-size: .1rem; color: #666666;}
-.btn_box { position: absolute; left: 0; width:100%; bottom:.1rem;}
-.btn_box .btn { width:.86rem; height:.3rem; line-height: .3rem; font-size: .12rem;border: 1px solid #ff0036;}
-.btn_box .btn.btna { color: #ffffff; background: #ff0036; margin-right: .1rem;}
-.btn_box .btn.btnb { border: 1px solid #b7b7b7; color: #b7b7b7; background: #ffffff;}
-.btn_box .btn.btnb.active { color: #ff0036; border: 1px solid #ff0036;}
 
+.killleft .smallicon {
+  display: inline-block;
+}
 
-.brankout { position: fixed; width:100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 111; left: 0;top: 0;}
+.label > div {
+  position: relative;
+  z-index: 9;
+  color: #ffffff;
+  font-size: .12rem;
+  line-height: .26rem;
+}
+
+.killleft .headimg {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.killdetail .killright {
+  width: 60%;
+  left: 37%;
+  position: absolute;
+  height: 100%;
+}
+
+.right_center {
+  position: absolute;
+  width: 100%;
+  top: .1rem;
+  bottom: .3rem;
+  left: 0;
+  margin: auto 0;
+  display: flex;
+  align-items: center;
+}
+
+.killprice {
+  font-size: .1rem;
+}
+
+.killprice .redcolor {
+  font-size: .16rem;
+  color: #ff0036;
+}
+
+.killright .killtitle {
+}
+
+.killright .killtitle > span {
+  font-size: .1rem;
+  border: 1px solid #ff0036;
+  color: #ff0036;
+  float: right;
+  border-radius: .03rem;
+  padding: 0rem .05rem;
+  display: inline-block;
+}
+
+.killtime {
+  font-size: .1rem;
+  color: #666666;
+}
+
+.btn_box {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  bottom: .1rem;
+}
+
+.btn_box .btn {
+  width: .86rem;
+  height: .3rem;
+  line-height: .3rem;
+  font-size: .12rem;
+  border: 1px solid #ff0036;
+}
+
+.btn_box .btn.btna {
+  color: #ffffff;
+  background: #ff0036;
+  margin-right: .1rem;
+}
+
+.btn_box .btn.btnb {
+  border: 1px solid #b7b7b7;
+  color: #b7b7b7;
+  background: #ffffff;
+}
+
+.btn_box .btn.btnb.active {
+  color: #ff0036;
+  border: 1px solid #ff0036;
+}
+
+.brankout {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 111;
+  left: 0;
+  top: 0;
+}
+
 .brankout .out_box {
-  width:2.7rem;
-  background: #ffffff; text-align: center;
-  height:1.54rem; position: absolute; left: 0; right:0; top:0; bottom:0; margin: auto;}
-.brankout .bottom { position: absolute;
-  width:100%; bottom: 0; left: 0; border-top:1px solid #f1f1f1;  }
-#app { background: #FC7926;}
+  width: 2.7rem;
+  background: #ffffff;
+  text-align: center;
+  height: 1.54rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.brankout .bottom {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  border-top: 1px solid #f1f1f1;
+}
+
+#app {
+  background: #FC7926;
+}
