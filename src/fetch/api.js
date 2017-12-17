@@ -11,6 +11,13 @@ const base = {
   base_login(params) {
     return fetch.fetch('user/login', params);
   },
+  /**
+   * 用户登出
+   */
+  base_logout(params) {
+    return fetch.fetch('user/logout', params);
+  },
+
   // 验证码
   base_getPhoneCode (params){
     return fetch.fetch('user/getAuthCode',params);

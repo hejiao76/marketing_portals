@@ -30,16 +30,16 @@
 }
 .timetolset span { margin-right: .05rem;}
 .killdetail { padding: 0 3% 3% 3%; clear: both; overflow: hidden; position: relative;}
-.killdetail .killleft { width: 33%; position: relative; float: left; margin-right: 3%; padding-bottom: 33%; height:0;}
+.killdetail .killleft { width: 33%; position: relative; float: left;    border: 1px solid #eaeaea; margin-right: 3%; padding-bottom: 33%; height:0;}
 .killleft .label { position: absolute; width:.7rem; z-index: 9; height: .2rem; top:.06rem; left: -.02rem;}
 .killleft .bigicon {
-   color: #ff0036; position: absolute; left:0; width: .7rem; height: .24rem; background-size:100% 100% !important;
+   color: #ff0036; position: absolute;     left: -.02rem; width: .7rem; height: .24rem; background-size:100% 100% !important;
   background: url("../img/willopen.png") no-repeat;
-  top:0;
+  top: -.04rem;
 }
 .killleft .smallicon { display: inline-block;}
 .label>div { position: relative; z-index: 9; color: #ffffff; font-size: .12rem; line-height: .26rem;}
-.killleft .headimg { width:100%; height:100%; position: absolute; left: 0; top:0; border: 1px solid #eaeaea;}
+.killleft .headimg { width:100%; position: absolute; left: 0; top:0; bottom:0; margin: auto;}
 .killdetail .killright { width: 60%;  left:37%;  position: absolute; height: 100%;}
 .right_center { position: absolute; width:100%; top:.1rem; bottom: .3rem; left: 0; margin: auto 0;    display: flex;
   align-items: center;}

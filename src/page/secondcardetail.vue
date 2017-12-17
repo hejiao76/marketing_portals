@@ -93,7 +93,7 @@
             let enrollStartTime=self.datamesg.beginTime
             self.reversedMessage=enrollStartTime-Date.parse(new Date());
           };
-      },1000)
+      },1000);
         this.codeId=this.$route.params.code;
         this.itemId=this.$route.query.id;
         api.ap_sedkill_info({itemId:this.itemId})
