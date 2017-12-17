@@ -2,9 +2,257 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-  <title>Title</title>
+  <title>订单支付</title>
+  <script src="../jquery/1.11.1.js"></script>
+  <script src="../jquery/cookie.js"></script>
 </head>
 <body>
+<div>
+  <loading v-show="loadingShow"></loading>
+  <div class="loginbox">
+    <div class="paybox true">
+      <!-- error-->
+      <div class="paytop">
+        <img class="carimg" :src="xxUrl" />
+        <div class="top_right">
+          <div class="title" >荣威RX5 万元抵扣券秒杀</div>
+          <div class="paynumber">订单金额：<span style="color: #ff0036;">1.00元</span></div>
+        </div>
+      </div>
+      <div class="paytypebox ">
+        <div id="wxPayButtom" class="paylist">
+          <span class="iconleft iconfont icon-weixin"></span>
+          微信支付
+          <span class="iconright iconfont icon-jiantou"></span>
+        </div>
+        <div id="alipayButton" class="paylist">
+          <span class="iconleft iconfont icon-zhifubao"></span>
+          支付宝支付
+          <span class="iconright iconfont icon-jiantou"></span>
+        </div>
+      </div>
+      <div class="mesgbox truemesg">
+        <div>支付倒计时<countdown endTime="1514061620" :callback="callback" endText="0分0秒"></countdown></div>
+        <div>请您尽快支付，以免错失良机</div>
+      </div>
+      <div class="mesgbox errmesgbox">
+        <div>很遗憾，本次秒杀已结束，您没有秒杀到该商品</div>
+        <div>如已支付，请到 <span style="color: #ff0036;">我的秒杀</span> 中申请退款</div>
+      </div>
+    </div>
+  </div>
+</div>
 
+<script>
+  $(function (){
+      $.cookie("test",123,{"domain":"chinameds.cn"});
+//      $.cookie("test",321);
+      alert("test-------->"+$.cookie("test"));
+      alert("cookie----->"+$.cookie("rwxtc"));
+      $("#alipayButton").on("click",function (){
+//          alert("alipay");
+        aliPay();
+      })
+    $("#wxpayButton").on("click",function (){
+//          alert("alipay");
+      wxPay();
+    })
+  })
+  /***
+   * 解析URL
+   * @param url
+   * @param name
+   */
+  function getUrlParam (url, name) {
+    var pattern = new RegExp("[?&]" + name + "=([^&^#]+)", "g");
+    var matcher = pattern.exec(url);
+    var items = null;
+    if (null != matcher) {
+      try {
+        items = decodeURIComponent(decodeURIComponent(matcher[1]));
+      } catch (e) {
+        try {
+          items = decodeURIComponent(matcher[1]);
+        } catch (e) {
+          items = matcher[1];
+        }
+      }
+    }
+    return items;
+  }
+  /**
+   * 判断浏览器是否是微信浏览器
+   * @returns {boolean}
+   */
+  function isWeiXin(){
+    var ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  function aliPay (){
+    var orderNum=getUrlParam(window.location.href,"orderNum");
+    var itemId=getUrlParam(window.location.href,"itemId");
+    if(!orderNum || !itemId){
+        return;
+    }
+    // 创建一个 form
+    var form1 = document.createElement("form");
+    form1.id = "form1";
+    form1.name = "form1";
+    // 添加到 body 中
+    document.body.appendChild(form1);
+    // 创建一个输入
+    var input1 = document.createElement("input");
+    // 设置相应参数
+    input1.type = "text";
+    input1.name = "itemId";
+    input1.value = itemId;
+
+    // 创建一个输入
+    var input2 = document.createElement("input");
+    // 设置相应参数
+    input2.type = "text";
+    input2.name = "clientType";
+    input2.value = "1";
+
+    // 创建一个输入
+    var input3 = document.createElement("input");
+    // 设置相应参数
+    input3.type = "text";
+    input3.name = "orderNum";
+    input3.value = orderNum;
+
+    // 将该输入框插入到 form 中111111111111111111111111111111111111
+    form1.appendChild(input1);
+    form1.appendChild(input2);
+    form1.appendChild(input3);
+    // form 的提交方式
+    form1.method = "POST";
+    // form 提交路径
+    form1.action = "/action/user/seckill/aliPay";
+    // 对该 form 执行提交
+    form1.submit();
+    // 删除该 form
+    document.body.removeChild(form1);
+  }
+  function wxPay(){
+    var orderNum=getUrlParam(window.location.href,"orderNum");
+    var itemId=getUrlParam(window.location.href,"itemId");
+    var openId=$.cookie("wxtc");
+    if(!orderNum || !itemId || !openId){
+        var param = {orderNum:orderNum,itemId:itemId,openId:openId};
+      $.ajax({
+        type: 'POST',
+        dataType: "JSON",
+        url: "/action/user/seckill/weixinPay" ,
+        data: param ,
+        success: function (res){
+          if(res.status==true){
+            if(res.code==200){
+              if (typeof WeixinJSBridge == "undefined"){
+                if( document.addEventListener ){
+                  document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                }else if (document.attachEvent){
+                  document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                  document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                }
+              }else{
+                  var param ={
+                    appId:res.result.appId,
+                    timeStamp:res.result.timeStamp,
+                    nonceStr:res.result.nonceStr,
+                    package:res.result.package,
+                    signType:res.result.signType,
+                    paySign:res.result.paySign
+                  }
+                  alert("wxBridge--------->"+JSON.stringify(param));
+                  onBridgeReady(param);
+              }
+            }else if(res.code==3){
+              console.log("未报名");
+            }else if(res.code==999){
+              console.log("未登录");
+            }else if(res.code==4){
+              console.log("已支付");
+            }
+          }else{
+            console.log("秒杀异常---"+res.message);
+          }
+        }
+      });
+    }
+
+    function onBridgeReady(){
+      WeixinJSBridge.invoke(
+        'getBrandWCPayRequest', {
+          "appId":"wx2421b1c4370ec43b",     //公众号名称，由商户传入
+          "timeStamp":"1395712654",         //时间戳，自1970年以来的秒数
+          "nonceStr":"e61463f8efa94090b1f366cccfbbb444", //随机串
+          "package":"prepay_id=u802345jgfjsdfgsdg888",
+          "signType":"MD5",         //微信签名方式：
+          "paySign":"70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名
+        },
+        function(res){
+          if(res.err_msg == "get_brand_wcpay_request:ok" ) {}     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+        }
+      );
+    }
+
+
+//    if(!orderNum || !itemId || !openId){
+//      return;
+//    }
+//    // 创建一个 form
+//    var form2 = document.createElement("form");
+//    form2.id = "form2";
+//    form2.name = "form2";
+//    // 添加到 body 中
+//    document.body.appendChild(form2);
+//    // 创建一个输入
+//    var input1 = document.createElement("input");
+//    // 设置相应参数
+//    input1.type = "text";
+//    input1.name = "itemId";
+//    input1.value = itemId;
+//
+//    // 创建一个输入
+//    var input2 = document.createElement("input");
+//    // 设置相应参数
+//    input2.type = "text";
+//    input2.name = "clientType";
+//    input2.value = "1";
+//
+//    // 创建一个输入
+//    var input3 = document.createElement("input");
+//    // 设置相应参数
+//    input3.type = "text";
+//    input3.name = "orderNum";
+//    input3.value = orderNum;
+//    alert(orderNum);
+//
+//    // 创建一个输入
+//    var input4 = document.createElement("input");
+//    // 设置相应参数
+//    input4.type = "text";
+//    input4.name = "openId";
+//    input4.value = openId;
+//
+//    // 将该输入框插入到 form
+//    form2.appendChild(input1);
+//    form2.appendChild(input2);
+//    form2.appendChild(input3);
+//    // form 的提交方式
+//    form2.method = "POST";
+//    // form 提交路径
+//    form2.action = "/action/user/seckill/weixinPay";
+//    // 对该 form 执行提交
+//    form2.submit();
+//    // 删除该 form
+//    document.body.removeChild(form2);
+  }
+</script>
 </body>
 </html>
