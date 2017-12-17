@@ -64,13 +64,48 @@
         callback:function(){
 
         },
+        ALiCheck : function (){
+            api.base_AliCheck()
+        },
+        /**
+         * 校验是否登录
+         */
+        checkLogin: function (){
+          api.base_veifyToken({})
+            .then(res => {
+              if(res.status==true){
 
+              }else{
+                this.mesg=""
+                this.mesg=res.message;
+              }
+              console.log(res)
+            }).catch(error => {
+            console.log(error)
+          });
+        },
         tosign:function (item) {
           if(item.status==2){
             this.$router.push({path: '/sedKill/'+this.codeId+'/secondkilllogin', params: {id:this.itemId}})
           }
         },
         sedkill:function () {
+          if(reversedMessage<0){
+            api.base_veifyToken({})
+              .then(res => {
+                if(res.status){
+
+                }else{
+                  this.mesg=""
+                  this.mesg=res.message;
+                }
+                console.log(res)
+              }).catch(error => {
+              console.log(error)
+            });
+          }else{
+
+          }
           api.ap_sedkill_seckill({clientType:1,itemId:this.itemId})
             .then(res => {
               if(res.status){
