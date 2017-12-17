@@ -5,7 +5,41 @@
   <title>订单支付</title>
   <script src="../jquery/1.11.1.js"></script>
   <script src="../jquery/cookie.js"></script>
+  <!--<link rel="stylesheet" href="/static/css/app.css">-->
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/SecondKillpay.css">
+  <link rel="stylesheet" href="../icon/iconfont.css">
 </head>
+<style>
+  /*.paybox { padding: .15rem; background: #F5F5F5;}*/
+  /*#app { background: #f5f5f5;}*/
+  /*.paytop { background: #ffffff; position: relative; padding: .12rem; overflow: hidden;*/
+    /*height:1.04rem;}*/
+  /*.paytypebox { margin-top: .2rem; background: #ffffff;}*/
+  /*.carimg {*/
+    /*float: left;*/
+    /*width:.8rem;*/
+    /*height:.8rem;}*/
+  /*.top_right { position: absolute;*/
+    /*height:100%; left: 1.16rem;}*/
+  /*.title { font-size: .14rem; color: #666666;}*/
+  /*.paynumber { font-size: .16rem; margin-top: .08rem; color: #000000;}*/
+  /*.paynumber>span { color: #ff0036;}*/
+  /*.paylist { height: .5rem; line-height: .5rem;}*/
+  /*.paylist:not(:last-child) { border-bottom: 1px solid #f1f1f1;}*/
+  /*.paylist .iconleft { font-size: .3rem; color: #2AD800;  float: left; margin-right: .13rem; margin-left: .11rem;}*/
+  /*.paylist .iconleft.icon-zhifubao {  color: #009EFB;}*/
+  /*.iconright { color: #999999; font-size: .16rem; float: right; margin-right: .11rem;}*/
+
+  /*.paybox.error .paytypebox .iconleft { color: #B7B7B7 !important;}*/
+
+  /*.mesgbox { margin-top: .33rem; text-align: center; line-height: 1.8; display: none;}*/
+  /*.mesgbox>div { color: #666666;}*/
+  /*.errmesgbox { display: none;}*/
+  /*.paybox.true .truemesg { display: block;}*/
+  /*.paybox.error .errmesgbox { display: block;}*/
+
+</style>
 <body>
 <div>
   <loading v-show="loadingShow"></loading>
@@ -19,8 +53,9 @@
           <div class="paynumber">订单金额：<span style="color: #ff0036;">1.00元</span></div>
         </div>
       </div>
+      <div id="showText"> </div>
       <div class="paytypebox ">
-        <div id="wxPayButtom" class="paylist">
+        <div id="wxpayButton" class="paylist">
           <span class="iconleft iconfont icon-weixin"></span>
           微信支付
           <span class="iconright iconfont icon-jiantou"></span>
@@ -44,6 +79,7 @@
 </div>
 
 <script>
+  var baseURL= "http://ec.web.dev.chinameds.cn/activity/#/";
   $(function (){
       $.cookie("test",123,{"domain":"chinameds.cn"});
 //      $.cookie("test",321);
@@ -54,8 +90,9 @@
         aliPay();
       })
     $("#wxpayButton").on("click",function (){
-//          alert("alipay");
-      wxPay();
+          alert("wxPay");
+          wxPay();
+//      wxPay();
     })
   })
   /***
@@ -138,65 +175,70 @@
     // 删除该 form
     document.body.removeChild(form1);
   }
-  function wxPay(){
-    var orderNum=getUrlParam(window.location.href,"orderNum");
-    var itemId=getUrlParam(window.location.href,"itemId");
-    var openId=$.cookie("wxtc");
-    if(!orderNum || !itemId || !openId){
-        var param = {orderNum:orderNum,itemId:itemId,openId:openId};
+  function wxPay() {
+    var orderNum = getUrlParam(window.location.href, "orderNum");
+    var itemId = getUrlParam(window.location.href, "itemId");
+    var openId = $.cookie("rwxtc");
+    alert("orderNun=" + orderNum + "~~~itemID=" + itemId + "~~~~openId=" + openId);
+    if (!orderNum || !itemId || !openId) {return }
+      var param = {orderNum: orderNum, itemId: itemId, openId: openId,clientType:1};
+      alert(JSON.stringify(param));
       $.ajax({
         type: 'POST',
         dataType: "JSON",
-        url: "/action/user/seckill/weixinPay" ,
-        data: param ,
-        success: function (res){
-          if(res.status==true){
-            if(res.code==200){
-              if (typeof WeixinJSBridge == "undefined"){
-                if( document.addEventListener ){
+        url: "/action/user/seckill/weixinPay",
+        data: param,
+        success: function (res) {
+          if (res.status == true) {
+            if (res.code == 200) {
+              if (typeof WeixinJSBridge == "undefined") {
+                if (document.addEventListener) {
                   document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-                }else if (document.attachEvent){
+                } else if (document.attachEvent) {
                   document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
                   document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
                 }
-              }else{
-                  var param ={
-                    appId:res.result.appId,
-                    timeStamp:res.result.timeStamp,
-                    nonceStr:res.result.nonceStr,
-                    package:res.result.package,
-                    signType:res.result.signType,
-                    paySign:res.result.paySign
-                  }
-                  alert("wxBridge--------->"+JSON.stringify(param));
-                  onBridgeReady(param);
+              } else {
+                var param = {
+                  appId: res.result.appId,
+                  timeStamp: res.result.timeStamp,
+                  nonceStr: res.result.nonceStr,
+                  package:res.result.paySubmitContent,
+                  signType: "MD5",
+                  paySign: res.result.sign
+                }
+                alert("wxBridge--------->" + JSON.stringify(param));
+                $("#showText").html(JSON.stringify(param));
+                onBridgeReady(param);
               }
-            }else if(res.code==3){
+            } else if (res.code == 3) {
               console.log("未报名");
-            }else if(res.code==999){
+            } else if (res.code == 999) {
               console.log("未登录");
-            }else if(res.code==4){
+            } else if (res.code == 4) {
               console.log("已支付");
             }
-          }else{
-            console.log("秒杀异常---"+res.message);
+          } else {
+            console.log("秒杀异常---" + res.message);
           }
         }
       });
-    }
 
-    function onBridgeReady(){
+  }
+
+    function onBridgeReady(param){
       WeixinJSBridge.invoke(
-        'getBrandWCPayRequest', {
-          "appId":"wx2421b1c4370ec43b",     //公众号名称，由商户传入
-          "timeStamp":"1395712654",         //时间戳，自1970年以来的秒数
-          "nonceStr":"e61463f8efa94090b1f366cccfbbb444", //随机串
-          "package":"prepay_id=u802345jgfjsdfgsdg888",
-          "signType":"MD5",         //微信签名方式：
-          "paySign":"70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名
-        },
+        'getBrandWCPayRequest', param,
         function(res){
-          if(res.err_msg == "get_brand_wcpay_request:ok" ) {}     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+          if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+              var itemId = getUrlParam(window.location.href, "itemId");
+              alert("这里成功回调------>"+itemId);
+              window.location.href=baseURL+"sedKill/secondcardetail?id="+itemId;
+          }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+          else{
+              alert("支付失败");
+              window.location.href=baseURL+"mysedKill/secondlist";
+          }
         }
       );
     }
@@ -252,7 +294,7 @@
 //    form2.submit();
 //    // 删除该 form
 //    document.body.removeChild(form2);
-  }
+
 </script>
 </body>
 </html>

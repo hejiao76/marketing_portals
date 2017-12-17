@@ -96,7 +96,8 @@
         api.base_veifyToken({})
           .then(res => {
             if (res.status == true) {
-              window.location.href = "/static/aliValid/aliValid.html?itemId=" + this.itemId;  //用户登录成功 跳转阿里滑块验证页面
+                alert("跳转");
+              window.location.href = "static/aliValid/aliValid.html?itemId=" + this.itemId;  //用户登录成功 跳转阿里滑块验证页面
             } else {
               this.mesg = ""
               this.mesg = res.message;

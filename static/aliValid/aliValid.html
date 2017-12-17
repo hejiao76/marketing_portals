@@ -2,12 +2,13 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>示例-HTML5版</title>
+  <title>秒杀校验</title>
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
 
   <!-- 此段必须要引入 t为小时级别的时间戳 -->
   <script type="text/javascript" charset="utf‐8" src="//g.alicdn.com/sd/nch5/index.js?t=1513478874529"></script>
+  <script src="../jquery/1.11.1.js"></script>
   <!-- 引入结束 -->
 
 </head>
@@ -21,7 +22,7 @@
 
 <!-- 表单示例，请替换成您的业务表单 -->
 <div class="container">
-  <form action="?action=sign" method="post">
+  <form id="aliValidForm" name="aliValidForm" action="/action/user/ali/check" method="post">
     <div class="ln2">
       <div id="dom_id"></div>
     </div>
@@ -47,11 +48,19 @@
     trans: '{"name1":"code0"}',//测试用，特殊nc_appkey时才生效，正式上线时请务必要删除；code0:通过;code100:点击验证码;code200:图形验证码;code300:恶意请求拦截处理
     callback: function (data) {// 校验成功回调
       console.log("callback",data);
-      alert("csessionid:"+data.csessionid+"~~~,sig:"+data.sig+",token:"+nc_token+",nc_scene:"+data.nc_scene)
+      console.log(JSON.stringify(data));
+      console.log("token---",nc_token);
+      console.log("scene---",nc_scene);
       document.getElementById('csessionid').value = data.csessionid;
       document.getElementById('sig').value = data.sig;
       document.getElementById('token').value = nc_token;
       document.getElementById('scene').value = nc_scene;
+      var param = {};
+      param.session=data.csessionid
+      param.sig=data.sig;
+      param.token=nc_token;
+      param.scene=nc_scene
+      aliServerValid(param);
     },
     error: function (s) {
       console.log("error",s);
@@ -64,6 +73,102 @@
   };
   NoCaptcha.init(nc_option);
   NoCaptcha.setEnabled(true);
+
+
+  /***
+   * 解析URL
+   * @param url
+   * @param name
+   */
+  function getUrlParam (url, name) {
+    var pattern = new RegExp("[?&]" + name + "=([^&^#]+)", "g");
+    var matcher = pattern.exec(url);
+    var items = null;
+    if (null != matcher) {
+      try {
+        items = decodeURIComponent(decodeURIComponent(matcher[1]));
+      } catch (e) {
+        try {
+          items = decodeURIComponent(matcher[1]);
+        } catch (e) {
+          items = matcher[1];
+        }
+      }
+    }
+    return items;
+  }
+  function aliServerValid (data){
+    $.ajax({
+      type: 'POST',
+      url: "/action/user/ali/check" ,
+      data: data ,
+      success: function (res){
+          if(res.status==true){
+              secKill();
+          }
+      },
+      dataType: "JSON"
+    });
+  }
+  /**
+   * 判断浏览器是否是微信浏览器
+   * @returns {boolean}
+   */
+  function isWeiXin(){
+    var ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  function secKill (){
+    var itemId =getUrlParam(window.location.href,"itemId");
+    if(itemId){
+      var param ={itemId:itemId,clientType:1}
+      $.ajax({
+        type: 'POST',
+        url: "/action/user/seckill/seckill" ,
+        data: param ,
+        success: function (res){
+          if(res.status==true){
+              if(res.code==200){
+                  var orderNum=res.result.orderNum;
+                  if(orderNum){
+//                      alert("1");
+//                    var param="http://abc.chinameds.cn"+"/static/pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"clientType="+1;
+//                    console.log(param);
+//                    return;
+//                    var redirectURL='http://ec.web.dev.chinameds.cn/web/html/wx3j.html?ref='+param;
+//
+//                    window.location.href=redirectURL;
+//                    return;
+                      if(isWeiXin()){
+                        var param="http://ec.web.dev.chinameds.cn/activity"+"/static/pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"&clientType="+1;
+                        var redirectURL='http://ec.web.dev.chinameds.cn/web/html/wx3j.html?ref='+encodeURIComponent(param);
+                        window.location.href=redirectURL;
+                      }else{
+                          window.location.href="static/pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"&clientType="+1;
+                      }
+                  }
+              }else if(res.code==3){
+                  console.log("未报名");
+              }else if(res.code==999){
+                  console.log("未登录");
+              }else if(res.code==4){
+                  console.log("已支付");
+              }else if(res.code==2){
+                  alert(res.message);
+
+              }
+          }else{
+              console.log("秒杀异常---"+res.message);
+          }
+        },
+        dataType: "JSON"
+      });
+    }
+  }
 </script>
 <!-- 引入结束 -->
 
@@ -82,6 +187,7 @@
   .container {
     background: #fff;
     margin: 20px 0;
+    margin-top:100px;
   }
   .ln {
     padding: 10px 20px;
