@@ -107,6 +107,7 @@
           localStorage.photo=mesg.photo;
         },
         checkedlist:function(){
+            alert(this.itemId);
             this.$router.push({path: '/sedKill/'+this.codeId+'/sedkillloginchecked', query: {id:this.itemId}})
         },
         loginout:function(){

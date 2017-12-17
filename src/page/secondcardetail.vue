@@ -74,7 +74,7 @@
           api.base_veifyToken({})
             .then(res => {
               if(res.status==true){
-
+                  window.location.href="/static/aliValid/aliValid.html?itemId="+this.itemId;  //用户登录成功 跳转阿里滑块验证页面
               }else{
                 this.mesg=""
                 this.mesg=res.message;
@@ -86,38 +86,29 @@
         },
         tosign:function (item) {
           if(item.status==2){
-            this.$router.push({path: '/sedKill/'+this.codeId+'/secondkilllogin', params: {id:this.itemId}})
+            this.$router.push({path: '/sedKill/'+this.codeId+'/secondkilllogin', query: {id:this.itemId}})
           }
         },
         sedkill:function () {
+            //校验是否登录
+          this.checkLogin();
           if(reversedMessage<0){
-            api.base_veifyToken({})
-              .then(res => {
-                if(res.status){
-
-                }else{
-                  this.mesg=""
-                  this.mesg=res.message;
-                }
-                console.log(res)
-              }).catch(error => {
-              console.log(error)
-            });
+            this.checkLogin();
           }else{
 
           }
-          api.ap_sedkill_seckill({clientType:1,itemId:this.itemId})
-            .then(res => {
-              if(res.status){
-
-              }else{
-                  this.mesg=""
-                  this.mesg=res.message;
-              }
-              console.log(res)
-            }).catch(error => {
-            console.log(error)
-          });
+//          api.ap_sedkill_seckill({clientType:1,itemId:this.itemId})
+//            .then(res => {
+//              if(res.status){
+//
+//              }else{
+//                  this.mesg=""
+//                  this.mesg=res.message;
+//              }
+//              console.log(res)
+//            }).catch(error => {
+//            console.log(error)
+//          });
         }
 
 
@@ -131,6 +122,7 @@
       },1000)
         this.codeId=this.$route.params.code;
         this.itemId=this.$route.query.id;
+        console.log("detail---->",this.itemId);
         api.ap_sedkill_info({itemId:this.itemId})
           .then(res => {
             console.log(res)

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>示例-HTML5版</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
+
+  <!-- 此段必须要引入 t为小时级别的时间戳 -->
+  <script type="text/javascript" charset="utf‐8" src="//g.alicdn.com/sd/nch5/index.js?t=1513478874529"></script>
+  <!-- 引入结束 -->
+
+</head>
+<body>
+
+
+<!-- 此段必须要引入 -->
+<div id="_umfp" style="display:inline;width:1px;height:1px;overflow:hidden"></div>
+<!-- 引入结束 -->
+
+
+<!-- 表单示例，请替换成您的业务表单 -->
+<div class="container">
+  <form action="?action=sign" method="post">
+    <div class="ln2">
+      <div id="dom_id"></div>
+    </div>
+    <input type='hidden' id='csessionid' name='csessionid'/>
+    <input type='hidden' id='sig' name='sig'/>
+    <input type='hidden' id='token' name='token'/>
+    <input type='hidden' id='scene' name='scene'/>
+  </form>
+</div>
+<!-- 表单示例结束 -->
+
+
+<!-- 此段必须要引入 -->
+<script>
+  var nc_appkey =  'FFFF0000000001790EE8'; // 应用标识,不可更改
+  var nc_scene = 'login_h5';  //场景,不可更改
+  var nc_token = [nc_appkey, (new Date()).getTime(), Math.random()].join(':');
+  var nc_option = {
+    renderTo: '#dom_id',//渲染到该DOM ID指定的Div位置
+    appkey: nc_appkey,
+    scene: nc_scene,
+    token: nc_token,
+    trans: '{"name1":"code0"}',//测试用，特殊nc_appkey时才生效，正式上线时请务必要删除；code0:通过;code100:点击验证码;code200:图形验证码;code300:恶意请求拦截处理
+    callback: function (data) {// 校验成功回调
+      console.log("callback",data);
+      alert("csessionid:"+data.csessionid+"~~~,sig:"+data.sig+",token:"+nc_token+",nc_scene:"+data.nc_scene)
+      document.getElementById('csessionid').value = data.csessionid;
+      document.getElementById('sig').value = data.sig;
+      document.getElementById('token').value = nc_token;
+      document.getElementById('scene').value = nc_scene;
+    },
+    error: function (s) {
+      console.log("error",s);
+    },
+    verifycallback: function (data) {
+      console.log("verifycallback",data);
+      if (data.code == "200") {
+      }
+    }
+  };
+  NoCaptcha.init(nc_option);
+  NoCaptcha.setEnabled(true);
+</script>
+<!-- 引入结束 -->
+
+</body>
+
+
+<!-- 样式示例，可替换成自己的样式 -->
+<style>
+  body {
+    background: #f5f5f5;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    background: #fff;
+    margin: 20px 0;
+  }
+  .ln {
+    padding: 10px 20px;
+  }
+  .ln .h {
+    display: inline-block;
+    width: 4em;
+  }
+  .ln input {
+    border: solid 1px #999;
+    padding: 5px 8px;
+  }
+</style>
+<!-- 样式示例结束 -->
+
+</html>
