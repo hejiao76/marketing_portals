@@ -15,6 +15,10 @@ const base = {
   base_getPhoneCode (params){
     return fetch.fetch('user/getAuthCode',params);
   },
+  // 验证码
+  base_AliCheck (params){
+    return fetch.fetch('user/ali/check',params);
+  },
   // 是否登录
   base_veifyToken (params){
     return fetch.fetch('user/veifyToken',params);

@@ -136,9 +136,6 @@ export default {
         //alert("create");
       },
       components :{
-        VHeader,
-        VLeft,
-        VConNav,
         zhuanpan,
         titleaa,
         loading,
