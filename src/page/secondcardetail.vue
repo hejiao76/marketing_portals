@@ -145,7 +145,7 @@
       setInterval(function () {
         if (self.datamesg.beginTime) {
           let enrollStartTime = self.datamesg.beginTime
-          self.reversedMessage = enrollStartTime - Date.parse(new Date())+1000;
+          self.reversedMessage = enrollStartTime - Date.parse(new Date())-1000;
           if(self.reversedMessage<=0 &&  self.datamesg.status!=3){
             self.datamesg.status=4;
           }

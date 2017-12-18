@@ -150,7 +150,7 @@
         }
       },
       gettime:function(time){
-        let newdata=new data()
+        return (time-Date.parse(new Date()))>24*60*60*1000?true:false
       }
     },
     mounted() {

@@ -155,6 +155,10 @@
     mounted() {
       this.itemId = this.$route.query.customerFlag || this.$route.query.id;
       this.imgurl = Final.QRCODE + "/v1/gift/qrcode?activityId=" + this.itemId + "&activityType=102&couponCode=yunyong"
+      let paySuccessTime= this.$route.query.paySuccessTime;
+      if(paySuccessTime){
+        detailmesg.payTime=paySuccessTime
+      }
       api.ap_sedkill_my_activity_info({itemId: this.itemId})
         .then(res => {
           if (res.status) {
