@@ -116,7 +116,7 @@
 </template>
 <script>
   import api from "./../fetch/api"
-  import Final from "../util/Final";
+  import Final from "../../static/baseSetting/Final";
   import API from "./../fetch/api";
   import loading from "../components/loading";
 
