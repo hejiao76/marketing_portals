@@ -107,6 +107,7 @@
   export default {
     data() {
       return {
+        Final:Final,
         util: util,
         codeimgshow: null,
         loadingShow: false,

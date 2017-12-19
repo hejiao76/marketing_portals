@@ -23,7 +23,7 @@
         <div class="city" @click="saycity">查看适用城市</div>
       </div>
       <div class="carbtnbox" v-if="datamesg.areaStatus==1">
-        <div class="bannr_titlea" v-show="reversedMessage>0">
+        <div class="bannr_titlea" v-show="reversedMessage>5000">
           <countdown :endTime="String(datamesg.beginTime)" :callback="callback" endText="00：00：00"></countdown>
           后开始
         </div>
@@ -64,6 +64,7 @@
   export default {
     data() {
       return {
+        Final:Final,
         mesg: '',
         util: util,
         status: ['活动已结束', '报名未开始', '快速报名', '已报名', '报名已结束'],

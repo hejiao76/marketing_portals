@@ -1,5 +1,5 @@
 <template>
-  <div class="showmesg" v-model="mesg" v-show="showstatus">
+  <div class="showmesg" v-show="showstatus">
     {{mesg}}
   </div>
 </template>
@@ -20,7 +20,6 @@
           this.showstatus = true;
           setTimeout(function () {
             _that.showstatus = false;
-            _that.mesg = "";
           }, 2000)
         }
       }

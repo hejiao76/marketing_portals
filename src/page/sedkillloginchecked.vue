@@ -23,7 +23,7 @@
       </div>
       <div class="checkedlist">
         <div class="listitem" v-for="item in checkedlist" @click="checkedDealer(item)">
-          <img class="logoimg" :src="item.dealerPicUrl"/>
+          <img class="logoimg" :src="item.dealerPicUrl.includes('http://')?item.dealerPicUrl:Final.IMG_PATH+item.dealerPicUrl"/>
           <div class="mesg_right">
             <div class="title">{{item.dealerFullName}}</div>
             <div class="where"><span class="iconfont icon-dingwei"></span> {{item.contactAddress}}</div>
@@ -47,6 +47,7 @@
   export default {
     data() {
       return {
+        Final:Final,
         loadingShow: true,
         provinceName: '请选择',
         provinceId: '',

@@ -62,6 +62,7 @@
     data() {
       return {
         util: util,
+        Final:Final,
         loadingShow: true,
         activityCode: '',
         codeId: '',
@@ -122,7 +123,6 @@
       sedkill_del: function (item) {
         api.ap_sedkill_del({itemId: item.itemId})
           .then(res => {
-            this.mesg = '';
             this.mesg = '删除成功';
             setTimeout(function () {
               location.reload();

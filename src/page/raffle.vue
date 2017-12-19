@@ -3,7 +3,7 @@
     <loading v-show="loadingShow"></loading>
     <mesg v-bind:mesg="mesg"></mesg>
     <div class="title">
-      <img class="title_bc" :src="title_img"></img>
+      <img class="title_bc" :src="title_img.includes('http://')?title_img:Final.IMG_PATH+title_img"></img>
       <div class="raffle_number">您还有 <span>{{remainnumber}}</span> 次抽奖机会</div>
     </div>
     <zhuanpan v-on:listenstatus="getstatus" v-bind:loginstatus="islogin"></zhuanpan>
@@ -95,7 +95,7 @@
 </template>
 <script>
   import api from "./../fetch/api"
-  import Final from "../util/Final";
+  //import Final from "../util/Final";
   import API from "./../fetch/api";
   import zhuanpan from "../components/zhuanpan";
   import titleaa from "../components/titleaa";

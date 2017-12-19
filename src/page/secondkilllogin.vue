@@ -98,7 +98,6 @@
             })
           }
         } else {
-          _that.mesg = "";
           _that.mesg = '请输入完整用户信息';
         }
 
@@ -137,7 +136,6 @@
           return;
         }
         if (!this.userName || !this.userPhone || !this.userCode || !this.dealerId) {
-          this.mesg = '';
           this.mesg = '请填入报名信息';
           return;
         }
@@ -150,7 +148,7 @@
               this.addUserCouponFun()
               this.status = 2;
               this.logintext = '报名成功'
-              this.$router.back();
+              this.$router.push({path: '/sedKill/' + this.codeId, query: {}})
             } else {
               this.mesg("登录失败")
               this.logining = true;

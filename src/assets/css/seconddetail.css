@@ -4,7 +4,7 @@
   color: #ffffff;
   padding: .06rem .15rem;
 }
-
+.detailbox { padding-bottom: .6rem;}
 .detailTop .typeaa {
   color: #ffffff;
   font-size: .18rem;
@@ -29,12 +29,13 @@
 
 .detail_list .list_item.itema {
   height: 1.12rem;
+  display: flex;
+  align-items: center;
 }
 
 .detail_list .list_item.itema > img {
   float: left;
   width: .81rem;
-  height: .81rem;
   margin-right: .26rem;
 }
 

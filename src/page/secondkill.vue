@@ -81,6 +81,7 @@
   export default {
     data() {
       return {
+        Final:Final,
         loadingShow: true,
         util: util,
         statustype: {1: '已上架', 2: '已下架', 3: '已过期', 4: '已删除'},

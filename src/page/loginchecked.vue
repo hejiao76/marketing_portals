@@ -38,6 +38,7 @@
   export default {
     data() {
       return {
+        Final:Final,
         loadingShow: false,
         provinceName: '',
         cityName: '',
