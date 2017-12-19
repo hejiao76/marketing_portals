@@ -43,7 +43,7 @@
               </div>
             </div>
             <div class="btn_box">
-              <button class="btn btna">{{'立即秒杀'}}</button> <!--statustype[item.status]-->
+              <button class="btn btna" @click="todetail(item)">{{'立即秒杀'}}</button> <!--statustype[item.status]-->
               <button :class="['btn','btnb',{active:item.status==2}]" @click="tosign(item)">{{status[item.status]}}
               </button>
             </div>
@@ -151,7 +151,7 @@
         }
       },
       gettime:function(time){
-        return (time-Date.parse(new Date()))>24*60*60*1000?true:false
+        return (time-Date.parse(new Date()))>24*60*60*1000?false:true
       }
     },
     mounted() {

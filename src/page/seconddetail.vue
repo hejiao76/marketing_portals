@@ -4,7 +4,7 @@
     <div class="detailbox">
       <div class="detailTop">
         <div class="typeaa">{{statustext[orderstatus]}}</div>
-        <div class="typebb" v-if="orderstatus==0">距秒杀开始还有
+        <div class="typebb" v-if="orderstatus==1 ||orderstatus==10">距秒杀开始还有
           <countdown :endTime="detailmesg.beginTime" :callback="callback" endText="00:00:00"></countdown>
         </div>
         <div class="typebb" v-if="orderstatus==2">支付后有机会秒杀成功</div>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="list_item">
-          <div class="item_list">
+          <div class="item_list" v-if="orderstatus==3 || orderstatus==4 || orderstatus==6|| orderstatus==8">
             <span class="spa">订单编号</span>
             <span class="spb">{{detailmesg.orderNum}}</span>
           </div>
@@ -41,7 +41,7 @@
           </div>
           <div class="item_list" v-if="orderstatus==3 || orderstatus==4 || orderstatus==6|| orderstatus==8">
             <span class="spa">支付方式</span>
-            <span class="spb">{{payType == 1 ? '支付宝' : (payType == 2 ? '微信支付' : '')}}</span>
+            <span class="spb">{{detailmesg.payType == 1 ? '支付宝' : (detailmesg.payType == 2 ? '微信支付' : '')}}</span>
           </div>
           <div class="item_list"
                v-if="orderstatus==3 || orderstatus==4 || orderstatus==6||  orderstatus==7|| orderstatus==8">
@@ -54,8 +54,9 @@
           </div>
           <div class="item_list" v-if="orderstatus==4">
             <span class="spa">核销码</span>
-            <span class="spb">{{detailmesg.verifyCode}}<span class="showcode" @click="codeimgshow=true"><span
-              class="iconfont icon-erweima" style="margin-right: .05rem;"></span>查看核销码</span></span>
+            <span class="spb">{{detailmesg.verifyCode}}<span class="showcode" @click="codeimgshow=true">
+              <span
+              class="iconfont icon-erweima" style="margin-right: .05rem; display: block; text-align: right;"></span>查看核销码</span></span>
           </div>
         </div>
         <div class="list_item">

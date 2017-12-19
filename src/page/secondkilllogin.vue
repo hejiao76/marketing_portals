@@ -64,8 +64,8 @@
       mesg
     },
     activated() {
-      this.dealerId = localStorage.dealerId;
-      this.dealerName = localStorage.dealerName;
+//      this.dealerId = localStorage.dealerId;
+//      this.dealerName = localStorage.dealerName;
     },
     methods: {
       Pickclick: function (data) {
@@ -121,12 +121,13 @@
         api.base_logout()
           .then(res => {
             if (res.status) {
-              this.mesg("退出成功");
+              this.mesg="退出成功";
+              localStorage.removeItem("dealerId");
               localStorage.removeItem("realName");
               localStorage.removeItem("mobile");
               location.reload();
             } else {
-              this.mesg("退出失败")
+              this.mesg="退出失败"
             }
           }).catch(err => {
         });
@@ -150,7 +151,7 @@
               this.logintext = '报名成功'
               this.$router.push({path: '/sedKill/' + this.codeId, query: {}})
             } else {
-              this.mesg("登录失败")
+              this.mesg="登录失败"
               this.logining = true;
             }
           }).catch(err => {
@@ -171,25 +172,28 @@
             if (res.status) {
               this.addUserCoupon = res
               console.log('报名');
-              this.mesg("报名成功")
+              this.mesg="报名成功"
             } else {
-              this.mesg("报名失败")
+              this.mesg="报名失败"
             }
           }).catch(err => {
-          this.mesg("报名失败")
+          this.mesg="报名失败"
         });
       },
 
     }, mounted() {
       this.codeId = this.$route.params.code;
       this.itemId = this.$route.query.id;
+
       let code = localStorage.sedkillcode;
       let mobile = localStorage.mobile;
       let realName = localStorage.realName;
+      let dealerId= localStorage.dealerId
       this.localname = localStorage.realName;
       if (mobile && realName) {
         this.userName = realName;
         this.userPhone = mobile;
+        this.dealerId = dealerId;
       }
     }
   }

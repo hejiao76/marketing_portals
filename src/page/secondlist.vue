@@ -18,7 +18,7 @@
               </div>
             </div>
             <div class="rightbottom">
-              <div class="bottomlist status1" v-if="item.status==1 && item.itemStatus==1">距秒杀开始还有<countdown :endTime="String(item.beginTime)" :callback="callback(index)" endText="00:00:00"></countdown>
+              <div class="bottomlist status1" v-if="item.status==1 ||item.status==10 && item.itemStatus==1">距秒杀开始还有<countdown :endTime="String(item.beginTime)" :callback="callback(index)" endText="00:00:00"></countdown>
               </div>
               <div class="bottomlist status1" v-if="item.itemStatus==0">秒杀已结束</div>
               <div class="bottomlist status1" v-if="item.status==2 && item.itemStatus==1">支付倒计时<countdown :endTime="getordertime(item,index)" :callback="callbacka(index,item)" endText="00:00:00"></countdown></div>
@@ -28,7 +28,7 @@
         </div>
         <div class="btn_box">
           <span class="timesigning">报名时间:{{util.toFullDateString(item.createTime)}}</span>
-          <span class="hexiao" v-show=" item.itemStatus==1"  @click="getcode(item)" style="font-size: .12rem;    display: inline-block; color: #168dde; margin-right: .04rem;" v-if="item.status==4"><i
+          <span class="hexiao" v-show=" item.itemStatus==1 || item.status==4"  @click="getcode(item)" style="font-size: .12rem;    display: inline-block; color: #168dde; margin-right: .04rem;"><i
             class="iconfont icon-libao" style="color: #168dde; margin-right: .05rem;"></i>查看核销码</span>
           <span class="btn btnb " @click="sedkill_del(item)" v-if="item.status==6 || item.status==7 || item.itemStatus==0 ">删除</span>
           <span @click="tocardetail(item)" class="btn btnb active" v-if="item.status !=1 && item.status!=2&& item.status!=10 ">查看秒杀</span>
@@ -78,7 +78,7 @@
           7: '已退款',
           8: '已使用',
           9: '已过期',
-          10: '去秒杀'
+          10: '已报名'
         },
         secondlist:[],
         status: ['快速报名', '报名未开始', '报名已结束', '已报名'],

@@ -1,7 +1,8 @@
 /**
  * Created by jsb-cpyy on 2017/8/30.
  */
-let proxy='/action' //代理请求目标声明
+const proxy='/action' //代理请求目标声明
+
 const OBJ ={
   PROXY:proxy, //代理请求目标
   IMG_PATH:"http://img.familyku.com",  //图片访问地址配置

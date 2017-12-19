@@ -9,7 +9,7 @@
         <div class="begintime">{{util.toFullDateString(datamesg.beginTime)}}开抢</div>
         <div class="list">
           <span class="spa">秒杀价 </span>
-          <span class="spb"><span>{{datamesg.amount}}</span><span>{{datamesg.couponAmount}}</span></span>
+          <span class="spb"><span>{{datamesg.amount+'元'}}</span><span style=" margin-left: 10px;text-decoration:line-through; ">{{datamesg.couponAmount+'元'}}</span></span>
         </div>
         <div class="list">
           <span class="spa">报名时间 </span>
