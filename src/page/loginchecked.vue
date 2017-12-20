@@ -92,7 +92,7 @@
           provinceName: this.provinceName,
           pageSize: 99
         }
-        api.ap_sedkill_enroll(data).then(re => {
+        api.ap_my_coupon_dealer(data).then(re => {
           console.log(res)
           let res=re.result;
           this.checkedlist = res.dealerList;
