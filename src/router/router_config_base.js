@@ -16,19 +16,20 @@ const sedkillloginchecked = r => require.ensure([], () => r(require('../page/sed
 const routerConfig = [{
   path: '',
   redirect:""
-}, {
+},
+  /************活动入口页面**************************/
+  {
     path: '/prizedraw/:code', // 抽奖活动入口
     component: prizedraw
   }, {
     path: '/coupon/:code', //抵扣券活动入口
     component: coupons,
-    meta:{KeepAlive:true}
+    meta:{keepAlive:true}
     },
   {
     path: '/sedKill/:code', //秒杀活动入口
     component: secondkill
   },
-
   /*****************抵扣券路由********************/
   {
     path: '/coupon/:code/loginchecked', //抵扣券选择经销商
