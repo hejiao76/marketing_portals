@@ -82,33 +82,39 @@
   import Final from "./../baseSetting/Final";
   var baseURL=window.location.href.split("#")[0]+"#/";
   $(function (){
-    $.ajax({
-      type:"GET",
-      //http://webtest.familyku.com
-      url:Final.PROXY+"/user/seckill/orderInfo",
-      dataType:"json",
-      data:{itemId:30,orderNum:'M0000000016'},
-      success:function(data){
-        $(".carimg").attr("src",data.result.imgUrl);
-        $("#title").html(data.result.itemName)
-        $(".orderAmount").html(data.result.orderAmount)
-        var itemStatus=data.result.itemStatus;
-        var orderStatus=data.result.orderStatus;
-        if(itemStatus!=1 || orderStatus!=2){
-          $(".paybox").addClass("error");
-        }else {
-          $(".paybox").addClass("true");
+    var orderNum=getUrlParam(window.location.href,"orderNum");
+    var itemId=getUrlParam(window.location.href,"itemId");
+    if(orderNum && itemId){
+        var param = {itemId:itemId,orderNum:orderNum};
+      $.ajax({
+        type:"GET",
+        //http://webtest.familyku.com
+        url:Final.PROXY+"/user/seckill/orderInfo",
+        dataType:"json",
+        data:param,
+        success:function(data){
+          $(".carimg").attr("src",data.result.imgUrl);
+          $("#title").html(data.result.itemName)
+          $(".orderAmount").html(data.result.orderAmount)
+          var itemStatus=data.result.itemStatus;
+          var orderStatus=data.result.orderStatus;
+          if(itemStatus!=1 || orderStatus!=2){
+            $(".paybox").addClass("error");
+          }else {
+            $(".paybox").addClass("true");
+          }
+        },
+        error:function(jqXHR){
+          $("#data").html("发生错误:"+jqXHR.status);
         }
-      },
-      error:function(jqXHR){
-        $("#data").html("发生错误:"+jqXHR.status);
+      });
+      if(isWeiXin()){
+        $("#wxpayButton").show();
+      }else{
+        $("#alipayButton").show();
       }
-    });
-    if(isWeiXin()){
-      $("#wxpayButton").show();
-    }else{
-      $("#alipayButton").show();
     }
+
 //      $.cookie("test",123,{"domain":"chinameds.cn"});
 //      $.cookie("test",321);
 //      alert("test-------->"+$.cookie("test"));
