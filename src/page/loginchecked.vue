@@ -53,7 +53,7 @@
         provinceId: '',
         cityName: '请选择',
         cityId: '',
-        checkedlist: null,
+        checkedlist: [],
         alllist: [],
         citylist: [],
         activeed: false,
