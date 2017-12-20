@@ -64,8 +64,8 @@
       mesg
     },
     activated() {
-//      this.dealerId = localStorage.dealerId;
-//      this.dealerName = localStorage.dealerName;
+      this.dealerId = localStorage.dealerId;
+      this.dealerName = localStorage.dealerName;
     },
     methods: {
       Pickclick: function (data) {
@@ -184,7 +184,6 @@
     }, mounted() {
       this.codeId = this.$route.params.code;
       this.itemId = this.$route.query.id;
-
       let code = localStorage.sedkillcode;
       let mobile = localStorage.mobile;
       let realName = localStorage.realName;
@@ -193,8 +192,12 @@
       if (mobile && realName) {
         this.userName = realName;
         this.userPhone = mobile;
-        this.dealerId = dealerId;
       }
+      if(dealerId){
+        this.dealerId = dealerId;
+       // localStorage.removeItem("dealerId");
+      }
+
     }
   }
 

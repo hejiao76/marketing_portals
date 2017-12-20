@@ -42,4 +42,12 @@ export default {
       ap_my_coupon_info(params) {
         return fetch.fetch('user/coupon/myCouponInfo', params,'post',"json");
       },
+      /**
+       * 经销商列表
+       * @param params
+       * @returns {*}
+       */
+      ap_my_coupon_dealer(params) {
+        return fetch.fetch('user/coupon/dealer', params,'post',"json");
+      },
 }

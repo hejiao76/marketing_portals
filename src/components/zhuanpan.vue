@@ -1,7 +1,7 @@
 <template>
   <div style="background-size:cover;">
     <div class="img_box" style="display: none;">
-      <img class="imgitem" :id="['imglist'+index]" :src="item.bgImg.includes('http://')?item.bgImg:Final.IMG_PATH+item.bgImg" v-for="(item,index,key) in imglist"/>
+      <img class="imgitem" :id="['imglist'+index]" :src="item.bgImg" v-for="(item,index,key) in imglist"/>
     </div>
     <div class="banner">
       <div class="turnplate">

@@ -9,7 +9,7 @@
         <div class="begintime">{{util.toFullDateString(datamesg.beginTime)}}开抢</div>
         <div class="list">
           <span class="spa">秒杀价 </span>
-          <span class="spb"><span>{{datamesg.amount+'元'}}</span><span style=" margin-left: 10px;text-decoration:line-through; ">{{datamesg.couponAmount+'元'}}</span></span>
+          <span class="spb"><span>{{datamesg.amount+'元'}}</span><span style=" margin-left: 10px;text-decoration:line-through; color: #999999; ">{{datamesg.couponAmount+'元'}}</span></span>
         </div>
         <div class="list">
           <span class="spa">报名时间 </span>
@@ -44,7 +44,7 @@
       <div class="citylist">
         <div class="title"><span class="iconfont icon-dingwei"></span>适用城市</div>
         <ul class="itemlistcity">
-          <li class="cityname" v-for="(item,index,key) in datamesg.areaNames?datamesg.areaNames.split(','):[]">
+          <li class="cityname" v-for="(item,index,key) in wherelist">
             {{item}}
           </li>
         </ul>
@@ -75,6 +75,7 @@
         codeId: '',
         timeval: null,
         citylist: false,
+        wherelist:[]
       }
     },
     components: {
@@ -97,7 +98,6 @@
         api.base_veifyToken({})
           .then(res => {
             if (res.status == true) {
-                alert("跳转");
               window.location.href = "static/aliValid/aliValid.html?itemId=" + this.itemId;  //用户登录成功 跳转阿里滑块验证页面
             } else {
               this.mesg = ""
@@ -160,7 +160,20 @@
           console.log(res)
           this.loadingShow = false;
           if (res.status) {
-            this.datamesg = res.result
+            this.datamesg = res.result;
+            if(this.datamesg.areaIds){
+             let newidlist= this.datamesg.areaIds.split(",");
+             let newwherelist=this.datamesg.areaNames.split(",");
+             let newarr=[]
+             for(let i=0;i<newidlist.length;i++){
+               if(newidlist[i]>99){
+                 newarr.push(newwherelist[i]);
+               }
+             }
+             this.wherelist=newarr;
+            }
+
+            datamesg.areaNames?datamesg.areaNames.split(','):[]
             var self = this;
           }
         }).catch(error => {

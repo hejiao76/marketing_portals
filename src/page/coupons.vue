@@ -8,7 +8,7 @@
         <div class="bottomtext">活动日期：<br>{{beginTime + '至' + endTime}}</div>
       </div>
 
-      <div class="login" v-show="status==1">
+      <div class="login"  v-show="status==1">
         <input type="text" class="logintext username" v-model="userName" placeholder="请填写真实购车人姓名"/>
         <input type="number" class="logintext mobile" v-model="userPhone" :onchange="isiphone()" placeholder="请输入手机号"/>
         <div class="errortext" v-if="ipone_err">请输入正确的手机号</div>
@@ -17,7 +17,7 @@
           <span class="btn_code" @click="getAuthCode()">{{codestatus ? '获取验证码' : timeout + 's后再次获取'}}</span>
         </div>
 
-        <span class="checked" @click="tochecked">请选择提车经销商参与活动<i class="iconfont icon-jiantou"></i></span>
+        <span class="checked" @click="tochecked">{{dealerName ? dealerName.substr(0, 12) : '请选择提车经销商参与活动'}}<i class="iconfont icon-jiantou"></i></span>
         <button class="codebtn" @click="getcoupon">点击领卷</button>
       </div>
       <div class="couponList" v-show="status==0" v-for="item in couponlist" :key="item.id">
@@ -148,6 +148,8 @@
         timeout: 60,
         activityId: null,
         juanxize: '',
+        dealerId:'',
+        dealerName:''
       }
     },
     mounted() {
@@ -160,6 +162,10 @@
     },
     components: {
       loading
+    },
+    activated() {
+      this.dealerId = localStorage.dealerId;
+      this.dealerName = localStorage.dealerName;
     },
     methods: {
       /**
@@ -246,6 +252,8 @@
         // this.loadingShow=true;
         let mobile = localStorage.mobile;
         let realName = localStorage.realName;
+        let dealerId= localStorage.dealerId
+        this.localname = localStorage.realName;
 
         if (mobile && realName) {
 //            $(".login .username").val(realName); // 弃用JQ
@@ -253,6 +261,10 @@
           this.userName = realName;
           this.userPhone = mobile;
 
+        }
+        if(dealerId){
+          this.dealerId = dealerId;
+         // localStorage.removeItem("dealerId");
         }
         this.status = 1;
       },
@@ -278,7 +290,8 @@
           userPhone: this.userPhone,
           checkCode: this.userCode,
           couponId: this.activecouponId,
-          activityId: this.activityId
+          activityId: this.activityId,
+          dealersName:this.dealerName,
         }
         api.ap_add_user_coupon(obj)
           .then(res => {

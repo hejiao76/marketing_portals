@@ -3,7 +3,7 @@
     <loading v-show="loadingShow"></loading>
     <mesg v-bind:mesg="mesg"></mesg>
     <div class="title">
-      <img class="title_bc" :src="title_img.includes('http://')?title_img:Final.IMG_PATH+title_img"></img>
+      <img class="title_bc" :src="title_img"></img>
       <div class="raffle_number">您还有 <span>{{remainnumber}}</span> 次抽奖机会</div>
     </div>
     <zhuanpan v-on:listenstatus="getstatus" v-bind:loginstatus="islogin"></zhuanpan>
@@ -96,6 +96,7 @@
 <script>
   import api from "./../fetch/api"
   //import Final from "../util/Final";
+  import Final from "../../static/baseSetting/Final";
   import API from "./../fetch/api";
   import zhuanpan from "../components/zhuanpan";
   import titleaa from "../components/titleaa";
@@ -108,6 +109,7 @@
     mixins: [wxShare],
     data() {
       return {
+        Final:Final,
         loadingShow: true,
         remainnumber: 0,
         allNumber: 0,
@@ -265,7 +267,7 @@
         _that.isShowJoinSize = isShowJoinSize;
         _that.isShowWinningRecord = isShowWinningRecord;
         _that.description = res.result.description;
-        _that.bc_img = res.result.bgImg;
+        _that.bc_img = res.result.bgImg.includes('http://')?res.result.bgImg:Final.IMG_PATH+res.result.bgImg;
         _that.title_img = res.result.titleImg;
         if (isShowJoinSize == 1) {
           //获取抽奖人数

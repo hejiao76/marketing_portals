@@ -82,7 +82,7 @@
         </div>
       </div>
       <div class="detail_btn_box">
-        <span class="btn brna" v-if="orderstatus==2">立即支付</span>
+        <span class="btn brna" v-if="orderstatus==2" @click="tojiaoyan()">立即支付</span>
         <span class="btn" @click="tocardetail(detailmesg)" v-if="orderstatus==1 || orderstatus==10">前往秒杀</span>
         <span class="btn" @click="tocardetail(detailmesg)" v-if="orderstatus !=1 && orderstatus!=2">查看秒杀</span>
       </div>
@@ -143,12 +143,16 @@
 
       callback: function () {
       },
+      tojiaoyan:function () {
+//        window.location.href = "static/aliValid/aliValid.html?itemId=" + this.itemId;  //用户登录成功 跳转阿里滑块验证页面
+        this.$router.push({path: '/sedKill/' + this.codeId + '/secondkilllogin', query: {id: this.itemId}})
+      },
       todetail: function (item) {
         this.$router.push({path: '/sedKill/' + item.codeId, query: {}})
       },
       tocardetail: function (item) {
         this.activityCode=item.activityCode;
-        this.$router.push({path: '/sedKill/' + this.activityCode + '/secondcardetail', query: {id: item.itemId}})
+        this.$router.push({path: '/sedKill/' + this.codeId + '/secondcardetail', query: {id: item.itemId}})
       },
       tomap: function (item) {
         location.href = "http://ec.web.dev.chinameds.cn/web/html/dealer/dealersInMap.html?skuId=" + 10001
@@ -166,6 +170,7 @@
           if (res.status) {
             this.detailmesg = res.result;
             this.orderstatus = res.result.status;
+            this.codeId=res.result.activityCode;
           } else {
 
           }

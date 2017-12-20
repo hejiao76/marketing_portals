@@ -28,7 +28,7 @@
         </div>
         <div class="btn_box">
           <span class="timesigning">报名时间:{{util.toFullDateString(item.createTime)}}</span>
-          <span class="hexiao" v-show=" item.itemStatus==1 || item.status==4"  @click="getcode(item)" style="font-size: .12rem;    display: inline-block; color: #168dde; margin-right: .04rem;"><i
+          <span class="hexiao" v-show=" item.itemStatus==1 && item.status==4"  @click="getcode(item)" style="font-size: .12rem;    display: inline-block; color: #168dde; margin-right: .04rem;"><i
             class="iconfont icon-libao" style="color: #168dde; margin-right: .05rem;"></i>查看核销码</span>
           <span class="btn btnb " @click="sedkill_del(item)" v-if="item.status==6 || item.status==7 || item.itemStatus==0 ">删除</span>
           <span @click="tocardetail(item)" class="btn btnb active" v-if="item.status !=1 && item.status!=2&& item.status!=10 ">查看秒杀</span>

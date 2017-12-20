@@ -107,6 +107,10 @@
         let beginTime = this.beginTime;
       }
     },
+//    activated() {
+//      this.dealerId = localStorage.dealerId;
+//      this.dealerName = localStorage.dealerName;
+//    },
     methods: {
 
       aliValid() {
