@@ -102,11 +102,11 @@
   import titleaa from "../components/titleaa";
   import loading from "../components/loading";
   import mesg from "../components/mesg";
-  import wxShare from '../mixin/wxShare.js'
+  import { wechatShare }  from '../mixin/wxShare.js'
+  import wx from 'weixin-js-sdk';
 
   var xxUrl = window.location.origin
   export default {
-    mixins: [wxShare],
     data() {
       return {
         Final:Final,
@@ -251,6 +251,12 @@
       let id = this.$route.params.code;
       var _that = this;
       console.log(id);
+     wechatShare({
+        title: '组件的标题',
+        content: '内容',
+        link: `${window.location.origin}/user/collegeIndex`,
+        logo: `${require('../assets/img/get_bg.png')}`,
+      });
       api.base_veifyToken().then(res => {
         if (res.status == true) {
           _that.islogin = true;

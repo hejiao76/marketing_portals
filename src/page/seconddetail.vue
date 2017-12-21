@@ -82,7 +82,7 @@
         </div>
       </div>
       <div class="detail_btn_box">
-        <span class="btn brna" v-if="orderstatus==2" @click="tojiaoyan()">立即支付</span>
+        <span class="btn brna" v-if="orderstatus==2" @click="tojiaoyan(detailmesg)">立即支付</span>
         <span class="btn" @click="tocardetail(detailmesg)" v-if="orderstatus==1 || orderstatus==10">前往秒杀</span>
         <span class="btn" @click="tocardetail(detailmesg)" v-if="orderstatus !=1 && orderstatus!=2">查看秒杀</span>
       </div>
@@ -143,9 +143,28 @@
 
       callback: function () {
       },
-      tojiaoyan:function () {
-//        window.location.href = "static/aliValid/aliValid.html?itemId=" + this.itemId;  //用户登录成功 跳转阿里滑块验证页面
-        this.$router.push({path: '/sedKill/' + this.codeId + '/secondkilllogin', query: {id: this.itemId}})
+      isWeiXin(){
+        var ua = window.navigator.userAgent.toLowerCase();
+        if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+          return true;
+        }else{
+          return false;
+        }
+      },
+      tojiaoyan:function (data) {
+        let orderNum=data.orderNum;
+        let itemId=this.itemId;
+        if(orderNum && itemId){
+          if(this.isWeiXin()){
+            var param="http://ec.web.dev.chinameds.cn/activity"+"/static/pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"&clientType="+1;
+            var redirectURL='http://ec.web.dev.chinameds.cn/web/html/wx3j.html?ref='+encodeURIComponent(param);
+            window.location.href=redirectURL;
+          }else{
+            window.location.href="./../pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"&clientType="+1;
+          }
+        }
+
+        // this.$router.push({path: '/sedKill/' + this.codeId + '/secondkilllogin', query: {id: this.itemId}})
       },
       todetail: function (item) {
         this.$router.push({path: '/sedKill/' + item.codeId, query: {}})

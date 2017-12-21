@@ -1,63 +1,105 @@
-import qs from 'qs'
-const wx = require('weixin-js-sdk')
-export default {
-  methods: {
-    wxReady (info) {
-      let that = this
+function getScript() {
+  return new Promise((resolve, reject) => {
+
+    $.ajax({
+      url: 'https://res.wx.qq.com/open/js/jweixin-1.0.0.js',
+      dataType: "script",
+      cache : true,
+    }).done(function() {
+      resolve(window.wx)
+    })
+      .fail(function(error) {
+        reject( error );
+      });
+
+  })
+}
+
+function act() {
+  debugger;
+  return new Promise((resolve, reject) => {
+    // console.log(window.location.href)
+    $.ajax({
+      url: 'http://sem.familyku.com/sys/wx/info?type=1&businessId=4',//后台索要的算法签名
+      type: 'get',
+    }).done(function(ret) {
+      console.log('ret',ret)
+      resolve(ret.result)
+    }).fail(function(ret) {
+      reject( ret );
+    })
+  })
+}
+
+
+
+export function wechatShare(shareDate) {
+  return new Promise(async function(resolve, reject) {
+
+    try{
+      let isWechat=navigator.userAgent.indexOf('MicroMessenger')>-1 //判断为微信浏览器
+      if(!isWechat){
+        return resolve('not weichat')
+      }
+      if(!window.wx){
+        await getScript();
+      }
+
+
+      var defaultData = {
+        title: `分享的标题`,
+        content: `内容`,
+        link: `${window.location.href}`,
+        logo: `${require('../assets/img/get_bg.png')}`, //分享出来的图片的
+        success: function (res) {
+
+        },
+      }
+      let data = { ...defaultData, ...shareDate }
+      let ret = await act()
+      console.log(ret)
+      wx.config($.extend({
+        // debug:1,
+        jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'],
+      }, ret))
+
       wx.ready(function () {
-        wx.showOptionMenu()
         wx.onMenuShareTimeline({
-          title: info.title,
-          link: info.link,
-          imgUrl: info.imgUrl,
-          success: function () {
-            that.$toast('已成功分享到朋友圈')
-          },
+          title: data.content,
+          desc: '',
+          link: data.link,
+          imgUrl: data.logo,
+          dataUrl: '',
+          success: data.success,
           cancel: function () {
-            that.$toast('已取消分享')
-          }
+            alert(1)
+          },
         })
         wx.onMenuShareAppMessage({
-          title: info.title,
-          desc: info.desc,
-          link: info.link,
-          imgUrl: info.imgUrl,
-          success: function () {
-            // that.$toast('已成功分享给您的朋友')
-            alert(111)
-          },
+          title: data.title,
+          desc: data.content,
+          link: data.link,
+          imgUrl: data.logo,
+          dataUrl: '',
+          success: data.success,
           cancel: function () {
-            that.$toast('已取消分享')
-          }
+            alert(2)
+          },
+        })
+        wx.onMenuShareQQ({
+          title: data.title,
+          desc: data.content,
+          link: data.link,
+          imgUrl: data.logo,
+          dataUrl: '',
+          success: data.success,
+          cancel: function () {},
         })
       })
-    },
-    weChatShare (info) {
-      let that = this
-      let url = ''
-      // 判断苹果手机
-      if (window.__wxjs_is_wkwebview === true) {
-        url = this.$store.state.iosUrl || window.location.href
-      } else {
-        url = window.location.href
-      }
-      window.$axios(this.$dataURL + '/getWxJsParams', qs.stringify({
-        url: url,
-        signId: that.$localStorage('signId')
-      })).then(res => {
-        let wxConfig = res.data.attr
-        wx.config({
-          debug: false,
-          appId: wxConfig.appid,
-          timestamp: wxConfig.timestamp,
-          nonceStr: wxConfig.nonceStr,
-          signature: wxConfig.signature,
-          jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'showOptionMenu']
-        })
-        that.wxReady(info)
-      }, err => {
-        console.error('微信分享失败', err.data.message)
-      })
+
+    }catch(error){
+      reject( error );
     }
-  }
+  })
+
 }
