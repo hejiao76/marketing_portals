@@ -24,7 +24,7 @@
       },
       callback : {
         type : Function,
-        default :''
+        default :function(){}
       }
     },
     watch:{
