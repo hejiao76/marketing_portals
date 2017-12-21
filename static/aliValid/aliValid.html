@@ -38,6 +38,7 @@
 
 <!-- 此段必须要引入 -->
 <script>
+  import Final from "./../baseSetting/Final"
   var nc_appkey =  'FFFF0000000001790EE8'; // 应用标识,不可更改
   var nc_scene = 'login_h5';  //场景,不可更改
   var nc_token = [nc_appkey, (new Date()).getTime(), Math.random()].join(':');
@@ -101,7 +102,7 @@
   function aliServerValid (data){
     $.ajax({
       type: 'POST',
-      url: "/action/user/ali/check" ,
+      url: Final.PROXY+"/user/ali/check" ,
       data: data ,
       success: function (res){
           if(res.status==true){
@@ -129,7 +130,7 @@
       var param ={itemId:itemId,clientType:1}
       $.ajax({
         type: 'POST',
-        url: "/action/user/seckill/seckill" ,
+        url: Final.PROXY+"/user/seckill/seckill" ,
         data: param ,
         success: function (res){
           if(res.status==true){
@@ -145,7 +146,8 @@
 //                    window.location.href=redirectURL;
 //                    return;
                       if(isWeiXin()){
-                        var param="http://ec.web.dev.chinameds.cn/activity"+"/static/pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"&clientType="+1;
+                        var param=window.location.href.split("#")[0]+"/static/pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"&clientType="+1;
+//                        var redirectURL='http://ec.web.dev.chinameds.cn/web/html/wx3j.html?ref='+encodeURIComponent(param);
                         var redirectURL='http://ec.web.dev.chinameds.cn/web/html/wx3j.html?ref='+encodeURIComponent(param);
                         window.location.href=redirectURL;
                       }else{
@@ -159,7 +161,7 @@
               }else if(res.code==4){
                   console.log("已支付");
               }else if(res.code==2){
-                  alert(res.message);
+//                  alert(res.message);
 
               }
           }else{

@@ -79,39 +79,43 @@
 </div>
 
 <script>
-  var baseURL= "http://ec.web.dev.chinameds.cn/activity/#/";
+  import Final from "./../baseSetting/Final";
+  var baseURL=window.location.href.split("#")[0]+"#/";
   $(function (){
     var orderNum=getUrlParam(window.location.href,"orderNum");
     var itemId=getUrlParam(window.location.href,"itemId");
-    $.ajax({
-      type:"GET",
-      //http://webtest.familyku.com
-
-      url:"http://webtest.familyku.com/action/user/seckill/orderInfo",
-      dataType:"json",
-      data:{itemId:itemId,orderNum:orderNum},
-      success:function(data){
-        $(".carimg").attr("src",data.result.imgUrl);
-        $("#title").html(data.result.itemName)
-        $(".orderAmount").html(data.result.orderAmount)
-        var itemStatus=data.result.itemStatus;
-        var orderStatus=data.result.orderStatus;
-        if(itemStatus!=1 || orderStatus!=2){
-          $(".paybox").addClass("error");
-        }else {
-          $(".paybox").addClass("true");
+    if(orderNum && itemId){
+        var param = {itemId:itemId,orderNum:orderNum};
+      $.ajax({
+        type:"GET",
+        //http://webtest.familyku.com
+        url:Final.PROXY+"/user/seckill/orderInfo",
+        dataType:"json",
+        data:param,
+        success:function(data){
+          $(".carimg").attr("src",data.result.imgUrl);
+          $("#title").html(data.result.itemName)
+          $(".orderAmount").html(data.result.orderAmount)
+          var itemStatus=data.result.itemStatus;
+          var orderStatus=data.result.orderStatus;
+          if(itemStatus!=1 || orderStatus!=2){
+            $(".paybox").addClass("error");
+          }else {
+            $(".paybox").addClass("true");
+          }
+        },
+        error:function(jqXHR){
+          $("#data").html("发生错误:"+jqXHR.status);
         }
-      },
-      error:function(jqXHR){
-        $("#data").html("发生错误:"+jqXHR.status);
+      });
+      if(isWeiXin()){
+        $("#wxpayButton").show();
+      }else{
+        $("#alipayButton").show();
       }
-    });
-    if(isWeiXin()){
-      $("#wxpayButton").show();
-    }else{
-      $("#alipayButton").show();
     }
-      $.cookie("test",123,{"domain":"chinameds.cn"});
+
+//      $.cookie("test",123,{"domain":"chinameds.cn"});
 //      $.cookie("test",321);
 //      alert("test-------->"+$.cookie("test"));
 //      alert("cookie----->"+$.cookie("rwxtc"));
@@ -215,14 +219,14 @@
     var orderNum = getUrlParam(window.location.href, "orderNum");
     var itemId = getUrlParam(window.location.href, "itemId");
     var openId = $.cookie("rwxtc");
-    alert("orderNun=" + orderNum + "~~~itemID=" + itemId + "~~~~openId=" + openId);
+//    alert("orderNun=" + orderNum + "~~~itemID=" + itemId + "~~~~openId=" + openId);
     if (!orderNum || !itemId || !openId) {return }
       var param = {orderNum: orderNum, itemId: itemId, openId: openId,clientType:1};
-      alert(JSON.stringify(param));
+//      alert(JSON.stringify(param));
       $.ajax({
         type: 'POST',
         dataType: "JSON",
-        url: "/action/user/seckill/weixinPay",
+        url: Final.PROXY+"/user/seckill/weixinPay",
         data: param,
         success: function (res) {
           if (res.status == true) {
@@ -243,7 +247,7 @@
                   signType: "MD5",
                   paySign: res.result.sign
                 }
-                alert("wxBridge--------->" + JSON.stringify(param));
+//                alert("wxBridge--------->" + JSON.stringify(param));
                 $("#showText").html(JSON.stringify(param));
                 onBridgeReady(param);
               }
@@ -268,11 +272,11 @@
         function(res){
           if(res.err_msg == "get_brand_wcpay_request:ok" ) {
               var itemId = getUrlParam(window.location.href, "itemId");
-              alert("这里成功回调------>"+itemId);
+//              alert("这里成功回调------>"+itemId);
               window.location.href=baseURL+"sedKill/secondcardetail?id="+itemId;
           }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
           else{
-              alert("支付失败");
+//              alert("支付失败");
               window.location.href=baseURL+"mysedKill/secondlist";
           }
         }
