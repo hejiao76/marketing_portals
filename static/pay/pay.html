@@ -79,8 +79,8 @@
 </div>
 
 <script>
-  import Final from "./../baseSetting/Final";
-  var baseURL=window.location.href.split("#")[0]+"#/";
+  var Final = {PROXY:"/action"}
+  var baseURL="/#/";
   $(function (){
     var orderNum=getUrlParam(window.location.href,"orderNum");
     var itemId=getUrlParam(window.location.href,"itemId");
@@ -256,9 +256,11 @@
             } else if (res.code == 999) {
               console.log("未登录");
             } else if (res.code == 4) {
+              window.location.href=baseURL+"sedKill/secondcardetail?id="+itemId;
               console.log("已支付");
             }
           } else {
+            window.location.href=baseURL+"mysedKill/secondlist";
             console.log("秒杀异常---" + res.message);
           }
         }
