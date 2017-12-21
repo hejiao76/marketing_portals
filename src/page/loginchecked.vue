@@ -85,7 +85,7 @@
         this.cityName = item.cityName
         this.cityId = item.cityId
         let data = {
-          itemId: this.itemId,
+          couponId: parseInt(this.itemId),
           cityId: this.cityId,
           cityName: this.cityName,
           provinceId: this.provinceId,

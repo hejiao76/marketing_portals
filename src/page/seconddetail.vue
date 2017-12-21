@@ -56,7 +56,7 @@
             <span class="spa">核销码</span>
             <span class="spb">{{detailmesg.verifyCode}}<span class="showcode" @click="codeimgshow=true">
               <span
-              class="iconfont icon-erweima" style="margin-right: .05rem; display: block; text-align: right;"></span>查看核销码</span></span>
+              class="iconfont icon-erweima" style="margin-right: .05rem;"></span>查看核销码</span></span>
           </div>
         </div>
         <div class="list_item">

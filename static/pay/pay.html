@@ -81,12 +81,15 @@
 <script>
   var baseURL= "http://ec.web.dev.chinameds.cn/activity/#/";
   $(function (){
+    var orderNum=getUrlParam(window.location.href,"orderNum");
+    var itemId=getUrlParam(window.location.href,"itemId");
     $.ajax({
       type:"GET",
       //http://webtest.familyku.com
-      url:"http://localhost:8070/action/user/seckill/orderInfo",
+
+      url:"http://webtest.familyku.com/action/user/seckill/orderInfo",
       dataType:"json",
-      data:{itemId:30,orderNum:'M0000000016'},
+      data:{itemId:itemId,orderNum:orderNum},
       success:function(data){
         $(".carimg").attr("src",data.result.imgUrl);
         $("#title").html(data.result.itemName)

@@ -1,6 +1,7 @@
 <template>
   <div>
     <loading v-show="loadingShow"></loading>
+    <mesg v-bind:mesg="mesg"></mesg>
     <div class="center_box">
       <div class="bannerbox">
         <img class="banner" v-show="status==0||status==1 ||status==10||status==11"
@@ -119,6 +120,7 @@
   import Final from "../../static/baseSetting/Final";
   import API from "./../fetch/api";
   import loading from "../components/loading";
+  import mesg from "../components/mesg";
 
   export default {
     data() {
@@ -126,6 +128,7 @@
         userName: "",
         userPhone: "",
         userCode: "",
+        mesg:"",
         activecouponId: '',
         addUserCoupon: {
           result: {
@@ -161,7 +164,8 @@
       //alert("create");
     },
     components: {
-      loading
+      loading,
+      mesg
     },
     activated() {
       this.dealerId = localStorage.dealerId;
@@ -319,12 +323,20 @@
           query: {itemId: this.activecouponId}
         })
       },
+      mesg(text){
+        this.mesg=text
+        var that=this;
+        setTimeout(function(){
+          that.mesg="";
+        },2000)
+      },
       /**
        * 点击领券前验证是否登录
        * @returns {}
        */
       getcoupon: function () {
         if (!this.userName || !this.userPhone || !this.userCode) {
+          this.mesg("请输入登录信息~");
           return;
         }
         api.base_login({userPhone: this.userPhone, checkCode: this.userCode, username: this.userName})

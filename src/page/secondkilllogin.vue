@@ -98,7 +98,7 @@
             })
           }
         } else {
-          _that.mesg = '请输入完整用户信息';
+          _that.mesga('请输入完整用户信息');
         }
 
       },
@@ -116,18 +116,27 @@
       },
       checkedlist: function () {
         this.$router.push({path: '/sedKill/' + this.codeId + '/sedkillloginchecked', query: {id: this.itemId}})
+      }
+      ,
+      mesga(text){
+        this.mesg=text
+        var that=this;
+        setTimeout(function(){
+          that.mesg="";
+        },2000)
       },
+
       loginout: function () {
         api.base_logout()
           .then(res => {
             if (res.status) {
-              this.mesg="退出成功";
+              this.mesga("退出成功");
               localStorage.removeItem("dealerId");
               localStorage.removeItem("realName");
               localStorage.removeItem("mobile");
               location.reload();
             } else {
-              this.mesg="退出失败"
+              this.mesga("退出失败");
             }
           }).catch(err => {
         });
@@ -137,7 +146,7 @@
           return;
         }
         if (!this.userName || !this.userPhone || !this.userCode || !this.dealerId) {
-          this.mesg = '请填入报名信息';
+          this.mesga('请填入报名信息');
           return;
         }
         this.logining = false;
@@ -151,7 +160,7 @@
               this.logintext = '报名成功'
               this.$router.push({path: '/sedKill/' + this.codeId, query: {}})
             } else {
-              this.mesg="登录失败"
+              this.mesga("登录失败")
               this.logining = true;
             }
           }).catch(err => {
@@ -172,12 +181,12 @@
             if (res.status) {
               this.addUserCoupon = res
               console.log('报名');
-              this.mesg="报名成功"
+              this.mesga("报名成功")
             } else {
-              this.mesg="报名失败"
+              this.mesga("报名失败")
             }
           }).catch(err => {
-          this.mesg="报名失败"
+          this.mesga("报名失败");
         });
       },
 
@@ -195,7 +204,7 @@
       }
       if(dealerId){
         this.dealerId = dealerId;
-       // localStorage.removeItem("dealerId");
+        // localStorage.removeItem("dealerId");
       }
 
     }
