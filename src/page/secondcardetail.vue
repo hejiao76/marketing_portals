@@ -37,7 +37,7 @@
       <div class="carbtnbox" v-if="datamesg.areaStatus==0">
         <div class="btnbox noaction">您所在的城市暂无秒杀</div>
       </div>
-      <div class="detailbox" v-html="datamesg.details"></div>
+      <div class="detailbox" style="margin-left:.2rem;margin-right:.2rem" v-html="datamesg.details"></div>
     </div>
 
     <div class="citybox" v-show="citylist">
@@ -115,7 +115,10 @@
       },
       sedkill: function () {
         //校验是否登录
-        if(this.reversedMessage>0 || this.datamesg.status==0){
+        if(this.reversedMessage>0 || this.datamesg.status==0 || this.datamesg.status==4){
+          if(this.datamesg.status==4){
+            this.mesg="请先报名"
+          }
           return false;
         }
         this.checkLogin();
@@ -153,7 +156,7 @@
         };
       }, 1000);
       this.codeId = this.$route.params.code;
-      this.itemId = this.$route.query.id;
+      this.itemId =this.$route.query.id;
       console.log("detail---->", this.itemId);
       api.ap_sedkill_info({itemId: this.itemId})
         .then(res => {

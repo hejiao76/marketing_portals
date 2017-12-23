@@ -56,7 +56,8 @@
         dealerId: '',
         dealerName: '',
         logining: true,
-        logintext: '报名秒杀'
+        logintext: '报名秒杀',
+        ownerType:2,
       }
     },
     components: {
@@ -193,6 +194,7 @@
     }, mounted() {
       this.codeId = this.$route.params.code;
       this.itemId = this.$route.query.id;
+      this.ownerType =localStorage.getItem("ownerType");
       let code = localStorage.sedkillcode;
       let mobile = localStorage.mobile;
       let realName = localStorage.realName;

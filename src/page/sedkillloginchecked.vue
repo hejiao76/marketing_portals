@@ -53,7 +53,7 @@
         provinceId: '',
         cityName: '请选择',
         cityId: '',
-        checkedlist: null,
+        checkedlist: [],
         alllist: [],
         citylist: [],
         activeed: false,
@@ -94,7 +94,9 @@
         }
         api.ap_sedkill_enroll(data).then(res => {
           console.log(res)
-          this.checkedlist = res.objList;
+          if(res.status==true){
+            this.checkedlist = res.objList;
+          }
         }).catch(error => {
           console.log(error)
         });
@@ -112,12 +114,12 @@
         console.log(res)
         this.alllist = res.result;
         api.ap_sedkill_enroll({itemId: this.itemId, pageSize: 99}).then(res => {
-          this.provinceId = res.provinceId;
-          this.provinceName = res.provinceName;
-          this.cityId = res.cityId;
-          this.cityName = res.cityName;
-          this.checkedlist = res.objList;
-          this.loadingShow = false;
+            this.provinceId = res.provinceId;
+            this.provinceName = res.provinceName;
+            this.cityId = res.cityId;
+            this.cityName = res.cityName;
+            this.checkedlist = res.objList || [];
+            this.loadingShow = false;
         }).catch(error => {
           console.log(error)
         });

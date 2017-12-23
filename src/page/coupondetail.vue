@@ -76,7 +76,7 @@
     },
     mounted() {
       this.activityId = this.$route.params.code;
-      this.imgurl = Final.QRCODE + "/v1/gift/qrcode?activityId=" + this.activityId + "&activityType=103&couponCode=yunyong"
+
       this.getmyCouponInfo({couponCode: this.activityId})
     },
     created() {
@@ -96,6 +96,8 @@
           .then(res => {
             if (res.status) {
               this.detail = res.result;
+              //厂商 经销商未区分....
+              this.imgurl = Final.QRCODE + "/v1/gift/qrcode?activityId=" + res.result.activityId + "&activityType=103&couponCode=yunyong"
               this.loadingShow = false;
             }
           }).catch(error => {

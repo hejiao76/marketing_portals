@@ -157,7 +157,7 @@
         if(orderNum && itemId){
           if(this.isWeiXin()){
             var param=window.location.origin+Final.CHILD_FLOADER_NAME+"/"+Final.BUILD_PATH+"/pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"&clientType="+1;
-            var redirectURL='http://ec.web.dev.chinameds.cn/web/html/wx3j.html?ref='+encodeURIComponent(param);
+            var redirectURL='http://ec.web.chinameds.cn/customerweb/html/wx3j.html?ref='+encodeURIComponent(param);
             window.location.href=redirectURL;
           }else{
             window.location.href=window.location.origin+Final.CHILD_FLOADER_NAME+"/"+Final.BUILD_PATH+"/pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"&clientType="+1;
@@ -174,7 +174,7 @@
         this.$router.push({path: '/sedKill/' + this.codeId + '/secondcardetail', query: {id: item.itemId}})
       },
       tomap: function (item) {
-        location.href = "http://ec.web.dev.chinameds.cn/web/html/dealer/dealersInMap.html?skuId=" + 10001
+        location.href = "http://ec.web.chinameds.cn/customerweb/html/dealer/dealersInMap.html?skuId=" + 10001
       },
     },
     mounted() {
@@ -182,7 +182,7 @@
       this.imgurl = Final.QRCODE + "/v1/gift/qrcode?activityId=" + this.itemId + "&activityType=102&couponCode=yunyong"
       let paySuccessTime= this.$route.query.paySuccessTime;
       if(paySuccessTime){
-        detailmesg.payTime=paySuccessTime
+        this.detailmesg.payTime=paySuccessTime
       }
       api.ap_sedkill_my_activity_info({itemId: this.itemId})
         .then(res => {

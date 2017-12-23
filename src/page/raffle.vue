@@ -12,7 +12,7 @@
     <div class="protocolBtn" @click="status=0">活动须知</div>
     <div class="out_box sigin" v-show="loginshow">
       <div class="out_boxa">
-        <span class="close iconfont icon-guanbi"></span>
+        <span class="close iconfont icon-guanbi" @click="loginshow=false"></span>
         <div class="title_name">登录</div>
         <input type="number" class="username" :onchange="isiphone()" v-model="userPhone" placeholder="请输入手机号"/>
         <div class="errortext" v-if="ipone_err">请输入正确的手机号</div>
@@ -24,7 +24,6 @@
         <div class="tishi"><span class="iconfont icon-tishi"></span>未注册过的手机号将自动创建帐户</div>
         <div class="codebtn" @click="loginin">立即登录</div>
       </div>
-
     </div>
     <div class="out_box actionmesg" v-if="status==0">
       <div class="out_boxa">
@@ -219,6 +218,7 @@
               if (res.status) {
                 _that.mesg = '登录成功';
                 _that.loginshow = false;
+                _that.islogin = true;
               } else {
                 _that.mesg = '登录失败';
               }
@@ -244,37 +244,86 @@
         $(".pointer").trigger("click");
       },
       tomyraddle: function () {
-        location.href = "http://ec.web.dev.chinameds.cn/web/html/gift/giftlist.html"
+        location.href = "http://ec.web.chinameds.cn/customerweb/html/gift/giftlist.html"
+      },
+      addFree: function (){
+        let id = this.$route.params.code;
+        if(id){
+          api.ap_prizedraw_addfree({activityCode:id})
+            .then(res => {
+              if (res.status==true) {
+                  alert("成功哈哈哈哈");
+                  this.getNumber();
+              } else {
+                  alert("失败.....");
+              }
+            }).catch(err => {
+          });
+        }
+
+      },
+      getNumber (){
+        //获取抽奖次数
+        let id = this.$route.params.code;
+        if(id){
+          api.ap_prizedraw_number({'activityCode': id}).then(res => {
+            console.log(res)
+            if(res.status==true){
+              _that.remainnumber = res.result.surplusCount
+            }
+          }).catch(error => {
+            console.log(error)
+          })
+        }
+
+      },
+      /***初始化微信分享标题内容***/
+      wxShareFn (data) {
+        let _self=this;
+        wechatShare({
+          title: data.name,
+          content: data.description,
+          link: window.location.href,
+          logo:data.shareImg ? data.shareImg.includes('http://') ? data.shareImg : Final.IMG_PATH+data.shareImg : "",
+          success:function (){
+              alert("分享成功");
+              _self.addFree();
+          }
+        });
       }
     },
     mounted() {
       let id = this.$route.params.code;
       var _that = this;
       console.log(id);
-     wechatShare({
-        title: '组件的标题',
-        content: '内容',
-        link: `${window.location.origin}/user/collegeIndex`,
-        logo: `${require('../assets/img/get_bg.png')}`,
-      });
+//     wechatShare({
+//        title: '组件的标题',
+//        content: '内容',
+//        link: `${window.location.origin}/user/collegeIndex`,
+//        logo: `${require('../assets/img/get_bg.png')}`,
+//      });
       api.base_veifyToken().then(res => {
         if (res.status == true) {
           _that.islogin = true;
+//          _that.loginshow=true;
         } else {
           _that.islogin = false;
+//          _that.loginshow=true;
         }
       }).catch(error => {
         console.log(error)
       });
       //获取详情
       api.ap_prizedraw({'activityCode': id}).then(res => {
+        this.wxShareFn(res.result);
+        document.title=res.result.name || "抽奖活动";
         let isShowJoinSize = res.result.isShowJoinSize;
         let isShowWinningRecord = res.result.isShowWinningRecord;
         _that.isShowJoinSize = isShowJoinSize;
         _that.isShowWinningRecord = isShowWinningRecord;
         _that.description = res.result.description;
         _that.bc_img = res.result.bgImg.includes('http://')?res.result.bgImg:Final.IMG_PATH+res.result.bgImg;
-        _that.title_img = res.result.titleImg;
+        _that.title_img = res.result.titleImg.includes('http://')?res.result.titleImg:Final.IMG_PATH+res.result.titleImg; //res.result.titleImg;
         if (isShowJoinSize == 1) {
           //获取抽奖人数
           api.ap_prizedraw_users({'activityCode': id}).then(res => {
@@ -300,7 +349,10 @@
       //获取抽奖次数
       api.ap_prizedraw_number({'activityCode': id}).then(res => {
         console.log(res)
-        _that.remainnumber = res.result.surplusCount
+        if(res.status==true){
+          _that.remainnumber = res.result.surplusCount
+        }else{
+        }
       }).catch(error => {
         console.log(error)
       })

@@ -77,6 +77,8 @@
   import api from "./../fetch/api";
   import loading from "../components/loading";
   import * as util from "../util/util"
+  import { wechatShare }  from '../mixin/wxShare.js'
+  import wx from 'weixin-js-sdk';
 
   export default {
     data() {
@@ -129,6 +131,20 @@
       },
       gettime:function(time){
         return (time-Date.parse(new Date()))>24*60*60*1000?false:true
+      },
+      /***初始化微信分享标题内容***/
+      wxShareFn (data) {
+        let _self=this;
+        wechatShare({
+          title: data.name,
+          content: data.description || '',
+          link: window.location.href,
+          logo:data.shareImg ? data.shareImg.includes('http://') ? data.shareImg : Final.IMG_PATH+data.shareImg : "",
+          success:function (){
+            alert("分享成功");
+            _self.addFree();
+          }
+        });
       }
     },
     mounted() {
@@ -136,19 +152,24 @@
       if(this.codeId){
         api.ap_sedkill_detail({'activityCode': this.codeId})
           .then(res => {
-            console.log(res)
-            this.loadingShow = false;
-            if (res.result.status == 1) {
-              this.killlist = res.result.itemList;
-            } else {
-              this.errormesg = this.statustype[res.result.status]
+            console.log(res);
+            if(res.status==true){
+              this.wxShareFn(res.result);
+              window.localStorage.setItem("ownerType",res.result.ownerType);
+              document.title=res.result.name || "秒杀活动";
+              this.loadingShow = false;
+              if (res.result.status == 1) {
+                this.killlist = res.result.itemList;
+              } else {
+                this.errormesg = this.statustype[res.result.status]
+              }
+              this.beginTime = util.toDateString(res.result.beginTime)
+              console.log("a----", this.beginTime);
+              this.endTime = util.toDateString(res.result.endTime)
             }
-            this.beginTime = util.toDateString(res.result.beginTime)
-            console.log("a----", this.beginTime);
-            this.endTime = util.toDateString(res.result.endTime)
           }).catch(error => {
-          console.log(error)
-          this.loadingShow = false;
+            console.log(error)
+            this.loadingShow = false;
         });
       }
     }

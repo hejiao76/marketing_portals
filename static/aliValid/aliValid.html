@@ -143,14 +143,15 @@
 //                    var param="http://abc.chinameds.cn"+"/static/pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"clientType="+1;
 //                    console.log(param);
 //                    return;
-//                    var redirectURL='http://ec.web.dev.chinameds.cn/web/html/wx3j.html?ref='+param;
+//                    var redirectURL='http://ec.web.chinameds.cn/customerweb/html/wx3j.html?ref='+param;
 //
 //                    window.location.href=redirectURL;
 //                    return;
                       if(isWeiXin()){
                         var param=window.location.origin+Final.CHILD_FLOADER_NAME+"/"+Final.BUILD_PATH+"/pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"&clientType="+1;
-//                        var redirectURL='http://ec.web.dev.chinameds.cn/web/html/wx3j.html?ref='+encodeURIComponent(param);
-                        var redirectURL='http://ec.web.dev.chinameds.cn/web/html/wx3j.html?ref='+encodeURIComponent(param);
+//                        alert("url--->"+param);
+//                        var redirectURL='http://ec.web.chinameds.cn/customerweb/html/wx3j.html?ref='+encodeURIComponent(param);
+                        var redirectURL='http://ec.web.chinameds.cn/customerweb/html/wx3j.html?ref='+encodeURIComponent(param);
                         window.location.href=redirectURL;
                       }else{
                         window.location.href="./../pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"&clientType="+1;
@@ -167,9 +168,10 @@
                   window.location.href=baseURL+"/sedKill/secondcardetail?id="+itemId;
               }
           }else{
-
+            alert(res.message);
               window.location.href=baseURL+"/mysedKill/secondlist";
-              console.log("秒杀异常---"+res.message);
+//              console.log("秒杀异常---"+res.message);
+
           }
         },
         dataType: "JSON"

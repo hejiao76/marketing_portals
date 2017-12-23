@@ -121,6 +121,8 @@
   import API from "./../fetch/api";
   import loading from "../components/loading";
   import mesg from "../components/mesg";
+  import { wechatShare }  from '../mixin/wxShare.js'
+  import wx from 'weixin-js-sdk';
 
   export default {
     data() {
@@ -179,6 +181,8 @@
       getCouponActivityInfo() {
         api.ap_coupon({'activityCode': this.activityCode}).then(res => {
           console.log(res)
+          this.wxShareFn(res.result);
+          document.title=res.result.name || "抵扣券活动";
           if (res.status) {
             if (res.result.status == 3) {
               this.status = 10;
@@ -353,6 +357,20 @@
 
         });
 //          this.status=2;
+      },
+      /***初始化微信分享标题内容***/
+      wxShareFn (data) {
+        let _self=this;
+        wechatShare({
+          title: data.name,
+          content: data.description,
+          link: window.location.href,
+          logo:data.shareImg ? data.shareImg.includes('http://') ? data.shareImg : Final.IMG_PATH+data.shareImg : "",
+          success:function (){
+            alert("分享成功");
+            _self.addFree();
+          }
+        });
       },
       /**
        * 跳转到我的礼券列表

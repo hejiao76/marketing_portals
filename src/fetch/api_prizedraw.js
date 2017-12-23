@@ -32,13 +32,22 @@ export default {
      */
   ap_prizedraw_go(params) {
       return fetch.fetch('user/lottery/go', params);
-    },/**
+    },
+  /**
    * 3.2.4.	抽奖人数
    * @param params
    * @returns {*}
    */
   ap_prizedraw_users(params) {
     return fetch.fetch('user/lottery/joinSize', params,'get');
+  },
+  /**
+   * 分享得抽奖次数
+   * @param params
+   * @returns {*}
+   */
+  ap_prizedraw_addfree(params) {
+    return fetch.fetch('user/lottery/addFree', params);
   },
 
 
