@@ -7,6 +7,8 @@ const OBJ ={
   PROXY:proxy, //代理请求目标
   IMG_PATH:"http://img.familyku.com",  //图片访问地址配置
   QRCODE:'http://openapi.dev.yunyang.work', //核销码访问地址配置
+  CHILD_FLOADER_NAME:"", //域名下静态资源目录 可以为空
+  BUILD_PATH:"js/app", //webPack 编译路径
 
   SERIALTYPE:{
     1:"全车系", 2:"指定车系"

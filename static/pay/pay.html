@@ -9,7 +9,8 @@
   <!--<link rel="stylesheet" href="/static/css/app.css">-->
   <link rel="stylesheet" href="../css/common.css">
   <link rel="stylesheet" href="../css/SecondKillpay.css">
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_491957_72imm8oh2r3eg66r.css">
+  <link rel="stylesheet" href="http://at.alicdn.com/t/font_491957_72imm8oh2r3eg66r.css">
+  <script src="../baseSetting/staticFinal.js"></script>
 </head>
 <style>
   html{ font-size: 100px; background: #F5F5F5; padding: .15rem; }
@@ -20,7 +21,8 @@
   .carimg {
     float: left;
     width:.8rem;
-    height:.8rem;}
+    max-height:.8rem;
+    max-width:.8rem;}
   .top_right { position: absolute;
     height:100%; left: 1.16rem;}
   .title { font-size: .14rem; color: #666666;}
@@ -79,8 +81,8 @@
 </div>
 
 <script>
-  var Final = {PROXY:"/action"}
-  var baseURL="/#/";
+  var Final = window.staticObj || {PROXY:"/action",CHILD_FLOADER_NAME:""}
+  var baseURL=Final.CHILD_FLOADER_NAME+"/#";
   $(function (){
     var orderNum=getUrlParam(window.location.href,"orderNum");
     var itemId=getUrlParam(window.location.href,"itemId");
@@ -132,7 +134,7 @@
 //      wxPay();
     })
     $("#tomysed").on("click",function (){
-      window.location.href=baseURL+"mysedKill/secondlist";
+      window.location.href=baseURL+"/mysedKill/secondlist";
     })
   })
   /***
@@ -209,7 +211,7 @@
     // form 的提交方式
     form1.method = "POST";
     // form 提交路径
-    form1.action = "/action/user/seckill/aliPay";
+    form1.action = Final.PROXY+"/user/seckill/aliPay";
     // 对该 form 执行提交
     form1.submit();
     // 删除该 form
@@ -256,11 +258,11 @@
             } else if (res.code == 999) {
               console.log("未登录");
             } else if (res.code == 4) {
-              window.location.href=baseURL+"sedKill/secondcardetail?id="+itemId;
+              window.location.href=baseURL+"/sedKill/secondcardetail?id="+itemId;
               console.log("已支付");
             }
           } else {
-            window.location.href=baseURL+"mysedKill/secondlist";
+            window.location.href=baseURL+"/mysedKill/secondlist";
             console.log("秒杀异常---" + res.message);
           }
         }
@@ -275,11 +277,11 @@
           if(res.err_msg == "get_brand_wcpay_request:ok" ) {
               var itemId = getUrlParam(window.location.href, "itemId");
 //              alert("这里成功回调------>"+itemId);
-              window.location.href=baseURL+"sedKill/secondcardetail?id="+itemId;
+              window.location.href=baseURL+"/sedKill/secondcardetail?id="+itemId;
           }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
           else{
 //              alert("支付失败");
-              window.location.href=baseURL+"mysedKill/secondlist";
+              window.location.href=baseURL+"/mysedKill/secondlist";
           }
         }
       );

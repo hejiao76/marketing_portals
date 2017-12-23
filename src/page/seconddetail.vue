@@ -156,11 +156,11 @@
         let itemId=this.itemId;
         if(orderNum && itemId){
           if(this.isWeiXin()){
-            var param=window.location.origin+"/js/app/pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"&clientType="+1;
+            var param=window.location.origin+Final.CHILD_FLOADER_NAME+"/"+Final.BUILD_PATH+"/pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"&clientType="+1;
             var redirectURL='http://ec.web.dev.chinameds.cn/web/html/wx3j.html?ref='+encodeURIComponent(param);
             window.location.href=redirectURL;
           }else{
-            window.location.href="js/app/pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"&clientType="+1;
+            window.location.href=window.location.origin+Final.CHILD_FLOADER_NAME+"/"+Final.BUILD_PATH+"/pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"&clientType="+1;
           }
         }
 
