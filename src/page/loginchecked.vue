@@ -112,7 +112,7 @@
       api.base_getcity().then(res => {
         console.log(res)
         this.alllist = res.result;
-        api.ap_my_coupon_dealer({couponId: parseInt(this.itemId)}).then(re => {
+        api.ap_my_coupon_dealer({couponId: parseInt(this.itemId),pageSize: 99}).then(re => {
           console.log(re)
           let res=re.result;
           this.provinceId = res.provinceId;
