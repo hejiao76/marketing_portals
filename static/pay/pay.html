@@ -112,7 +112,7 @@
           $(".orderAmount").html(data.result.orderAmount)
           var itemStatus=data.result.itemStatus;
           var orderStatus=data.result.orderStatus;
-          if(itemStatus!=1 || orderStatus!=1){
+          if(orderStatus!=1){
             $(".paybox").addClass("error");
           }else {
             $(".paybox").addClass("true");
