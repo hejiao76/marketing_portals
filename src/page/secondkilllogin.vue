@@ -23,9 +23,9 @@
           <div class="errortext" v-show="">验证码有误</div>
         </div>
       </div>
-      <div class="list_item">
+      <div v-if="ownerType==1" class="list_item">
         <span class="title">选择经销商</span>
-        <span class="checked" @click="checkedlist">{{dealerName ? dealerName.substr(0, 12) : '请选择提车经销商参与活动'}}<i
+        <span :class="['delared',dealerName ? 'checked' : '']" @click="checkedlist">{{dealerName ? dealerName.substr(0, 12) : '请选择提车经销商参与活动'}}<i
           class="iconfont icon-jiantou"></i></span>
       </div>
       <div class="siginout" v-show="localname" @click="loginout">不是{{localname}}? 点此退出</div>
@@ -67,6 +67,7 @@
     activated() {
       this.dealerId = localStorage.dealerId;
       this.dealerName = localStorage.dealerName;
+      this.ownerType =localStorage.ownerType || 2
     },
     methods: {
       Pickclick: function (data) {
@@ -146,10 +147,21 @@
         if (!this.logining) {
           return;
         }
-        if (!this.userName || !this.userPhone || !this.userCode || !this.dealerId) {
-          this.mesga('请填入报名信息');
-          return;
+        if(this.ownerType==2){
+          if (!this.userName || !this.userPhone || !this.userCode) {
+            this.mesga('请填写报名信息');
+            return;
+          }
+        }else{
+          if (!this.userName || !this.userPhone || !this.userCode || !this.dealerId) {
+            this.mesga('请填写报名信息');
+            return;
+          }
         }
+//        if (!this.userName || !this.userPhone || !this.userCode || !this.dealerId) {
+//          this.mesga('请填入报名信息');
+//          return;
+//        }
         this.logining = false;
         api.base_login({userPhone: this.userPhone, checkCode: this.userCode, username: this.userName})
           .then(res => {
@@ -176,6 +188,9 @@
           checkCode: this.userCode,
           itemId: this.itemId,
           dealerId: this.dealerId
+        }
+        if(this.ownerType==2){
+          delete obj.dealerId;
         }
         api.ap_sedkill_enrollaa(obj)
           .then(res => {

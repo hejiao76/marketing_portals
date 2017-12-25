@@ -51,12 +51,15 @@
   z-index: 9;
 }
 
-.checked, .checked > i {
+.delared, .delared > i {
   color: #B7B7B7;
 }
 
-.checked > i {
+.delared > i {
   float: right;
+}
+.checked {
+  color:#333;
 }
 
 .getcode {

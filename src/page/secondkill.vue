@@ -142,7 +142,7 @@
             .then(res => {
               if(res.status==true){
                 this.wxShareFn(res.result);
-                window.localStorage.setItem("ownerType",res.result.ownerType);
+                localStorage.setItem("ownerType",res.result.ownerType);
                 document.title=res.result.name || "秒杀活动";
                 this.loadingShow = false;
                 if (res.result.status == 1) {

@@ -295,7 +295,7 @@
                       if(res.code==999){
                         this.showLogin();
                       }else if(res.code == 3){
-                        this.$refs.msgTip.showMsgTip("请先报名")
+                        this.$refs.msgTip.showMsgTip("您没有报名该秒杀活动")
                       }else if(res.code ==4){
                         this.$refs.msgTip.showMsgTip("你已经参与过该活动");
                       }else if(res.code == 5){
