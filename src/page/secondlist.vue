@@ -18,10 +18,10 @@
               </div>
             </div>
             <div class="rightbottom">
-              <div class="bottomlist status1" v-if="item.status==1 ||item.status==10 && item.itemStatus==1">距秒杀开始还有<countdown :endTime="String(item.beginTime)" :callback="callback(index)" endText="00:00:00"></countdown>
+              <div class="bottomlist status0" v-if="item.status==1 ||item.status==10 && item.itemStatus==1">距秒杀开始还有<countdown :endTime="String(item.beginTime)" :callback="callback(index)" endText="00:00:00"></countdown>
               </div>
               <div class="bottomlist status1" v-if="item.itemStatus==0">秒杀已结束</div>
-              <div class="bottomlist status1" v-if="item.status==2 && item.itemStatus==1">支付倒计时<countdown :endTime="getordertime(item,index)" :callback="callbacka(index,item)" endText="00:00:00"></countdown></div>
+              <div class="bottomlist status2" v-if="item.status==2 && item.itemStatus==1">支付倒计时<countdown :endTime="getordertime(item,index)" :callback="callbacka(index,item)" endText="00:00:00"></countdown></div>
               <div class="bottomlist status1" v-if="item.status==4 && item.itemStatus==1">核销码：{{item.verifyCode}}</div>
             </div>
           </div>

@@ -85,7 +85,10 @@ body {
   color: #ffffff;
   text-align: center;
 }
-
+.bannr_titlea .countdown span {
+  width:.18rem;
+  height:.18rem;  line-height: .18rem; background:#f1f1f1; color: #ffffff; margin-left: .04rem; margin-right: .02rem; border-radius: .02rem;}
+.bannr_titlea .countdown span{ color: rgba(72,86,104,1)}
 .btnbox {
   height: .5rem;
   line-height: .5rem;
@@ -109,7 +112,9 @@ body {
   float: left;
   display: inline-block;
 }
+.btnbox .btna.willbegin { color:rgba(255,255,255,0.6)}
 .btnbox .btna.close { background: #b7b7b7; border-color: #b7b7b7; color: #ffffff;}
+
 .btnbox .btnb {
   color: #FF002D;
   background: #ffffff;

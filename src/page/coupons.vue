@@ -18,8 +18,8 @@
           <span class="btn_code" @click="getAuthCode()">{{codestatus ? '获取验证码' : timeout + 's后再次获取'}}</span>
         </div>
 
-        <span class="checked" @click="tochecked">{{dealerName ? dealerName.substr(0, 12) : '请选择提车经销商参与活动'}}<i class="iconfont icon-jiantou"></i></span>
-        <button class="codebtn" @click="getcoupon">点击领卷</button>
+        <span :class="['checked',dealerName ? 'active' : '']" @click="tochecked">{{dealerName ? dealerName.substr(0, 12) : '请选择提车经销商参与活动'}}<i class="iconfont icon-jiantou"></i></span>
+        <button class="codebtn" @click="getcoupon">点击领券</button>
       </div>
       <div class="couponList" v-show="status==0" v-for="item in couponlist" :key="item.id">
         <div class="couponTop">
@@ -70,7 +70,7 @@
           </div>
           <div class="centerlist validity">
             <span class="spa">有效期</span>
-            <span class="spb" style="color: #FF0036">{{addUserCoupon.result.validity.split(" ")[0]}}日前使用有效</span>
+            <span class="spb" style="color: #FF0036">{{addUserCoupon.result.validity.split(" ")[0]}}前使用有效</span>
           </div>
           <div class="getbtn" @click="tolist">查看我的礼券</div>
         </div>
@@ -141,7 +141,7 @@
         },
         activityCode: '',//活动Id
         loadingShow: false,
-        status: 0,
+        status: 1,
         Final: Final,
         endTime: null,
         beginTime: null,
@@ -154,10 +154,11 @@
         activityId: null,
         juanxize: '',
         dealerId:'',
-        dealerName:''
+        dealerName:'',
       }
     },
     mounted() {
+      return false;
       this.activityCode = this.$route.params.code;
       console.log(this.activityCode);
       this.getCouponActivityInfo();
@@ -300,6 +301,7 @@
           couponId: this.activecouponId,
           activityId: this.activityId,
           dealersName:this.dealerName,
+          dealerId:this.dealerId
         }
         api.ap_add_user_coupon(obj)
           .then(res => {

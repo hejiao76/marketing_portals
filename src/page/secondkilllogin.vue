@@ -171,7 +171,8 @@
               this.addUserCouponFun()
               this.status = 2;
               this.logintext = '报名成功'
-              this.$router.push({path: '/sedKill/' + this.codeId, query: {}})
+              //this.$router.push({path: '/sedKill/' + this.codeId, query: {}})
+              location.href='/#/sedKill/' + this.codeId
             } else {
               this.mesga("登录失败")
               this.logining = true;

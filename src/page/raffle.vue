@@ -78,7 +78,7 @@
         <div class="title_name">抽奖机会已用完</div>
         <div class="iconfont icon-weixin weixinicon"></div>
         <div class="mesg">分享到微信<br>可增加抽奖机会噢~</div>
-        <div class="color_btn" @click="getnumber">获取抽奖机会</div>
+        <div class="color_btn" @click="status=null">我知道了</div>
       </div>
     </div>
 

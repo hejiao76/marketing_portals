@@ -11,11 +11,12 @@
         </div>
         <div class="itemright">
           <div class="righttop">
-            <span class="type">{{Final.COUPON_TYPE[item.type]}}</span>
+           <span class="type">{{'抵扣卷'}}</span>
+            <!-- Final.COUPON_TYPE[item.type]-->
             <span class="name">{{item.name}}</span>
           </div>
           <div class="rightcenter">
-            <span class="time">{{'有效期:' + item.validity}}</span>
+            <span class="time">{{'有效期:' + item.validity.split(" ")[0]+'前有效'}}</span>
             <span class="userbtn ft_tight" @click="getDetail(item.couponCode)">立即使用</span>
           </div>
           <div class="rightbottom">

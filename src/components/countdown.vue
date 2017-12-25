@@ -1,10 +1,14 @@
 <template>
   <span :endTime="String(endTime)" :callback="callback" :endText="endText">
     <slot>
-      {{content}}
+      <span v-html="content" class="countdown"></span>
     </slot>
   </span>
 </template>
+<style>
+  .countdown { display: inline-block;}
+  .countdown span { display: inline-block;text-align: center;}
+</style>
 <script>
   export default {
     data(){
@@ -29,7 +33,7 @@
     },
     watch:{
       endTime(){
-       console.log("~~~~~watch");
+        console.log("~~~~~watch");
 
         if(this.endTime){
           this.initPage(this.endTime/1000);
@@ -38,9 +42,9 @@
       }
     },
     mounted () {
-        if(this.endTime){
-          this.initPage(this.endTime/1000);
-        }
+      if(this.endTime){
+        this.initPage(this.endTime/1000);
+      }
 
     },
     methods: {
@@ -64,16 +68,18 @@
             let sec=Math.floor((t/1000)%60);
             hour = hour < 10 ? "0" + hour : hour;
             min = min < 10 ? "0" + min : min;
-            sec = sec < 10 ? "0" + sec : sec;
+            sec = sec < 10 ? "0" + sec :sec;
             let format = '';
             if(day > 0){
-              format = `${day}天${hour}小时${min}分${sec}秒`;
+              format = '<span>'+day+'</span>'+'天'+ '<span>'+hour+'</span>'+'小时'+ '<span>'+min+ '</span>'+'分'+ '</span>'+sec+ '<span>'+'秒';
             }
             if(day <= 0 && hour > 0 ){
-              format = `${hour}小时${min}分${sec}秒`;
+              format ='<span>'+hour+'</span>'+'小时'+ '<span>'+min+ '</span>'+'分'+ '<span>'+sec+ '</span>'+'秒';
+
             }
             if(day <= 0 && hour <= 0){
-              format =`${min}分${sec}秒`;
+              format = '<span>'+min+ '</span>'+'分'+ '<span>'+sec+ '</span>'+'秒';
+
             }
             self.content = format;
           }else if(self.endTime){

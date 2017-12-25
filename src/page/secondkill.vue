@@ -194,7 +194,7 @@
        * 验证是否已经开始
        */
       validBegin:function(item){
-        return (item.beginTime>=Date.parse(new Date()))?false:true
+        return (item.beginTime>=Date.parse(new Date()) && item.beginTime>=Date.parse(new Date()))?false:true
       },
       /***初始化微信分享标题内容***/
       wxShareFn (data) {

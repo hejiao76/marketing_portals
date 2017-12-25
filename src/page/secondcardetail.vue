@@ -38,13 +38,13 @@
         </div>
         <div class="city" @click="saycity">查看适用城市</div>
       </div>
-      <div class="carbtnbox" v-if="datamesg.areaStatus==1">
+      <div class="carbtnbox">
         <div class="bannr_titlea" v-show="reversedMessage>5000">
           <countdown :endTime="String(datamesg.beginTime)" :callback="callback" endText="00：00：00"></countdown>
           后开始
         </div>
         <div class="btnbox ">
-          <div :class="['btna',{close:datamesg.itemStatus==0}]" @click="checkSedkill">
+          <div :class="['btna',{close:datamesg.itemStatus==0},{willbegin:datamesg.itemStatus!=0 &&reversedMessage > 5000}]" @click="checkSedkill">
             {{datamesg.itemStatus==0?'已结束':(reversedMessage > 5000 ? '即将开始' : (reversedMessage > 0 ? reversedMessage / 1000 + '秒后即将开始' : '立即秒杀'))}}
           </div>
           <div :class="['btnb',{close:(datamesg.status==4 || datamesg.status==1 ||datamesg.itemStatus==0)}]" @click="tosign(datamesg)">{{status[datamesg.status]}}</div>
@@ -304,6 +304,8 @@
                         this.$refs.msgTip.showMsgTip("秒杀活动已结束");
                       }else if(res.code == 7){
                         this.$refs.msgTip.showMsgTip("秒杀达到限制");
+                      }else if(res.code == 8){
+                        this.$refs.msgTip.showMsgTip("你已经参与过该活动");
                       }
                     }
                   }).catch(error => {

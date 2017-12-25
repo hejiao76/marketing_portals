@@ -177,6 +177,7 @@
 .killdetail .killright {
   width: 60%;
   left: 37%;
+  top:0;
   position: absolute;
   height: 100%;
 }
@@ -223,7 +224,7 @@
   position: absolute;
   left: 0;
   width: 100%;
-  bottom: .1rem;
+  bottom: .06rem;
 }
 
 .btn_box .btn {
