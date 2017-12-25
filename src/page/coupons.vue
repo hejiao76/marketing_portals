@@ -141,7 +141,7 @@
         },
         activityCode: '',//活动Id
         loadingShow: false,
-        status: 1,
+        status: 0,
         Final: Final,
         endTime: null,
         beginTime: null,
@@ -158,7 +158,6 @@
       }
     },
     mounted() {
-      return false;
       this.activityCode = this.$route.params.code;
       console.log(this.activityCode);
       this.getCouponActivityInfo();
