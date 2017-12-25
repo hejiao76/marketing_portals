@@ -35,6 +35,14 @@ export default {
       return fetch.fetch('user/seckill/dealer', params,'get');
     },
     /**
+     * 校验秒杀活动状态
+     * @param params
+     * @returns {*}
+     */
+    ap_sedkill_seckill_check(params) {
+      return fetch.fetch('user/seckill/checkSeckill', params,'post');
+    },
+    /**
      * 秒杀
      * @param params
      * @returns {*}

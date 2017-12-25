@@ -22,10 +22,13 @@
         </div>
         <div class="killdetail">
           <div class="killleft" @click="todetail(item)">
-            <div class="label" v-if="gettime(item.beginTime)">
+            <div class="label" v-if="validWillBegin(item)">
               <span class="bigicon"></span>
               <!--<div><span class="smallicon iconfont  icon-miaobiao"></span>-->
               <!--即将开始</div>-->
+            </div>
+            <div class="label" v-if="validBegin(item)">
+              <span class="beginKill"></span>
             </div>
             <img class="headimg" :src="item.whitePic"/>
           </div>
@@ -70,14 +73,16 @@
 
     <div id="_umfp" style="display:inline;width:1px;height:1px;overflow:hidden"></div>
     <div id="dom_id" style="display:inline;width:1px;height:1px;overflow:hidden"></div>
+    <mesg ref="msgTip"></mesg>
   </div>
 </template>
 <script>
   import Final from "../../static/baseSetting/Final";
   import api from "./../fetch/api";
   import loading from "../components/loading";
-  import * as util from "../util/util"
-  import { wechatShare }  from '../mixin/wxShare.js'
+  import * as util from "../util/util";
+  import mesg from "../components/mesg";
+  import { wechatShare }  from '../mixin/wxShare.js';
   import wx from 'weixin-js-sdk';
 
   export default {
@@ -101,8 +106,12 @@
     created() {
       //alert("create");
     },
+    mounted() {
+      this.initPage();
+    },
     components: {
-      loading
+      loading:loading,
+      mesg:mesg,
     },
     computed: {
       willbegin: function () {
@@ -114,23 +123,78 @@
 //      this.dealerName = localStorage.dealerName;
 //    },
     methods: {
-      Pickclick: function (data) {
-        this.loadingShow = true;
+      /**
+       * 初始化页面
+       */
+      initPage : function (){
+        this.codeId = this.$route.params.code;
+        if(this.codeId){
+            this.requestDetail(this.codeId);
+        }
       },
-      showdetail: function (index) {
-        $(".listitem:eq(" + index + ") .xz_detail").toggleClass('active');
-        $(".listitem:eq(" + index + ") .iconfont").toggleClass('active');
+      /**
+       * 请求秒杀详情数据
+       */
+      requestDetail(codeId) {
+        if(codeId){
+          this.loadingShow = true;
+          api.ap_sedkill_detail({'activityCode': codeId})
+            .then(res => {
+              if(res.status==true){
+                this.wxShareFn(res.result);
+                window.localStorage.setItem("ownerType",res.result.ownerType);
+                document.title=res.result.name || "秒杀活动";
+                this.loadingShow = false;
+                if (res.result.status == 1) {
+                  this.killlist = res.result.itemList;
+                } else {
+                  this.errormesg = this.statustype[res.result.status]
+                }
+                this.beginTime = util.toDateString(res.result.beginTime)
+                this.endTime = util.toDateString(res.result.endTime)
+              }else{
+                this.loadingShow = false;
+                this.$refs.msgTip.showMsgTip(res.message || "访问异常，请刷新重试");
+              }
+            }).catch(error => {
+            console.log(error)
+            this.loadingShow = false;
+            this.$refs.msgTip.showMsgTip("访问异常，请刷新重试");
+          });
+        }
       },
+//      Pickclick: function (data) {
+//        this.loadingShow = true;
+//      },
+//      showdetail: function (index) {
+//        $(".listitem:eq(" + index + ") .xz_detail").toggleClass('active');
+//        $(".listitem:eq(" + index + ") .iconfont").toggleClass('active');
+//      },
+      /**
+       * 查看详情
+       */
       todetail: function (item) {
         this.$router.push({path: '/sedKill/' + this.codeId + '/secondcardetail', query: {id: item.itemId}})
       },
+      /**
+       * 登录
+       */
       tosign: function (item) {
         if (item.status == 2) {
           this.$router.push({path: '/sedKill/' + this.codeId + '/secondkilllogin', query: {id: item.itemId}})
         }
       },
-      gettime:function(time){
-        return (time-Date.parse(new Date()))>24*60*60*1000?false:true
+      /**
+       * 验证是否即将开始规则（24小时）
+       */
+      validWillBegin:function(item){
+        return ((item.beginTime-Date.parse(new Date()))>24*60*60*1000 ||  item.beginTime<Date.parse(new Date()))?false:true
+      },
+      /**
+       * 验证是否已经开始
+       */
+      validBegin:function(item){
+        return (item.beginTime>=Date.parse(new Date()))?false:true
       },
       /***初始化微信分享标题内容***/
       wxShareFn (data) {
@@ -146,33 +210,8 @@
           }
         });
       }
-    },
-    mounted() {
-      this.codeId = this.$route.params.code;
-      if(this.codeId){
-        api.ap_sedkill_detail({'activityCode': this.codeId})
-          .then(res => {
-            console.log(res);
-            if(res.status==true){
-              this.wxShareFn(res.result);
-              window.localStorage.setItem("ownerType",res.result.ownerType);
-              document.title=res.result.name || "秒杀活动";
-              this.loadingShow = false;
-              if (res.result.status == 1) {
-                this.killlist = res.result.itemList;
-              } else {
-                this.errormesg = this.statustype[res.result.status]
-              }
-              this.beginTime = util.toDateString(res.result.beginTime)
-              console.log("a----", this.beginTime);
-              this.endTime = util.toDateString(res.result.endTime)
-            }
-          }).catch(error => {
-            console.log(error)
-            this.loadingShow = false;
-        });
-      }
     }
+
   }
 
 </script>

@@ -1,3 +1,20 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  color: #333;
+  font-family: "Microsoft YaHei"
+}
+
+.mainContent {
+  font-size: .14rem;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
 .banner {
   width: 100%;
 }
@@ -100,6 +117,7 @@
   float: left;
   display: inline-block;
 }
+.btnbox .btnb.close { background: #FFFFFF; border-color: #b7b7b7; color: #b7b7b7;}
 
 #app {
   background: #f1f1f1;
@@ -175,3 +193,48 @@
   display: inline-block;
 }
 .detailbox { padding-bottom: .5rem;}
+
+
+
+.out_box { position: fixed; z-index: 99; background: rgba(0,0,0,0.6); width:100%; height:100%; left: 0; top:0;}
+.out_box .out_boxa { width:3.04rem; padding: 0 .24rem; height:3.58rem; position: absolute; left: 0; top:0; right:0; bottom:0; margin: auto; background: #ffffff;}
+.out_boxa .close { position: absolute; right: -.24rem; top:-.57rem; padding: .2rem; font-size: .28rem; color: #ffffff;z-index: 100;}
+.title_name { font-size: .2rem; color: #475669; text-align: center; margin: .2rem auto .17rem; border-radius: .02rem;}
+.out_boxa input { width: 100%; display:inline-block;  height: .44rem; line-height: .44rem; border: 1px solid #f1f1f1; border-radius: .02rem; font-size: .16rem; text-indent: .1rem;}
+.Verification { overflow: hidden; margin: .18rem auto .1rem;}
+.Verification .logintext {
+  float: left;
+  width:60%;}
+.Verification .btn_code { width: 35%;border-radius: 3px; height: .42rem; line-height:.42rem; text-align: center; float: right; border:1px solid #FB6362; color: #FB6362;}
+.Verification .btn_code.clicked { font-size:.12rem; }
+.codebtn { height:.44rem; width: 100%;  border-radius: 3px; background: #FB6362; font-size: .18rem; color: #ffffff; line-height: .44rem; text-align: center}
+.out_box .tishi { margin-bottom: .48rem; font-size: .12rem; color: #b7b7b7; text-align: center;}
+.out_box .tishi >span { margin-right: .05rem;}
+.out_box .action_detail { height:2.72rem; overflow: auto;}
+.out_box .action_detail>div { margin-bottom: .15rem;}
+.out_boxa.min-width { width:2.6rem; height:3.4rem; background: none;}
+.out_boxa.min-width .bc_img {
+  width:110%;
+  height:100%; position: absolute; z-index: -1;
+  top:0; left: -10%;}
+.out_boxa.min-width .close { right:-.55rem; top:-.34rem;}
+.out_boxa.min-width .jiangli {width:1.3rem; position: absolute; color: #FAF169; left: 50%; top:1.2rem; }
+.out_boxa.min-width .title_name { color: #ffffff;}
+.out_boxa.min-width .jl_name { font-size: .16rem; margin-bottom: .05rem;color: #FAF169;}
+.jl_list { line-height: 1.5; font-size: .14rem; color: #FAF169;}
+.out_boxa .color_btn { position: absolute; bottom: -.25rem; color: #FF0036; font-size: .18rem; left: 50%; margin-left: -.78rem; width:1.56rem; height:.46rem; line-height: .42rem; text-align: center; background: url("../img/btnbc.png") no-repeat center center; background-size: 100% 100%;}
+
+.noprize .remainnumber { position: absolute; width:100%; left: 0; bottom: .3rem; text-align: center; color: #333;}
+.remainnumber>span { margin: 0 .05rem; color: #ff0036; font-size: .18rem;}
+.out_boxa.min-width.noprize { background: url("../img/noprize.png") no-repeat !important; background-size: 100% 100% !important;}
+
+
+.out_boxa.min-width.getnumber { background: url("../img/colorbc.png") no-repeat !important; text-align: center;}
+.getnumber .weixinicon { margin: .62rem auto .1rem; font-size: .84rem; color: #ffffff;}
+.getnumber .mesg { line-height: 1.5; color:#ffffff;}
+
+
+
+.errortext {    color: #ff0036;
+  font-size: .12rem;
+  margin-top: .05rem;}

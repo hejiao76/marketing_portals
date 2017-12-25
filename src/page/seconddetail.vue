@@ -178,6 +178,7 @@
       },
     },
     mounted() {
+      document.title="秒杀详情"
       this.itemId = this.$route.query.customerFlag || this.$route.query.id;
       this.imgurl = Final.QRCODE + "/v1/gift/qrcode?activityId=" + this.itemId + "&activityType=102&couponCode=yunyong"
       let paySuccessTime= this.$route.query.paySuccessTime;

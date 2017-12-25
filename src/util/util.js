@@ -74,41 +74,44 @@ export function dateObjToFullString(date) {
  * 长整型转换成时间(yyyy-MM-dd)
  */
 export function toDateString(l_date) {
-  var date = new Date();
-  date.setTime(l_date);
-  var year = date.getFullYear();
-  var month = date.getMonth() + 1;
-  var day = date.getDate();
-  // var hour = date.getHours();
-  // var minute = date.getMinutes();
-  // var second = date.getSeconds();
+  if(l_date){
+    var date = new Date();
+    date.setTime(l_date);
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
 
-  month = month < 10 ? "0" + month : month;
-  day = day < 10 ? "0" + day : day;
-  // hour = hour < 10 ? "0" + hour : hour;
-  // minute = minute < 10 ? "0" + minute : minute;
-  // second = second < 10 ? "0" + second : second;
-  return ( year+"-"+month + "-" + day);
+    month = month < 10 ? "0" + month : month;
+    day = day < 10 ? "0" + day : day;
+
+    return ( year+"-"+month + "-" + day);
+  }
+  return l_date;
+
 }
 /**
  * 长整型转换成时间(yyyy-MM-dd hh:mm:ss)
  */
 export function toFullDateString(l_date) {
-  var date = new Date();
-  date.setTime(l_date);
-  var year = date.getFullYear();
-  var month = date.getMonth() + 1;
-  var day = date.getDate();
-  var hour = date.getHours();
-  var minute = date.getMinutes();
-  var second = date.getSeconds();
+  if(l_date){
+    var date = new Date();
+    date.setTime(l_date);
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
 
-  month = month < 10 ? "0" + month : month;
-  day = day < 10 ? "0" + day : day;
-  hour = hour < 10 ? "0" + hour : hour;
-  minute = minute < 10 ? "0" + minute : minute;
-  second = second < 10 ? "0" + second : second;
-  return ( year+"-"+month + "-" + day + " " + hour + ":" + minute+":"+second);
+    month = month < 10 ? "0" + month : month;
+    day = day < 10 ? "0" + day : day;
+    hour = hour < 10 ? "0" + hour : hour;
+    minute = minute < 10 ? "0" + minute : minute;
+    second = second < 10 ? "0" + second : second;
+    return ( year+"-"+month + "-" + day + " " + hour + ":" + minute+":"+second);
+  }
+  return l_date;
+
 }
 /**
  * 解析URL参数

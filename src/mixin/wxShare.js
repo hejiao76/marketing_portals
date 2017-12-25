@@ -20,7 +20,7 @@ function act() {
   return new Promise((resolve, reject) => {
     // console.log(window.location.href)
     $.ajax({
-      url: Final.PROXY+'/sys/wx/info?type=1&businessId=4',//后台索要的算法签名
+      url: Final.PROXY+'/sys/wx/info?type=1&businessId=10001',//后台索要的算法签名
       param:{type:1,businessId:4},
       type: 'get',
     }).done(function(ret) {

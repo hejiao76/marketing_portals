@@ -38,7 +38,7 @@
     </div>
     <div class="nolist" v-if="nolistshow">
       <img src="../assets/img/couponNulla.png"/>
-      <div class="mesg">你还没用秒杀活动哦~</div>
+      <div class="mesg">您还未参加过秒杀活动</div>
     </div>
     <div class="codeimgshow" v-show="codeimgshow">
       <div class="imgbox">
@@ -153,7 +153,7 @@
 
     },
     mounted() {
-
+        document.title="我的活动";
         this.getlist();
     }
   }
