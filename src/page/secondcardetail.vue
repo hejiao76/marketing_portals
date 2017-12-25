@@ -137,7 +137,7 @@
                 this.datamesg = res.result;
                 this.showPanel=true;
                 this.formatArea();
-                if(this.data.mesg.status!=0){
+                if(this.datamesg.status!=0){
                   this.startTimer();
                 }
               }
@@ -369,15 +369,16 @@
        */
       startTimer () {
         let self = this;
-        if(this.timer){
-            clearInterval(this.timer);
-        }
-        this.timer=setInterval(function () {
+
+        setTimeout(function () {
           if (self.datamesg.beginTime) {
             let enrollStartTime = self.datamesg.beginTime
             self.reversedMessage = enrollStartTime - Date.parse(new Date())-1000;
+            console.log(self.reversedMessage)
             if(self.reversedMessage<=0 &&  self.datamesg.status!=3){
               self.datamesg.status=4;
+            }else{
+                self.startTimer();
             }
           };
         }, 1000);

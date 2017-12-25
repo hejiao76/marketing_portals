@@ -190,7 +190,7 @@
   bottom: .4rem;
   text-align: center;
 }
-
+.bottomlist { font-size: .1rem;}
 .codeimgshow .close {
   position: absolute;
   right: -.55rem;
