@@ -4,7 +4,7 @@
     <mesg v-bind:mesg="mesg"></mesg>
     <div class="title">
       <img class="title_bc" :src="title_img"></img>
-      <div class="raffle_number">您还有 <span>{{remainnumber}}</span> 次抽奖机会</div>
+      <div v-if="islogin" class="raffle_number">您还有 <span>{{remainnumber}}</span> 次抽奖机会</div>
     </div>
     <zhuanpan v-on:listenstatus="getstatus" v-bind:loginstatus="islogin"></zhuanpan>
     <div class="all_number" v-if="isShowJoinSize===1">已有<span class="number">{{allNumber}}</span>人参加</div>
@@ -137,6 +137,9 @@
     created() {
       //alert("create");
     },
+    mounted() {
+      this.initPage();
+    },
     components: {
       zhuanpan,
       titleaa,
@@ -144,6 +147,66 @@
       mesg
     },
     methods: {
+      initPage () {
+        let id = this.$route.params.code;
+        var _that = this;
+        console.log(id);
+        api.base_veifyToken().then(res => {
+          if (res.status == true) {
+            _that.islogin = true;
+//          _that.loginshow=true;
+          } else {
+            _that.islogin = false;
+//          _that.loginshow=true;
+          }
+        }).catch(error => {
+          console.log(error)
+        });
+        //获取详情
+        api.ap_prizedraw({'activityCode': id}).then(res => {
+          this.wxShareFn(res.result);
+          document.title=res.result.name || "抽奖活动";
+          let isShowJoinSize = res.result.isShowJoinSize;
+          let isShowWinningRecord = res.result.isShowWinningRecord;
+          _that.isShowJoinSize = isShowJoinSize;
+          _that.isShowWinningRecord = isShowWinningRecord;
+          _that.description = res.result.description;
+          _that.bc_img = res.result.bgImg.includes('http://')?res.result.bgImg:Final.IMG_PATH+res.result.bgImg;
+          _that.title_img = res.result.titleImg.includes('http://')?res.result.titleImg:Final.IMG_PATH+res.result.titleImg; //res.result.titleImg;
+          if (isShowJoinSize == 1) {
+            //获取抽奖人数
+            api.ap_prizedraw_users({'activityCode': id}).then(res => {
+              console.log(res)
+              _that.allNumber = res.result.joinSize
+            }).catch(error => {
+              console.log(error)
+            });
+          }
+          if (isShowWinningRecord == 1) {
+            //获取最近中奖
+            api.ap_prizedraw_log({'activityCode': id}).then(res => {
+              console.log(res)
+              _that.titlelistaa = res.result;
+            }).catch(error => {
+              console.log(error)
+            });
+          }
+          _that.loadingShow = false;
+        }).catch(error => {
+          console.log(error)
+        })
+        //获取抽奖次数
+        api.ap_prizedraw_number({'activityCode': id}).then(res => {
+          console.log(res)
+          if(res.status==true){
+            _that.remainnumber = res.result.surplusCount
+          }else{
+          }
+        }).catch(error => {
+          console.log(error)
+        })
+
+      },
       getstatus: function (data) {
         let _that = this;
         if (data == false) {
@@ -216,14 +279,15 @@
             .then(res => {
               console.log(res)
               if (res.status) {
-                _that.mesg = '登录成功';
-                _that.loginshow = false;
-                _that.islogin = true;
+                this.mesg = '登录成功';
+                this.loginshow = false;
+                this.islogin = true;
+                this.getNumber();
               } else {
-                _that.mesg = '登录失败';
+                this.mesg = '登录失败';
               }
             }).catch(err => {
-            _that.mesg = '登录失败';
+              this.mesg = '登录失败';
           });
         }
       },
@@ -291,74 +355,7 @@
           }
         });
       }
-    },
-    mounted() {
-      let id = this.$route.params.code;
-      var _that = this;
-      console.log(id);
-//     wechatShare({
-//        title: '组件的标题',
-//        content: '内容',
-//        link: `${window.location.origin}/user/collegeIndex`,
-//        logo: `${require('../assets/img/get_bg.png')}`,
-//      });
-      api.base_veifyToken().then(res => {
-        if (res.status == true) {
-          _that.islogin = true;
-//          _that.loginshow=true;
-        } else {
-          _that.islogin = false;
-//          _that.loginshow=true;
-        }
-      }).catch(error => {
-        console.log(error)
-      });
-      //获取详情
-      api.ap_prizedraw({'activityCode': id}).then(res => {
-        this.wxShareFn(res.result);
-        document.title=res.result.name || "抽奖活动";
-        let isShowJoinSize = res.result.isShowJoinSize;
-        let isShowWinningRecord = res.result.isShowWinningRecord;
-        _that.isShowJoinSize = isShowJoinSize;
-        _that.isShowWinningRecord = isShowWinningRecord;
-        _that.description = res.result.description;
-        _that.bc_img = res.result.bgImg.includes('http://')?res.result.bgImg:Final.IMG_PATH+res.result.bgImg;
-        _that.title_img = res.result.titleImg.includes('http://')?res.result.titleImg:Final.IMG_PATH+res.result.titleImg; //res.result.titleImg;
-        if (isShowJoinSize == 1) {
-          //获取抽奖人数
-          api.ap_prizedraw_users({'activityCode': id}).then(res => {
-            console.log(res)
-            _that.allNumber = res.result.joinSize
-          }).catch(error => {
-            console.log(error)
-          });
-        }
-        if (isShowWinningRecord == 1) {
-          //获取最近中奖
-          api.ap_prizedraw_log({'activityCode': id}).then(res => {
-            console.log(res)
-            _that.titlelistaa = res.result;
-          }).catch(error => {
-            console.log(error)
-          });
-        }
-        _that.loadingShow = false;
-      }).catch(error => {
-        console.log(error)
-      })
-      //获取抽奖次数
-      api.ap_prizedraw_number({'activityCode': id}).then(res => {
-        console.log(res)
-        if(res.status==true){
-          _that.remainnumber = res.result.surplusCount
-        }else{
-        }
-      }).catch(error => {
-        console.log(error)
-      })
-
-
-    },
+    }
   }
 
 </script>
