@@ -1,6 +1,7 @@
 <template>
   <div>
     <loading v-show="loadingShow"></loading>
+    <!--<headera :titlea="抵扣券列表"></headera>-->
     <div class="couponlist">
       <div class="listitem"
            :class="[ {nouser: item.status == 0},{user: item.status == 1}, {outofdate: item.status == 3},{outwilldate: item.status ==2 }, {dikou: item.type == 1}, {youhui: item.type == 2}, {youhui: item.type == 3}]"
@@ -11,7 +12,7 @@
         </div>
         <div class="itemright">
           <div class="righttop">
-           <span class="type">{{'抵扣卷'}}</span>
+           <span class="type">{{'抵扣券'}}</span>
             <!-- Final.COUPON_TYPE[item.type]-->
             <span class="name">{{item.name}}</span>
           </div>
@@ -39,6 +40,7 @@
   import Final from "../../static/baseSetting/Final";
   import api from "./../fetch/api";
   import loading from "../components/loading";
+  import headera from "../components/header";
 
   export default {
     data() {
@@ -55,7 +57,8 @@
 
     },
     components: {
-      loading
+      loading,
+      headera
     },
     methods: {
       /**

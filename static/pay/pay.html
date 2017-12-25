@@ -46,7 +46,7 @@
 <body>
 <div>
   <div class="loginbox">
-    <div class="paybox true">
+    <div class="paybox">
       <!-- error-->
       <div class="paytop">
         <img class="carimg" />
@@ -70,11 +70,11 @@
       </div>
       <div class="mesgbox truemesg">
         <div>支付倒计时
-          <div id="fnTimeCountDown" data-end="2022/07/08 18:45:13" style="display: inline-block">
+          <div id="fnTimeCountDown" data-end="" style="display: inline-block">
             <!--<span class="year">00</span>年-->
             <!--<span class="month">00</span>月-->
             <!--<span class="day">00</span>天-->
-            <span class="hour">00</span>时
+            <!--<span class="hour">00</span>时-->
             <span class="mini">00</span>分
             <span class="sec">00</span>秒
             <!--<span class="hm">000</span>-->
@@ -116,7 +116,7 @@
             $(".paybox").addClass("error");
           }else {
             $(".paybox").addClass("true");
-            $("#fnTimeCountDown").fnTimeCountDown(data.result.createTime);
+            $("#fnTimeCountDown").fnTimeCountDown(data.result.cancelTime);
           }
         },
         error:function(jqXHR){

@@ -94,7 +94,7 @@
 
         mesg: '',
         util: util,
-        status: ['活动已结束', '报名未开始', '快速报名', '已报名', '报名已结束'],
+        status: ['活动已结束', '报名未开始', '马上报名', '已报名', '报名已结束'],
         loadingShow: true,
         itemId: '',
         datamesg: {beginTime: ''},

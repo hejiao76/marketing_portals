@@ -272,6 +272,8 @@
 
 .qy_ul {
   display: inline-block;
+  width: 68%;
+  float: right;
 }
 
 .validity {
