@@ -2,7 +2,7 @@
   <div>
     <loading v-show="loadingShow"></loading>
     <mesg v-bind:mesg="mesg"></mesg>
-    <headera titlea="抵扣券列表" :callback="callback"></headera>
+    <headera titlea="抵扣券活动" :callback="callback"></headera>
     <div class="center_box">
       <div class="bannerbox">
         <img class="banner" v-show="status==0||status==1 ||status==10||status==11"

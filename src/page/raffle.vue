@@ -1,6 +1,6 @@
 <template>
   <div class="raffle" v-if='bc_img' :style="{background: 'url('+ bc_img +')',backgroundSize:'cover' }">
-    <headera titlea="转盘抽奖"></headera>
+    <!--<headera titlea="转盘抽奖"></headera>-->
     <loading v-show="loadingShow"></loading>
     <mesg v-bind:mesg="mesg"></mesg>
     <div class="title">
