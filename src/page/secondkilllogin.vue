@@ -67,7 +67,7 @@
     activated() {
       this.dealerId = localStorage.dealerId;
       this.dealerName = localStorage.dealerName;
-      this.ownerType =localStorage.ownerType || 2
+      this.ownerType =localStorage.ownerType || 1
     },
     methods: {
       Pickclick: function (data) {

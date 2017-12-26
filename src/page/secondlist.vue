@@ -117,7 +117,10 @@
       },
       getcode:function(item){
         this.codeimgshow=true;
-        this.imgurl = Final.QRCODE + "/v1/gift/qrcode?activityId=" + item.itemId + "&activityType=102&couponCode="+item.verifyCode;
+        let activityType =102;
+        let ownerType = item.ownerType || localStorage.getItem("ownerType") || 1;
+        activityType = ownerType == 1 ? 102 : 202;
+        this.imgurl = Final.QRCODE + "/v1/gift/qrcode?activityId=" + item.itemId + "&activityType="+activityType+"&couponCode="+item.verifyCode;
       },
       tocardetail: function (item) {
         //this.codeId = this.$route.params.code;
