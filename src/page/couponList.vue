@@ -53,6 +53,7 @@
       }
     },
     created() {
+      document.title="我的礼券";
       this.getmyCouponList();
 
     },

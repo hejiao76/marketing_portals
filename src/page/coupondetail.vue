@@ -75,6 +75,7 @@
       }
     },
     mounted() {
+      document.title="礼券详情";
       this.activityId = this.$route.params.code;
 
       this.getmyCouponInfo({couponCode: this.activityId})
