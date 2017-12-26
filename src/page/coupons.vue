@@ -143,7 +143,7 @@
         },
         activityCode: '',//活动Id
         loadingShow: false,
-        status: 2,
+        status: 0,
         Final: Final,
         endTime: null,
         beginTime: null,
