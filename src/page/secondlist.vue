@@ -18,7 +18,14 @@
               </div>
             </div>
             <div class="rightbottom">
-              <div class="bottomlist status0" v-if="item.status==1 ||item.status==10 && item.itemStatus==1 &&item.beginTime>new Date()">距秒杀开始还有<countdown :endTime="String(item.beginTime)" :callback="callback(index)" endText="00:00:00"></countdown>
+              <div class="bottomlist status0" v-if="item.status==1 || (item.status==10 && item.itemStatus==1 &&item.beginTime>new Date())">
+                <div v-if="item.beginTime-new Date().getTime()<60*60*24*1000">
+                  <span>距秒杀开始还有</span>
+                  <countdown :endTime="String(item.beginTime)" :callback="callback(index)" endText="00:00:00"></countdown>
+                </div>
+                <div v-else>
+                  <span>秒杀开始时间：{{util.toFullDateString(item.beginTime)}}</span>
+                </div>
               </div>
               <div class="bottomlist status1" v-if="item.itemStatus==0">秒杀已结束</div>
               <div class="bottomlist status2" v-if="item.status==2 && item.itemStatus==1">支付倒计时<countdown :endTime="getordertime(item,index)" :callback="callbacka(index,item)" endText="00:00:00"></countdown></div>
@@ -110,7 +117,7 @@
       },
       getcode:function(item){
         this.codeimgshow=true;
-        this.imgurl = Final.QRCODE + "/v1/gift/qrcode?activityId=" + item.itemId + "&activityType=102&couponCode=yunyong"
+        this.imgurl = Final.QRCODE + "/v1/gift/qrcode?activityId=" + item.itemId + "&activityType=102&couponCode="+item.verifyCode;
       },
       tocardetail: function (item) {
         //this.codeId = this.$route.params.code;
