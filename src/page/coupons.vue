@@ -18,7 +18,7 @@
           <span class="btn_code" @click="getAuthCode()">{{codestatus ? '获取验证码' : timeout + 's后再次获取'}}</span>
         </div>
 
-        <span :class="['checked',dealerName ? 'active' : '']" @click="tochecked">{{dealerName ? dealerName.substr(0, 12) : '请选择提车经销商参与活动'}}<i class="iconfont icon-jiantou"></i></span>
+        <span v-if="ownerType==1" :class="['checked',dealerName ? 'active' : '']" @click="tochecked">{{dealerName ? dealerName.substr(0, 12) : '请选择提车经销商参与活动'}}<i class="iconfont icon-jiantou"></i></span>
         <button class="codebtn" @click="getcoupon">点击领券</button>
       </div>
       <div class="couponList" v-show="status==0" v-for="item in couponlist" :key="item.id">
@@ -155,6 +155,7 @@
         juanxize: '',
         dealerId:'',
         dealerName:'',
+        ownerType:1,
       }
     },
     mounted() {
@@ -184,6 +185,8 @@
           this.wxShareFn(res.result);
           document.title=res.result.name || "抵扣券活动";
           if (res.status) {
+            localStorage.setItem("ownerType",res.result.ownerType); //缓存是经销商还是厂商标识
+            this.ownerType=res.result.ownerType;
             if (res.result.status == 3) {
               this.status = 10;
             } else if (res.result.status == 1) {

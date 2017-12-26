@@ -97,7 +97,15 @@
             if (res.status) {
               this.detail = res.result;
               //厂商 经销商未区分....
-              this.imgurl = Final.QRCODE + "/v1/gift/qrcode?activityId=" + res.result.activityId + "&activityType=103&couponCode=yunyong"
+              let activityType = 103;
+              let ownerType = res.result.ownerType || localStorage.getItem("ownerType") || 1;
+              if(ownerType==2){
+                activityType =203;
+              }else {
+                activityType=103;
+              }
+
+              this.imgurl = Final.QRCODE + "/v1/gift/qrcode?activityId=" + res.result.activityId + "&activityType="+activityType+"&couponCode="+res.result.couponCode;
               this.loadingShow = false;
             }
           }).catch(error => {
