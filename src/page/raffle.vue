@@ -1,5 +1,6 @@
 <template>
   <div class="raffle" v-if='bc_img' :style="{background: 'url('+ bc_img +')',backgroundSize:'cover' }">
+    <headera titlea="转盘抽奖"></headera>
     <loading v-show="loadingShow"></loading>
     <mesg v-bind:mesg="mesg"></mesg>
     <div class="title">
@@ -101,6 +102,7 @@
   import titleaa from "../components/titleaa";
   import loading from "../components/loading";
   import mesg from "../components/mesg";
+  import headera from "../components/header";
   import { wechatShare }  from '../mixin/wxShare.js'
   import wx from 'weixin-js-sdk';
 
@@ -144,7 +146,8 @@
       zhuanpan,
       titleaa,
       loading,
-      mesg
+      mesg,
+      headera
     },
     methods: {
       initPage () {

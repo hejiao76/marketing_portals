@@ -26,6 +26,7 @@
   overflow: auto;
   background: #F8A900;
   position: absolute;
+  padding-top: .4rem;
   height: 100%;
   width: 100%;
   left: 0;
@@ -332,7 +333,7 @@
 }
 
 .listitem.youhui .itemright .type {
-  background: #F5B041;
+  background: #FB6362;
 }
 
 .itemleft {

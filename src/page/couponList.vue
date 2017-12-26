@@ -1,7 +1,7 @@
 <template>
   <div>
     <loading v-show="loadingShow"></loading>
-    <!--<headera :titlea="抵扣券列表"></headera>-->
+    <!--<headera titlea="抵扣券列表"></headera>-->
     <div class="couponlist">
       <div class="listitem"
            :class="[ {nouser: item.status == 0},{user: item.status == 1}, {outofdate: item.status == 3},{outwilldate: item.status ==2 }, {dikou: item.type == 1}, {youhui: item.type == 2}, {youhui: item.type == 3}]"

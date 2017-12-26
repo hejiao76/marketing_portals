@@ -2,6 +2,7 @@
   <div>
     <loading v-show="loadingShow"></loading>
     <mesg v-bind:mesg="mesg"></mesg>
+    <headera titlea="抵扣券列表" :callback="callback"></headera>
     <div class="center_box">
       <div class="bannerbox">
         <img class="banner" v-show="status==0||status==1 ||status==10||status==11"
@@ -121,6 +122,7 @@
   import API from "./../fetch/api";
   import loading from "../components/loading";
   import mesg from "../components/mesg";
+  import headera from "../components/header";
   import { wechatShare }  from '../mixin/wxShare.js'
   import wx from 'weixin-js-sdk';
 
@@ -141,7 +143,7 @@
         },
         activityCode: '',//活动Id
         loadingShow: false,
-        status: 0,
+        status: 2,
         Final: Final,
         endTime: null,
         beginTime: null,
@@ -167,7 +169,8 @@
     },
     components: {
       loading,
-      mesg
+      mesg,
+      headera
     },
     activated() {
       this.dealerId = localStorage.dealerId;
@@ -204,6 +207,12 @@
           this.endTime = "";
           this.beginTime = "";
         })
+      },
+      callback(){
+        var status=this.status;
+        if(status==1 ||status==2){
+          this.status=0;
+        }
       },
       /**
        * 获取验证码
