@@ -195,7 +195,7 @@
             let activityType =102;
             let ownerType = res.result.ownerType || localStorage.getItem("ownerType") || 1;
             activityType = ownerType == 1 ? 102 : 202;
-            this.imgurl = Final.QRCODE + "/v1/gift/qrcode?activityId=" + this.itemId + "&activityType="+activityType+"&couponCode=yunyong"
+            this.imgurl = Final.QRCODE + "/v1/gift/qrcode?activityId=" + this.itemId + "&activityType="+activityType+"&couponCode="+res.result.verifyCode;
           } else {
 
           }
