@@ -67,7 +67,7 @@
     activated() {
       this.dealerId = localStorage.dealerId;
       this.dealerName = localStorage.dealerName;
-      this.ownerType =localStorage.ownerType || 2
+      this.ownerType =localStorage.ownerType || 1
     },
     methods: {
       Pickclick: function (data) {
@@ -172,7 +172,6 @@
               this.status = 2;
               this.logintext = '报名成功'
               //this.$router.push({path: '/sedKill/' + this.codeId, query: {}})
-              location.href='/#/sedKill/' + this.codeId
             } else {
               this.mesga("登录失败")
               this.logining = true;
@@ -196,9 +195,16 @@
         api.ap_sedkill_enrollaa(obj)
           .then(res => {
             if (res.status) {
-              this.addUserCoupon = res
+              this.addUserCoupon = res;
+//              location.href='/#/sedKill/' + this.codeId
+              this.mesga("报名成功");
+              let _self=this;
+              window.setTimeout(function (){
+                _self.$router.push({path: '/sedKill/' + _self.codeId, query: {}})
+              },500);
+
               console.log('报名');
-              this.mesga("报名成功")
+
             } else {
               this.mesga("报名失败")
             }

@@ -180,7 +180,7 @@
     mounted() {
       document.title="秒杀详情"
       this.itemId = this.$route.query.customerFlag || this.$route.query.id;
-      this.imgurl = Final.QRCODE + "/v1/gift/qrcode?activityId=" + this.itemId + "&activityType=102&couponCode=yunyong"
+
       let paySuccessTime= this.$route.query.paySuccessTime;
       if(paySuccessTime){
         this.detailmesg.payTime=paySuccessTime
@@ -191,6 +191,11 @@
             this.detailmesg = res.result;
             this.orderstatus = res.result.status;
             this.codeId=res.result.activityCode;
+
+            let activityType =102;
+            let ownerType = res.result.ownerType || localStorage.getItem("ownerType") || 1;
+            activityType = ownerType == 1 ? 102 : 202;
+            this.imgurl = Final.QRCODE + "/v1/gift/qrcode?activityId=" + this.itemId + "&activityType="+activityType+"&couponCode="+res.result.verifyCode;
           } else {
 
           }
