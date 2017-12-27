@@ -64,11 +64,6 @@
       loading,
       mesg
     },
-    mounted (){
-        this.codeId = this.$route.params.code;
-        this.ownerType =localStorage.ownerType || 1
-        this.requestDetail(this.codeId);
-    },
     activated() {
       if(this.ownerType==1){
         this.dealerId = localStorage.dealerId;
@@ -88,30 +83,27 @@
           api.ap_sedkill_detail({'activityCode': codeId})
             .then(res => {
               if(res.status==true){
-                this.wxShareFn(res.result);
                 localStorage.setItem("ownerType",res.result.ownerType);
                 this.ownerType=res.result.ownerType;
                 document.title=res.result.name || "秒杀活动";
                 this.loadingShow = false;
+                if(res.result.ownerType==2){
+                  this.dealerId =res.result.ownerId ||''
+                  this.dealerName=res.result.ownerName ||'暂无名称'
+                }
                 if (res.result.status == 1) {
                   this.killlist = res.result.itemList;
                 } else {
-                  this.errormesg = this.statustype[res.result.status]
+                  this.errormesg = this.statustype[res.result.status];
                 }
-                this.beginTime = util.toDateString(res.result.beginTime)
-                this.endTime = util.toDateString(res.result.endTime)
-                if(res.result.ownerType==2){
-                  this.dealerId =res.result.ownerId ||''
-                  this.dealerName=res.result.ownerName ||''
-                }
+                this.beginTime = util.toDateString(res.result.beginTime);
+                this.endTime = util.toDateString(res.result.endTime);
               }else{
                 this.loadingShow = false;
-                this.$refs.msgTip.showMsgTip(res.message || "访问异常，请刷新重试");
               }
             }).catch(error => {
             console.log(error)
             this.loadingShow = false;
-            this.$refs.msgTip.showMsgTip("访问异常，请刷新重试");
           });
         }
       },
@@ -233,9 +225,6 @@
           itemId: this.itemId,
           dealerId: this.dealerId
         }
-        if(this.ownerType==2){
-          delete obj.dealerId;
-        }
         api.ap_sedkill_enrollaa(obj)
           .then(res => {
             if (res.status) {
@@ -272,8 +261,8 @@
       }
       if(dealerId){
         this.dealerId = dealerId;
-        // localStorage.removeItem("dealerId");
       }
+      this.requestDetail(this.codeId);
 
     }
   }

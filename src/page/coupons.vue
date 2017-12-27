@@ -81,7 +81,7 @@
     mounted() {
       this.activityCode = this.$route.params.code;
       console.log(this.activityCode);
-      this.getCouponActivityInfo();
+
     },
     created() {
       //alert("create");
@@ -92,6 +92,7 @@
       mesg
     },
     activated() {
+      this.getCouponActivityInfo();
     },
     methods: {
       /**
