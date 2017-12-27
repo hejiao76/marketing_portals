@@ -91,7 +91,7 @@
     mounted() {
       this.activityCode = this.$route.params.code;
       this.activecouponId = this.$route.query.activecouponId;
-      this.pageTitle = this.$route.query.activityName ? decodeURI(this.$route.query.activityName) : "抵扣券活动";
+      document.title=this.pageTitle ="领取抵扣券";
       this.backPath="/coupon/"+this.activityCode;
       this.userPhone = localStorage.mobile || '';
       this.userName = localStorage.realName || '';

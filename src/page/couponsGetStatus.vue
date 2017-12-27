@@ -108,7 +108,7 @@
       this.couponCode = this.$route.query.couponCode;
       this.activityCode = this.$route.params.code;
       this.backPath="/coupon/"+this.activityCode;
-      document.title=this.pageTitle = '礼券详情';
+      document.title=this.pageTitle = '领取抵扣券';
 //      let dealerId= localStorage.dealerId
 //      alert(this.couponCode);
 //      return;
