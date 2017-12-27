@@ -2,7 +2,6 @@
   <div>
     <loading v-show="loadingShow"></loading>
     <mesg v-bind:mesg="mesg"></mesg>
-    <v-header :showBack="false" :title="pageTitle"></v-header>
     <div class="center_box">
       <div class="bannerbox">
         <img class="banner" v-show="status==0||status==1 ||status==10||status==11"
@@ -57,14 +56,12 @@
   import API from "./../fetch/api";
   import loading from "../components/loading";
   import mesg from "../components/mesg";
-  import VHeader from "../components/header";
   import { wechatShare }  from '../mixin/wxShare.js'
   import wx from 'weixin-js-sdk';
 
   export default {
     data() {
       return {
-        pageTitle:'',
         mesg:"",
         activecouponId: '',
         activityCode: '',//活动Id
@@ -87,7 +84,6 @@
       //alert("create");
     },
     components: {
-      VHeader,
       loading,
       mesg
     },
@@ -102,7 +98,7 @@
         api.ap_coupon({'activityCode': this.activityCode}).then(res => {
           console.log(res)
           this.wxShareFn(res.result);
-          document.title=this.pageTitle = res.result.name || "抵扣券活动";
+          document.title=res.result.name || "抵扣券活动";
           if (res.status) {
             localStorage.setItem("ownerType",res.result.ownerType); //缓存是经销商还是厂商标识
             this.ownerType=res.result.ownerType;
@@ -136,7 +132,7 @@
           return false;
         }
         this.activecouponId = data.id;
-        this.$router.push({path: '/coupon/' + this.activityCode + '/couponsLogin', query: {activecouponId:this.activecouponId,ownerType:this.ownerType,activityName:encodeURI(this.pageTitle)}})
+        this.$router.push({path: '/coupon/' + this.activityCode + '/couponsLogin', query: {activecouponId:this.activecouponId,ownerType:this.ownerType}})
       },
       mesgFn(text){
         this.mesg=text

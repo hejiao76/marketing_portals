@@ -152,6 +152,10 @@
                 }
                 this.beginTime = util.toDateString(res.result.beginTime)
                 this.endTime = util.toDateString(res.result.endTime)
+                if(res.result.ownerType==2){
+                  this.dealerId =res.result.ownerId ||''
+                  this.dealerName=res.result.ownerName ||''
+                }
               }else{
                 this.loadingShow = false;
                 this.$refs.msgTip.showMsgTip(res.message || "访问异常，请刷新重试");

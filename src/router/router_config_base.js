@@ -2,6 +2,8 @@
 //require.ensure()，同时将模块添加到一个分开的 chunk 当中。这个新的 chunk 会被 webpack 通过 jsonp 来按需加载。
 const prizedraw = r => require.ensure([], () => r(require('../page/raffle')), 'prizedraw');
 const coupons = r => require.ensure([], () => r(require('../page/coupons')), 'coupons');
+const couponlogin = r => require.ensure([], () => r(require('../page/couponsLogin')), 'couponlogin');
+const getstatus = r => require.ensure([], () => r(require('../page/couponsGetStatus')), 'getstatus');
 const mycouponlist = r => require.ensure([], () => r(require('../page/couponlist')), 'couponlist');
 const secondkill = r => require.ensure([], () => r(require('../page/secondkill')), 'secondkill');
 const secondlist = r => require.ensure([], () => r(require('../page/secondlist')), 'secondlist');
@@ -32,8 +34,17 @@ const routerConfig = [{
   },
   /*****************抵扣券路由********************/
   {
+    path: '/coupon/:code/couponsLogin', //领券输入用户信息
+    component: couponlogin,
+    meta:{keepAlive:true}
+  },
+  {
     path: '/coupon/:code/loginchecked', //抵扣券选择经销商
     component: loginchecked
+  },
+  {
+    path: '/coupon/:code/getstatus', //领取状态
+    component: getstatus
   }
   , {
     path: '/mycoupon/couponlist', //我的抵扣券

@@ -23,9 +23,9 @@
           <div class="errortext" v-show="">验证码有误</div>
         </div>
       </div>
-      <div v-if="ownerType==1" class="list_item">
+      <div class="list_item">
         <span class="title">选择经销商</span>
-        <span :class="['delared',dealerName ? 'checked' : '']" @click="checkedlist">{{dealerName ? dealerName.substr(0, 12) : '请选择提车经销商参与活动'}}<i
+        <span :class="['delared',(dealerName && ownerType!=2) ? 'checked' : '']" @click="checkedlist">{{dealerName ? dealerName.substr(0, 12) : '请选择提车经销商参与活动'}}<i
           class="iconfont icon-jiantou"></i></span>
       </div>
       <div class="siginout" v-show="localname" @click="loginout">不是{{localname}}? 点此退出</div>
@@ -64,14 +64,56 @@
       loading,
       mesg
     },
+    mounted (){
+        this.codeId = this.$route.params.code;
+        this.ownerType =localStorage.ownerType || 1
+        this.requestDetail(this.codeId);
+    },
     activated() {
-      this.dealerId = localStorage.dealerId;
-      this.dealerName = localStorage.dealerName;
-      this.ownerType =localStorage.ownerType || 1
+      if(this.ownerType==1){
+        this.dealerId = localStorage.dealerId;
+        this.dealerName = localStorage.dealerName;
+      }
     },
     methods: {
       Pickclick: function (data) {
         this.loadingShow = true;
+      },
+      /**
+       * 请求秒杀详情数据
+       */
+      requestDetail(codeId) {
+        if(codeId){
+          this.loadingShow = true;
+          api.ap_sedkill_detail({'activityCode': codeId})
+            .then(res => {
+              if(res.status==true){
+                this.wxShareFn(res.result);
+                localStorage.setItem("ownerType",res.result.ownerType);
+                this.ownerType=res.result.ownerType;
+                document.title=res.result.name || "秒杀活动";
+                this.loadingShow = false;
+                if (res.result.status == 1) {
+                  this.killlist = res.result.itemList;
+                } else {
+                  this.errormesg = this.statustype[res.result.status]
+                }
+                this.beginTime = util.toDateString(res.result.beginTime)
+                this.endTime = util.toDateString(res.result.endTime)
+                if(res.result.ownerType==2){
+                  this.dealerId =res.result.ownerId ||''
+                  this.dealerName=res.result.ownerName ||''
+                }
+              }else{
+                this.loadingShow = false;
+                this.$refs.msgTip.showMsgTip(res.message || "访问异常，请刷新重试");
+              }
+            }).catch(error => {
+            console.log(error)
+            this.loadingShow = false;
+            this.$refs.msgTip.showMsgTip("访问异常，请刷新重试");
+          });
+        }
       },
       /**
        * 获取验证码
@@ -117,7 +159,9 @@
         localStorage.photo = mesg.photo;
       },
       checkedlist: function () {
-        this.$router.push({path: '/sedKill/' + this.codeId + '/sedkillloginchecked', query: {id: this.itemId}})
+        if(this.ownerType==1){
+          this.$router.push({path: '/sedKill/' + this.codeId + '/sedkillloginchecked', query: {id: this.itemId}})
+        }
       }
       ,
       mesga(text){

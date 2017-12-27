@@ -35,6 +35,14 @@ export default {
         return fetch.fetch('user/coupon/addUserCoupon', params,'post',"json");
       },
       /**
+       * 查询抵扣券信息
+       * @param params
+       * @returns {*}
+       */
+      ap_get_user_coupon_info(params) {
+        return fetch.fetch('user/coupon/getUserCoupon', params,'post',"json");
+      },
+      /**
        * 我的抵扣券详情
        * @param params
        * @returns {*}

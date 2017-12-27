@@ -1,7 +1,7 @@
 <template>
   <div class="headtop">
-    <span v-show="showBack" class="back" @click="back"><span class="iconfont icon-fanhui"></span>返回</span>
-    <span class="title">{{title}}</span>
+      <span class="back" @click="back"><span class="iconfont icon-fanhui"></span>返回</span>
+      <span class="title">{{titlea}}</span>
   </div>
 </template>
 
@@ -11,22 +11,20 @@
       return {
       }
     },
-    props: ['title','showBack','targetPath','callback'],
+    props: ['titlea','callback'],
     mounted() {
     },
     methods : {
-      initPage (){
+        initPage (){
 
-      },
-      back () {
-        if(this.targetPath){
-          this.$router.push(this.targetPath);
-        } else if(this.callback){
-          this.callback()
-        }else{
-          this.$router.go(-1);
+        },
+        back () {
+          if(this.callback){
+            this.callback()
+          }else{
+            this.$router.go(-1);
+          }
         }
-      }
     },
   }
 </script>
