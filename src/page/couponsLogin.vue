@@ -265,6 +265,8 @@
               } else if (res.code == 202) {
 //                this.addUserCoupon = res;
                   this.$router.push({path: '/coupon/' + this.activityCode + '/getstatus', query: {status:202}})
+              }else{
+                this.mesgFn("报名失败")
               }
             }
           }).catch(err => {
@@ -299,19 +301,20 @@
           this.mesgFn("请输入登录信息~");
           return;
         }
-        api.base_login({userPhone: this.userPhone, checkCode: this.userCode, username: this.userName})
-          .then(res => {
-            console.log(res)
-            if (res.status) {
-              this.setlocal(res.result);
-              this.addUserCouponFun()
-//              this.status = 2;
-            } else {
-              alert('登录失败')
-            }
-          }).catch(err => {
-
-        });
+        this.addUserCouponFun()
+//        api.base_login({userPhone: this.userPhone, checkCode: this.userCode, username: this.userName})
+//          .then(res => {
+//            console.log(res)
+//            if (res.status) {
+//              this.setlocal(res.result);
+//              this.addUserCouponFun()
+////              this.status = 2;
+//            } else {
+//              alert('登录失败')
+//            }
+//          }).catch(err => {
+//
+//        });
       },
       /**
        * 跳转到我的礼券列表

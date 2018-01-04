@@ -199,22 +199,23 @@
 //          return;
 //        }
         this.logining = false;
-        api.base_login({userPhone: this.userPhone, checkCode: this.userCode, username: this.userName})
-          .then(res => {
-            console.log(res)
-            if (res.status) {
-              this.setlocal(res.result);
-              this.addUserCouponFun()
-              this.status = 2;
-              this.logintext = '报名成功'
-              //this.$router.push({path: '/sedKill/' + this.codeId, query: {}})
-            } else {
-              this.mesga("登录失败")
-              this.logining = true;
-            }
-          }).catch(err => {
-          this.logining = true;
-        });
+        this.addUserCouponFun();
+//        api.base_login({userPhone: this.userPhone, checkCode: this.userCode, username: this.userName})
+//          .then(res => {
+//            console.log(res)
+//            if (res.status) {
+//              this.setlocal(res.result);
+//              this.addUserCouponFun()
+//              this.status = 2;
+//              this.logintext = '报名成功'
+//              //this.$router.push({path: '/sedKill/' + this.codeId, query: {}})
+//            } else {
+//              this.mesga("登录失败")
+//              this.logining = true;
+//            }
+//          }).catch(err => {
+//          this.logining = true;
+//        });
 //          this.status=2;
       },
       addUserCouponFun() {
