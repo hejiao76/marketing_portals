@@ -47,7 +47,7 @@
           <div :class="['btna',{close:datamesg.itemStatus==0},{willbegin:datamesg.itemStatus!=0 &&reversedMessage > 5000}]" @click="checkSedkill">
             {{datamesg.itemStatus==0?'已结束':(reversedMessage > 5000 ? '即将开始' : (reversedMessage > 0 ? reversedMessage / 1000 + '秒后即将开始' : '立即秒杀'))}}
           </div>
-          <div :class="['btnb',{close:(datamesg.status==4 || datamesg.status==1 ||datamesg.itemStatus==0)}]" @click="tosign(datamesg)">{{status[datamesg.status]}}</div>
+          <div :class="['btnb',{close:(datamesg.status==4 ||datamesg.status==3 || datamesg.status==1 ||datamesg.itemStatus==0)}]" @click="tosign(datamesg)">{{status[datamesg.status]}}</div>
         </div>
       </div>
       <div class="carbtnbox" v-if="datamesg.areaStatus==0">

@@ -1,22 +1,23 @@
 <template>
   <div>
     <loading v-show="loadingShow"></loading>
-    <div :class="['killbox', {nolist:killlist.length==0}]">
-      <div class="killbanner">
-        <img class="bannerimg" src="../assets/img/ms_bc.png"/>
-        <div class="actionTime">活动时间：{{beginTime}} ~ {{endTime}}</div>
+    <div class="killbanner">
+      <img class="bannerimg" src="../assets/img/ms_bc.png"/>
+      <div class="actionTime">活动时间：{{beginTime}} ~ {{endTime}}</div>
         <ul class="banner_list" v-if="killlist.length!=0">
-          <li><span class="float iconfont icon-jushouxin"></span>
-            <span class="list_text float">报名秒杀</span>
-          </li>
-          <li><span class="float iconfont icon-miaobiao_kuai"></span>
-            <span class="list_text float">秒杀开启</span>
-          </li>
-          <li><span class="float iconfont icon-duigou"></span>
-            <span class="list_text">支付订单<br>秒杀成功</span>
-          </li>
-        </ul>
-      </div>
+        <li><span class="float iconfont icon-jushouxin"></span>
+          <span class="list_text float">报名秒杀</span>
+        </li>
+        <li><span class="float iconfont icon-miaobiao_kuai"></span>
+          <span class="list_text float">秒杀开启</span>
+        </li>
+        <li><span class="float iconfont icon-duigou"></span>
+          <span class="list_text">支付订单<br>秒杀成功</span>
+        </li>
+      </ul>
+    </div>
+    <div :class="['killbox', {nolist:killlist.length==0}]">
+
       <div class="killlist" :key="item.itemId" v-for="(item,index,key) in killlist">
         <div class="timetolset"><span class="iconfont icon-miaobiao_kuai"></span>{{util.toFullDateString(item.beginTime)}}
         </div>

@@ -2,6 +2,7 @@
   padding: .15rem;
   background: #FC7926;
   font-size: .14rem;
+  padding-top: .1rem;
 }
 
 .killbox.nolist {
@@ -40,7 +41,18 @@
 .banner_list li:not(:last-child) {
   margin-right: 5%;
 }
-
+.banner_list li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top:50%;
+  margin-top: -.06rem;
+  right:-.08rem;
+  width: 0;
+  height: 0;
+  border-top: .06rem solid transparent;
+  border-left: .08rem solid #FCA167;
+  border-bottom:.06rem solid transparent;
+}
 .list_text {
   display: flex;
   align-items: center;
@@ -285,4 +297,9 @@
 
 #app {
   background: #FC7926;
+}
+#app>div {
+  background: #FC7926; height: 100%; position: absolute;
+  left:0;
+  top:0;
 }
