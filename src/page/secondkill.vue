@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="killboxx">
     <loading v-show="loadingShow"></loading>
     <div class="killbanner">
       <img class="bannerimg" src="../assets/img/ms_bc.png"/>

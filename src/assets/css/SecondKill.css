@@ -295,10 +295,8 @@
   border-top: 1px solid #f1f1f1;
 }
 
-#app {
-  background: #FC7926;
-}
-#app>div {
+
+#app>div.killboxx {
   background: #FC7926; height: 100%; position: absolute;
   left:0;
   top:0;
