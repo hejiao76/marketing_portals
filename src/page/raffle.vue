@@ -311,7 +311,7 @@
         $(".pointer").trigger("click");
       },
       tomyraddle: function () {
-        location.href = "http://ec.web.chinameds.cn/customerweb/html/gift/giftlist.html"
+        location.href = "http://static.strongdigit.com/customerweb/html/gift/giftlist.html"
       },
       addFree: function (){
         let id = this.$route.params.code;

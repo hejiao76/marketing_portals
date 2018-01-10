@@ -20,8 +20,7 @@ function act() {
   return new Promise((resolve, reject) => {
     // console.log(window.location.href)
     $.ajax({
-      url: Final.PROXY+'/sys/wx/info?type=1&businessId=10001',//后台索要的算法签名
-      param:{type:1,businessId:4},
+      url: Final.PROXY+'/sys/wx/info?type=1&businessId=10000&url='+window.location.href.split('#')[0],//后台索要的算法签名
       type: 'get',
     }).done(function(ret) {
       console.log('ret',ret);
@@ -39,10 +38,10 @@ export function wechatShare(shareDate) {
   return new Promise(async function(resolve, reject) {
     try{
       // alert("分享入口-------->"+JSON.stringify(shareDate));
-      let isWechat=navigator.userAgent.indexOf('MicroMessenger')>-1 //判断为微信浏览器
-      if(!isWechat){
-        return resolve('not weichat')
-      }
+      // let isWechat=navigator.userAgent.indexOf('MicroMessenger')>-1 //判断为微信浏览器
+      // if(!isWechat){
+      //   return resolve('not weichat')
+      // }
       if(!window.wx){
         await getScript();
       }
@@ -66,7 +65,7 @@ export function wechatShare(shareDate) {
         timestamp:ret.timestamp,
         nonceStr:ret.nonceStr,
         signature:ret.signature,
-        jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'],
+        jsApiList: ['checkJsApi','onMenuShareAppMessage', 'onMenuShareTimeline'],
       };
       // alert("config数据封装-------->"+JSON.stringify(configData));
       wx.config(configData);
