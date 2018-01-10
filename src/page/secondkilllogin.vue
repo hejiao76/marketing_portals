@@ -169,7 +169,7 @@
           .then(res => {
             if (res.status) {
               this.mesga("退出成功");
-              localStorage.removeItem("dealerId");
+//              localStorage.removeItem("dealerId");
               localStorage.removeItem("realName");
               localStorage.removeItem("mobile");
               location.reload();
