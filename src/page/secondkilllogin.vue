@@ -240,7 +240,7 @@
               console.log('报名');
 
             } else {
-              this.mesga("报名失败")
+              this.mesga(res.message || "报名失败")
             }
           }).catch(err => {
           this.mesga("报名失败");
