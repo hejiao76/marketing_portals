@@ -60,7 +60,7 @@ export function wechatShare(shareDate) {
       // alert("数据装载-------->"+JSON.stringify(data));
       let ret = await act();
       let configData={
-        debug:true,
+        debug:false,
         appId:ret.appId,
         timestamp:ret.timestamp,
         nonceStr:ret.nonceStr,
