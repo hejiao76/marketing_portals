@@ -157,7 +157,7 @@
         if(orderNum && itemId){
           if(this.isWeiXin()){
             var param=window.location.origin+Final.CHILD_FLOADER_NAME+"/"+Final.BUILD_PATH+"/pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"&clientType="+1;
-            var redirectURL='http://ec.web.chinameds.cn/customerweb/html/wx3j.html?ref='+encodeURIComponent(param);
+            var redirectURL='http://ec.web.EC_WEB_DOMAIN_REPLACE/customerweb/html/wx3j.html?ref='+encodeURIComponent(param);
             window.location.href=redirectURL;
           }else{
             window.location.href=window.location.origin+Final.CHILD_FLOADER_NAME+"/"+Final.BUILD_PATH+"/pay/pay.html?orderNum="+orderNum+"&itemId="+itemId+"&clientType="+1;
@@ -174,7 +174,7 @@
         this.$router.push({path: '/sedKill/' + this.codeId + '/secondcardetail', query: {id: item.itemId}})
       },
       tomap: function (item) {
-        location.href = "http://ec.web.chinameds.cn/customerweb/html/dealer/dealersInMap.html?skuId=" + 10001
+        location.href = "http://ec.web.EC_WEB_DOMAIN_REPLACE/customerweb/html/dealer/dealersInMap.html?skuId=" + 10001
       },
     },
     mounted() {
