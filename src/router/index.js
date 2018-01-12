@@ -14,6 +14,7 @@ routerConfig = routerConfig.concat(RouterConfigBase)
 console.log(routerConfig)
 // debugger;
 export default new Router ({
+  // mode: 'history',
   linkActiveClass: 'active',
   routes:routerConfig
   //   component: App, //顶层路由，对应index.html

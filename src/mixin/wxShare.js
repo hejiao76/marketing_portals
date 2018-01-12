@@ -18,9 +18,9 @@ function getScript() {
 
 function act() {
   return new Promise((resolve, reject) => {
-    // console.log(window.location.href)
+    // console.log(window.location.href);
     $.ajax({
-      url: Final.PROXY+'/sys/wx/info?type=1&businessId=10000&url='+window.location.href.split('#')[0],//后台索要的算法签名
+      url: Final.PROXY+'/sys/wx/info?type=1&businessId=10000&url='+window.location.href.split("#")[0],//后台索要的算法签名
       type: 'get',
     }).done(function(ret) {
       console.log('ret',ret);
