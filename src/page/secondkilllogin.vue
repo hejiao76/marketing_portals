@@ -173,6 +173,7 @@
               localStorage.removeItem("realName");
               localStorage.removeItem("mobile");
               location.reload();
+
             } else {
               this.mesga("退出失败");
             }
@@ -233,6 +234,9 @@
 //              location.href='/#/sedKill/' + this.codeId
               this.mesga("报名成功");
               let _self=this;
+              _self.codestatus = true;
+              _self.timeout = 60;
+              clearInterval(_self.interval);
               window.setTimeout(function (){
                 _self.$router.push({path: '/sedKill/' + _self.codeId, query: {}})
               },500);

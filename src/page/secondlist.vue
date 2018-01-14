@@ -19,11 +19,11 @@
             </div>
             <div class="rightbottom">
               <div class="bottomlist status0" v-if="item.status==1 || (item.status==10 && item.itemStatus==1 &&item.beginTime>new Date())">
-                <div v-if="item.beginTime-new Date().getTime()<60*60*24*1000">
+                <div v-if="item.beginTime-new Date().getTime()<60*60*24*1000 &&item.beginTime-new Date().getTime()>0">
                   <span>距秒杀开始还有</span>
                   <countdown :endTime="String(item.beginTime)" :callback="callback(index)" endText="00:00:00"></countdown>
                 </div>
-                <div v-else>
+                <div v-if="item.status==1 && item.beginTime-new Date().getTime()>0">
                   <span>秒杀开始时间：{{util.toFullDateString(item.beginTime)}}</span>
                 </div>
               </div>

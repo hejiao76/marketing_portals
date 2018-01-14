@@ -171,10 +171,16 @@
 
       //旋转转盘 item:奖品位置; txt：提示语;
       var rotateFn = function (item, txt, mesg) {
-        var angles = (item + 1) * (360 / turnplate.restaraunts.length) - (360 / (turnplate.restaraunts.length * 2)) + 90;
+//        var angles = (item + 1) * (360 / turnplate.restaraunts.length) - (360 / (turnplate.restaraunts.length * 2)) + 90;
+        var angles = (item+1) * (360 / turnplate.restaraunts.length) - (360 / (turnplate.restaraunts.length*2));
+        if(angles<270){
+          angles = 270 - angles;
+        }else{
+          angles = 360 - angles + 270;
+        }
         console.log(angles)
-        $('.pointer').stopRotate();
-        $('.pointer').rotate({
+        $('#wheelcanvas').stopRotate();
+        $('#wheelcanvas').rotate({
           angle: 0,
           animateTo: angles + 1800,
           duration: 8000,
@@ -188,6 +194,7 @@
       };
 
       $('.pointer').click(function () {
+
         if (!_that.loginstatus) {
           _that.sendmesgtoparent(false);
           return false;
