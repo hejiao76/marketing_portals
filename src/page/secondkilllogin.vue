@@ -66,8 +66,25 @@
     },
     activated() {
       if(this.ownerType==1){
+        console.log('xxxx',this.$route.query.id)
         this.dealerId = localStorage.dealerId;
         this.dealerName = localStorage.dealerName;
+        this.codeId = this.$route.params.code;
+        this.itemId = this.$route.query.id;
+        this.ownerType =localStorage.getItem("ownerType");
+        let code = localStorage.sedkillcode;
+        let mobile = localStorage.mobile;
+        let realName = localStorage.realName;
+        let dealerId= localStorage.dealerId
+        this.localname = localStorage.realName;
+        if (mobile && realName) {
+          this.userName = realName;
+          this.userPhone = mobile;
+        }
+        if(dealerId){
+          this.dealerId = dealerId;
+        }
+        this.requestDetail(this.codeId);
       }
     },
     methods: {
@@ -234,12 +251,12 @@
 //              location.href='/#/sedKill/' + this.codeId
               this.mesga("报名成功");
               let _self=this;
-              _self.codestatus = true;
-              _self.timeout = 60;
-              _self.logining=true;
-              _self.userCode='';
-              clearInterval(_self.interval);
               window.setTimeout(function (){
+                _self.codestatus = true;
+                _self.timeout = 60;
+                _self.logining=true;
+                _self.userCode='';
+                clearInterval(_self.interval);
                 _self.$router.push({path: '/sedKill/' + _self.codeId, query: {}})
               },500);
 
@@ -254,6 +271,7 @@
       },
 
     }, mounted() {
+      console.log('xxxx',this.$route.query.id)
       this.codeId = this.$route.params.code;
       this.itemId = this.$route.query.id;
       this.ownerType =localStorage.getItem("ownerType");
