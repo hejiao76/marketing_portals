@@ -236,6 +236,7 @@
               let _self=this;
               _self.codestatus = true;
               _self.timeout = 60;
+              _self.logining=true;
               clearInterval(_self.interval);
               window.setTimeout(function (){
                 _self.$router.push({path: '/sedKill/' + _self.codeId, query: {}})
