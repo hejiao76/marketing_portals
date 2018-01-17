@@ -23,7 +23,7 @@
                   <span>距秒杀开始还有</span>
                   <countdown :endTime="String(item.beginTime)" :callback="callback(index)" endText="00:00:00"></countdown>
                 </div>
-                <div v-if="item.status==1 && item.beginTime-new Date().getTime()>0">
+                <div v-if="item.status==1 && item.beginTime-new Date().getTime()>60*60*24*1000">
                   <span>秒杀开始时间：{{util.toFullDateString(item.beginTime)}}</span>
                 </div>
               </div>

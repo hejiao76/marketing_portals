@@ -67,7 +67,6 @@
     activated() {
       if(this.ownerType==1){
         console.log('xxxx',this.$route.query.id)
-        this.dealerId = localStorage.dealerId;
         this.dealerName = localStorage.dealerName;
         this.codeId = this.$route.params.code;
         this.itemId = this.$route.query.id;
