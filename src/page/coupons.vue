@@ -12,7 +12,8 @@
       <div class="couponList" v-show="status==0" v-for="item in couponlist" :key="item.id">
         <div class="couponTop">
           <img class="couponImg"
-               src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=169726949,11506498&fm=27&gp=0.jpg">
+               src="../assets/img/couponlisticon.png">
+
           <div class="couponright">
             <div class="coupontitle">{{item.name}}</div>
             <ul class="detailslist">
