@@ -39,7 +39,7 @@
             class="iconfont icon-libao" style="color: #168dde; margin-right: .05rem;"></i>查看核销码</span>
           <span class="btn btnb " @click="sedkill_del(item)" v-if="item.status==6 || item.status==7 || item.itemStatus==0 ">删除</span>
           <span @click="tocardetail(item)" class="btn btnb active" v-if="(item.status !=1 && item.status!=2&& item.status!=10) || item.itemStatus==0 ">查看秒杀</span>
-          <span @click="tocardetail(item)" class="btn btna" v-if="item.status==1 ||item.status==2 || item.status==10 && item.itemStatus==1 ">前往秒杀</span>
+          <span @click="tocardetail(item)" class="btn btna" v-if="(item.status==1 ||item.status==2 || item.status==10) && item.itemStatus==1 ">前往秒杀</span>
         </div>
       </div>
     </div>
